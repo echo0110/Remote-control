@@ -1,0 +1,1 @@
+"..\bsp_lib\SystemClock.c" -E -c --cpu Cortex-M3 -O0 --apcs=interwork -I..\User -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\bsp_lib -I "C:\Keil\ARM\INC" -I "C:\Keil\ARM\INC\ST\STM32F10x" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -o ".\Listing\systemclock.i"
