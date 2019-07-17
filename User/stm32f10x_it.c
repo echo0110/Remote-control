@@ -70,7 +70,7 @@ void key_prograss(void){
 	}
 #endif
 	for(i=0; i<14; i++){
-		if(!GPIO_ReadInputDataBit(key[i].GPIOx, key[i].GPIO_Pin)){
+  		if(!GPIO_ReadInputDataBit(key[i].GPIOx, key[i].GPIO_Pin)){
 			key[i].touch_flag = 1;
 			key[i].delay++;
 			if((key[i].delay > 50) && key[i].untouch_flag){
@@ -205,7 +205,7 @@ void SysTick_Handler(void)
 {
 	cnt++;
 	delay_cnt++;
-	
+	//TimingDelay_Decrement();
 	key_prograss();
 	return;
 }

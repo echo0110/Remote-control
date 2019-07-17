@@ -1,26 +1,15 @@
 L 1 "..\bsp_lib\delay.c"
+N/*-------------------------------------------------------------------------------
+N文件名称：SysTick.c
+N文件描述：SysTick 系统滴答时钟1us中断函数库,中断时间可自由配置，
+N          常用的有 1us 10us 1ms 中断。        
+N备    注：程序默认使用72M时钟，无分频 
+N---------------------------------------------------------------------------------*/
 N#include "delay.h"
 L 1 "..\bsp_lib\delay.h" 1
-N#ifndef __DELAY_H
-N#define __DELAY_H 
+N#ifndef __SYSTICK_H
+N#define __SYSTICK_H
 N
-N#include "stm32f10x_it.h"
-L 1 "..\User\stm32f10x_it.h" 1
-N/*******************************************************************************
-N** 文件名: 		stm32f10x_it.h
-N** 版本：  		1.0
-N** 工作环境: 	RealView MDK-ARM 4.20
-N** 作者: 		XXX
-N** 生成日期: 	2011-04-10
-N** 功能:		中断头文件声明
-N** 相关文件:	无
-N** 修改日志：	2011-04-10   创建文档
-N*******************************************************************************/
-N/* 防止重定义-----------------------------------------------------------------*/
-N#ifndef __STM32F10x_IT_H
-N#define __STM32F10x_IT_H
-N
-N/* 包含的头文件---------------------------------------------------------------*/
 N#include "stm32f10x.h"
 L 1 "..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h" 1
 N/**
@@ -88,7 +77,7 @@ N   application
 N  */
 N
 N#if !defined (STM32F10X_LD) && !defined (STM32F10X_LD_VL) && !defined (STM32F10X_MD) && !defined (STM32F10X_MD_VL) && !defined (STM32F10X_HD) && !defined (STM32F10X_HD_VL) && !defined (STM32F10X_XL) && !defined (STM32F10X_CL) 
-X#if !0L && !0L && !0L && !0L && !1L && !0L && !0L && !0L 
+X#if !0L && !0L && !1L && !0L && !0L && !0L && !0L && !0L 
 S  /* #define STM32F10X_LD */     /*!< STM32F10X_LD: STM32 Low density devices */
 S  /* #define STM32F10X_LD_VL */  /*!< STM32F10X_LD_VL: STM32 Low density Value Line devices */  
 S  /* #define STM32F10X_MD */     /*!< STM32F10X_MD: STM32 Medium density devices */
@@ -119,7 +108,7 @@ N - Connectivity line devices are STM32F105xx and STM32F107xx microcontrollers.
 N  */
 N
 N#if !defined (STM32F10X_LD) && !defined (STM32F10X_LD_VL) && !defined (STM32F10X_MD) && !defined (STM32F10X_MD_VL) && !defined (STM32F10X_HD) && !defined (STM32F10X_HD_VL) && !defined (STM32F10X_XL) && !defined (STM32F10X_CL)
-X#if !0L && !0L && !0L && !0L && !1L && !0L && !0L && !0L
+X#if !0L && !0L && !1L && !0L && !0L && !0L && !0L && !0L
 S #error "Please select first the target STM32F10x device used in your application (in stm32f10x.h file)"
 N#endif
 N
@@ -271,31 +260,31 @@ S  TIM7_IRQn                   = 55      /*!< TIM7 Interrupt                    
 N#endif /* STM32F10X_LD_VL */
 N
 N#ifdef STM32F10X_MD
-S  ADC1_2_IRQn                 = 18,     /*!< ADC1 and ADC2 global Interrupt                       */
-S  USB_HP_CAN1_TX_IRQn         = 19,     /*!< USB Device High Priority or CAN1 TX Interrupts       */
-S  USB_LP_CAN1_RX0_IRQn        = 20,     /*!< USB Device Low Priority or CAN1 RX0 Interrupts       */
-S  CAN1_RX1_IRQn               = 21,     /*!< CAN1 RX1 Interrupt                                   */
-S  CAN1_SCE_IRQn               = 22,     /*!< CAN1 SCE Interrupt                                   */
-S  EXTI9_5_IRQn                = 23,     /*!< External Line[9:5] Interrupts                        */
-S  TIM1_BRK_IRQn               = 24,     /*!< TIM1 Break Interrupt                                 */
-S  TIM1_UP_IRQn                = 25,     /*!< TIM1 Update Interrupt                                */
-S  TIM1_TRG_COM_IRQn           = 26,     /*!< TIM1 Trigger and Commutation Interrupt               */
-S  TIM1_CC_IRQn                = 27,     /*!< TIM1 Capture Compare Interrupt                       */
-S  TIM2_IRQn                   = 28,     /*!< TIM2 global Interrupt                                */
-S  TIM3_IRQn                   = 29,     /*!< TIM3 global Interrupt                                */
-S  TIM4_IRQn                   = 30,     /*!< TIM4 global Interrupt                                */
-S  I2C1_EV_IRQn                = 31,     /*!< I2C1 Event Interrupt                                 */
-S  I2C1_ER_IRQn                = 32,     /*!< I2C1 Error Interrupt                                 */
-S  I2C2_EV_IRQn                = 33,     /*!< I2C2 Event Interrupt                                 */
-S  I2C2_ER_IRQn                = 34,     /*!< I2C2 Error Interrupt                                 */
-S  SPI1_IRQn                   = 35,     /*!< SPI1 global Interrupt                                */
-S  SPI2_IRQn                   = 36,     /*!< SPI2 global Interrupt                                */
-S  USART1_IRQn                 = 37,     /*!< USART1 global Interrupt                              */
-S  USART2_IRQn                 = 38,     /*!< USART2 global Interrupt                              */
-S  USART3_IRQn                 = 39,     /*!< USART3 global Interrupt                              */
-S  EXTI15_10_IRQn              = 40,     /*!< External Line[15:10] Interrupts                      */
-S  RTCAlarm_IRQn               = 41,     /*!< RTC Alarm through EXTI Line Interrupt                */
-S  USBWakeUp_IRQn              = 42      /*!< USB Device WakeUp from suspend through EXTI Line Interrupt */  
+N  ADC1_2_IRQn                 = 18,     /*!< ADC1 and ADC2 global Interrupt                       */
+N  USB_HP_CAN1_TX_IRQn         = 19,     /*!< USB Device High Priority or CAN1 TX Interrupts       */
+N  USB_LP_CAN1_RX0_IRQn        = 20,     /*!< USB Device Low Priority or CAN1 RX0 Interrupts       */
+N  CAN1_RX1_IRQn               = 21,     /*!< CAN1 RX1 Interrupt                                   */
+N  CAN1_SCE_IRQn               = 22,     /*!< CAN1 SCE Interrupt                                   */
+N  EXTI9_5_IRQn                = 23,     /*!< External Line[9:5] Interrupts                        */
+N  TIM1_BRK_IRQn               = 24,     /*!< TIM1 Break Interrupt                                 */
+N  TIM1_UP_IRQn                = 25,     /*!< TIM1 Update Interrupt                                */
+N  TIM1_TRG_COM_IRQn           = 26,     /*!< TIM1 Trigger and Commutation Interrupt               */
+N  TIM1_CC_IRQn                = 27,     /*!< TIM1 Capture Compare Interrupt                       */
+N  TIM2_IRQn                   = 28,     /*!< TIM2 global Interrupt                                */
+N  TIM3_IRQn                   = 29,     /*!< TIM3 global Interrupt                                */
+N  TIM4_IRQn                   = 30,     /*!< TIM4 global Interrupt                                */
+N  I2C1_EV_IRQn                = 31,     /*!< I2C1 Event Interrupt                                 */
+N  I2C1_ER_IRQn                = 32,     /*!< I2C1 Error Interrupt                                 */
+N  I2C2_EV_IRQn                = 33,     /*!< I2C2 Event Interrupt                                 */
+N  I2C2_ER_IRQn                = 34,     /*!< I2C2 Error Interrupt                                 */
+N  SPI1_IRQn                   = 35,     /*!< SPI1 global Interrupt                                */
+N  SPI2_IRQn                   = 36,     /*!< SPI2 global Interrupt                                */
+N  USART1_IRQn                 = 37,     /*!< USART1 global Interrupt                              */
+N  USART2_IRQn                 = 38,     /*!< USART2 global Interrupt                              */
+N  USART3_IRQn                 = 39,     /*!< USART3 global Interrupt                              */
+N  EXTI15_10_IRQn              = 40,     /*!< External Line[15:10] Interrupts                      */
+N  RTCAlarm_IRQn               = 41,     /*!< RTC Alarm through EXTI Line Interrupt                */
+N  USBWakeUp_IRQn              = 42      /*!< USB Device WakeUp from suspend through EXTI Line Interrupt */  
 N#endif /* STM32F10X_MD */  
 N
 N#ifdef STM32F10X_MD_VL
@@ -325,48 +314,48 @@ S  TIM7_IRQn                   = 55      /*!< TIM7 Interrupt                    
 N#endif /* STM32F10X_MD_VL */
 N
 N#ifdef STM32F10X_HD
-N  ADC1_2_IRQn                 = 18,     /*!< ADC1 and ADC2 global Interrupt                       */
-N  USB_HP_CAN1_TX_IRQn         = 19,     /*!< USB Device High Priority or CAN1 TX Interrupts       */
-N  USB_LP_CAN1_RX0_IRQn        = 20,     /*!< USB Device Low Priority or CAN1 RX0 Interrupts       */
-N  CAN1_RX1_IRQn               = 21,     /*!< CAN1 RX1 Interrupt                                   */
-N  CAN1_SCE_IRQn               = 22,     /*!< CAN1 SCE Interrupt                                   */
-N  EXTI9_5_IRQn                = 23,     /*!< External Line[9:5] Interrupts                        */
-N  TIM1_BRK_IRQn               = 24,     /*!< TIM1 Break Interrupt                                 */
-N  TIM1_UP_IRQn                = 25,     /*!< TIM1 Update Interrupt                                */
-N  TIM1_TRG_COM_IRQn           = 26,     /*!< TIM1 Trigger and Commutation Interrupt               */
-N  TIM1_CC_IRQn                = 27,     /*!< TIM1 Capture Compare Interrupt                       */
-N  TIM2_IRQn                   = 28,     /*!< TIM2 global Interrupt                                */
-N  TIM3_IRQn                   = 29,     /*!< TIM3 global Interrupt                                */
-N  TIM4_IRQn                   = 30,     /*!< TIM4 global Interrupt                                */
-N  I2C1_EV_IRQn                = 31,     /*!< I2C1 Event Interrupt                                 */
-N  I2C1_ER_IRQn                = 32,     /*!< I2C1 Error Interrupt                                 */
-N  I2C2_EV_IRQn                = 33,     /*!< I2C2 Event Interrupt                                 */
-N  I2C2_ER_IRQn                = 34,     /*!< I2C2 Error Interrupt                                 */
-N  SPI1_IRQn                   = 35,     /*!< SPI1 global Interrupt                                */
-N  SPI2_IRQn                   = 36,     /*!< SPI2 global Interrupt                                */
-N  USART1_IRQn                 = 37,     /*!< USART1 global Interrupt                              */
-N  USART2_IRQn                 = 38,     /*!< USART2 global Interrupt                              */
-N  USART3_IRQn                 = 39,     /*!< USART3 global Interrupt                              */
-N  EXTI15_10_IRQn              = 40,     /*!< External Line[15:10] Interrupts                      */
-N  RTCAlarm_IRQn               = 41,     /*!< RTC Alarm through EXTI Line Interrupt                */
-N  USBWakeUp_IRQn              = 42,     /*!< USB Device WakeUp from suspend through EXTI Line Interrupt */
-N  TIM8_BRK_IRQn               = 43,     /*!< TIM8 Break Interrupt                                 */
-N  TIM8_UP_IRQn                = 44,     /*!< TIM8 Update Interrupt                                */
-N  TIM8_TRG_COM_IRQn           = 45,     /*!< TIM8 Trigger and Commutation Interrupt               */
-N  TIM8_CC_IRQn                = 46,     /*!< TIM8 Capture Compare Interrupt                       */
-N  ADC3_IRQn                   = 47,     /*!< ADC3 global Interrupt                                */
-N  FSMC_IRQn                   = 48,     /*!< FSMC global Interrupt                                */
-N  SDIO_IRQn                   = 49,     /*!< SDIO global Interrupt                                */
-N  TIM5_IRQn                   = 50,     /*!< TIM5 global Interrupt                                */
-N  SPI3_IRQn                   = 51,     /*!< SPI3 global Interrupt                                */
-N  UART4_IRQn                  = 52,     /*!< UART4 global Interrupt                               */
-N  UART5_IRQn                  = 53,     /*!< UART5 global Interrupt                               */
-N  TIM6_IRQn                   = 54,     /*!< TIM6 global Interrupt                                */
-N  TIM7_IRQn                   = 55,     /*!< TIM7 global Interrupt                                */
-N  DMA2_Channel1_IRQn          = 56,     /*!< DMA2 Channel 1 global Interrupt                      */
-N  DMA2_Channel2_IRQn          = 57,     /*!< DMA2 Channel 2 global Interrupt                      */
-N  DMA2_Channel3_IRQn          = 58,     /*!< DMA2 Channel 3 global Interrupt                      */
-N  DMA2_Channel4_5_IRQn        = 59      /*!< DMA2 Channel 4 and Channel 5 global Interrupt        */
+S  ADC1_2_IRQn                 = 18,     /*!< ADC1 and ADC2 global Interrupt                       */
+S  USB_HP_CAN1_TX_IRQn         = 19,     /*!< USB Device High Priority or CAN1 TX Interrupts       */
+S  USB_LP_CAN1_RX0_IRQn        = 20,     /*!< USB Device Low Priority or CAN1 RX0 Interrupts       */
+S  CAN1_RX1_IRQn               = 21,     /*!< CAN1 RX1 Interrupt                                   */
+S  CAN1_SCE_IRQn               = 22,     /*!< CAN1 SCE Interrupt                                   */
+S  EXTI9_5_IRQn                = 23,     /*!< External Line[9:5] Interrupts                        */
+S  TIM1_BRK_IRQn               = 24,     /*!< TIM1 Break Interrupt                                 */
+S  TIM1_UP_IRQn                = 25,     /*!< TIM1 Update Interrupt                                */
+S  TIM1_TRG_COM_IRQn           = 26,     /*!< TIM1 Trigger and Commutation Interrupt               */
+S  TIM1_CC_IRQn                = 27,     /*!< TIM1 Capture Compare Interrupt                       */
+S  TIM2_IRQn                   = 28,     /*!< TIM2 global Interrupt                                */
+S  TIM3_IRQn                   = 29,     /*!< TIM3 global Interrupt                                */
+S  TIM4_IRQn                   = 30,     /*!< TIM4 global Interrupt                                */
+S  I2C1_EV_IRQn                = 31,     /*!< I2C1 Event Interrupt                                 */
+S  I2C1_ER_IRQn                = 32,     /*!< I2C1 Error Interrupt                                 */
+S  I2C2_EV_IRQn                = 33,     /*!< I2C2 Event Interrupt                                 */
+S  I2C2_ER_IRQn                = 34,     /*!< I2C2 Error Interrupt                                 */
+S  SPI1_IRQn                   = 35,     /*!< SPI1 global Interrupt                                */
+S  SPI2_IRQn                   = 36,     /*!< SPI2 global Interrupt                                */
+S  USART1_IRQn                 = 37,     /*!< USART1 global Interrupt                              */
+S  USART2_IRQn                 = 38,     /*!< USART2 global Interrupt                              */
+S  USART3_IRQn                 = 39,     /*!< USART3 global Interrupt                              */
+S  EXTI15_10_IRQn              = 40,     /*!< External Line[15:10] Interrupts                      */
+S  RTCAlarm_IRQn               = 41,     /*!< RTC Alarm through EXTI Line Interrupt                */
+S  USBWakeUp_IRQn              = 42,     /*!< USB Device WakeUp from suspend through EXTI Line Interrupt */
+S  TIM8_BRK_IRQn               = 43,     /*!< TIM8 Break Interrupt                                 */
+S  TIM8_UP_IRQn                = 44,     /*!< TIM8 Update Interrupt                                */
+S  TIM8_TRG_COM_IRQn           = 45,     /*!< TIM8 Trigger and Commutation Interrupt               */
+S  TIM8_CC_IRQn                = 46,     /*!< TIM8 Capture Compare Interrupt                       */
+S  ADC3_IRQn                   = 47,     /*!< ADC3 global Interrupt                                */
+S  FSMC_IRQn                   = 48,     /*!< FSMC global Interrupt                                */
+S  SDIO_IRQn                   = 49,     /*!< SDIO global Interrupt                                */
+S  TIM5_IRQn                   = 50,     /*!< TIM5 global Interrupt                                */
+S  SPI3_IRQn                   = 51,     /*!< SPI3 global Interrupt                                */
+S  UART4_IRQn                  = 52,     /*!< UART4 global Interrupt                               */
+S  UART5_IRQn                  = 53,     /*!< UART5 global Interrupt                               */
+S  TIM6_IRQn                   = 54,     /*!< TIM6 global Interrupt                                */
+S  TIM7_IRQn                   = 55,     /*!< TIM7 global Interrupt                                */
+S  DMA2_Channel1_IRQn          = 56,     /*!< DMA2 Channel 1 global Interrupt                      */
+S  DMA2_Channel2_IRQn          = 57,     /*!< DMA2 Channel 2 global Interrupt                      */
+S  DMA2_Channel3_IRQn          = 58,     /*!< DMA2 Channel 3 global Interrupt                      */
+S  DMA2_Channel4_5_IRQn        = 59      /*!< DMA2 Channel 4 and Channel 5 global Interrupt        */
 N#endif /* STM32F10X_HD */  
 N
 N#ifdef STM32F10X_HD_VL
@@ -4688,11 +4677,11 @@ N #define  RCC_APB2RSTR_IOPERST               ((uint32_t)0x00000040)        /*!<
 N#endif /* STM32F10X_LD && STM32F10X_LD_VL */
 N
 N#if defined (STM32F10X_HD) || defined (STM32F10X_XL)
-X#if 1L || 0L
-N #define  RCC_APB2RSTR_IOPFRST               ((uint32_t)0x00000080)        /*!< I/O port F reset */
-N #define  RCC_APB2RSTR_IOPGRST               ((uint32_t)0x00000100)        /*!< I/O port G reset */
-N #define  RCC_APB2RSTR_TIM8RST               ((uint32_t)0x00002000)        /*!< TIM8 Timer reset */
-N #define  RCC_APB2RSTR_ADC3RST               ((uint32_t)0x00008000)        /*!< ADC3 interface reset */
+X#if 0L || 0L
+S #define  RCC_APB2RSTR_IOPFRST               ((uint32_t)0x00000080)        /*!< I/O port F reset */
+S #define  RCC_APB2RSTR_IOPGRST               ((uint32_t)0x00000100)        /*!< I/O port G reset */
+S #define  RCC_APB2RSTR_TIM8RST               ((uint32_t)0x00002000)        /*!< TIM8 Timer reset */
+S #define  RCC_APB2RSTR_ADC3RST               ((uint32_t)0x00008000)        /*!< ADC3 interface reset */
 N#endif
 N
 N#if defined (STM32F10X_HD_VL)
@@ -4731,19 +4720,19 @@ N #define  RCC_APB1RSTR_I2C2RST               ((uint32_t)0x00400000)        /*!<
 N#endif /* STM32F10X_LD && STM32F10X_LD_VL */
 N
 N#if defined (STM32F10X_HD) || defined (STM32F10X_MD) || defined (STM32F10X_LD) || defined  (STM32F10X_XL)
-X#if 1L || 0L || 0L || 0L
+X#if 0L || 1L || 0L || 0L
 N #define  RCC_APB1RSTR_USBRST                ((uint32_t)0x00800000)        /*!< USB Device reset */
 N#endif
 N
 N#if defined (STM32F10X_HD) || defined  (STM32F10X_CL) || defined  (STM32F10X_XL)
-X#if 1L || 0L || 0L
-N #define  RCC_APB1RSTR_TIM5RST                ((uint32_t)0x00000008)        /*!< Timer 5 reset */
-N #define  RCC_APB1RSTR_TIM6RST                ((uint32_t)0x00000010)        /*!< Timer 6 reset */
-N #define  RCC_APB1RSTR_TIM7RST                ((uint32_t)0x00000020)        /*!< Timer 7 reset */
-N #define  RCC_APB1RSTR_SPI3RST                ((uint32_t)0x00008000)        /*!< SPI 3 reset */
-N #define  RCC_APB1RSTR_UART4RST               ((uint32_t)0x00080000)        /*!< UART 4 reset */
-N #define  RCC_APB1RSTR_UART5RST               ((uint32_t)0x00100000)        /*!< UART 5 reset */
-N #define  RCC_APB1RSTR_DACRST                 ((uint32_t)0x20000000)        /*!< DAC interface reset */
+X#if 0L || 0L || 0L
+S #define  RCC_APB1RSTR_TIM5RST                ((uint32_t)0x00000008)        /*!< Timer 5 reset */
+S #define  RCC_APB1RSTR_TIM6RST                ((uint32_t)0x00000010)        /*!< Timer 6 reset */
+S #define  RCC_APB1RSTR_TIM7RST                ((uint32_t)0x00000020)        /*!< Timer 7 reset */
+S #define  RCC_APB1RSTR_SPI3RST                ((uint32_t)0x00008000)        /*!< SPI 3 reset */
+S #define  RCC_APB1RSTR_UART4RST               ((uint32_t)0x00080000)        /*!< UART 4 reset */
+S #define  RCC_APB1RSTR_UART5RST               ((uint32_t)0x00100000)        /*!< UART 5 reset */
+S #define  RCC_APB1RSTR_DACRST                 ((uint32_t)0x20000000)        /*!< DAC interface reset */
 N#endif
 N
 N#if defined (STM32F10X_LD_VL) || defined  (STM32F10X_MD_VL) || defined  (STM32F10X_HD_VL)
@@ -4782,14 +4771,14 @@ N#define  RCC_AHBENR_FLITFEN                  ((uint16_t)0x0010)            /*!<
 N#define  RCC_AHBENR_CRCEN                    ((uint16_t)0x0040)            /*!< CRC clock enable */
 N
 N#if defined (STM32F10X_HD) || defined  (STM32F10X_CL) || defined  (STM32F10X_HD_VL)
-X#if 1L || 0L || 0L
-N #define  RCC_AHBENR_DMA2EN                  ((uint16_t)0x0002)            /*!< DMA2 clock enable */
+X#if 0L || 0L || 0L
+S #define  RCC_AHBENR_DMA2EN                  ((uint16_t)0x0002)            /*!< DMA2 clock enable */
 N#endif
 N
 N#if defined (STM32F10X_HD) || defined (STM32F10X_XL)
-X#if 1L || 0L
-N #define  RCC_AHBENR_FSMCEN                  ((uint16_t)0x0100)            /*!< FSMC clock enable */
-N #define  RCC_AHBENR_SDIOEN                  ((uint16_t)0x0400)            /*!< SDIO clock enable */
+X#if 0L || 0L
+S #define  RCC_AHBENR_FSMCEN                  ((uint16_t)0x0100)            /*!< FSMC clock enable */
+S #define  RCC_AHBENR_SDIOEN                  ((uint16_t)0x0400)            /*!< SDIO clock enable */
 N#endif
 N
 N#if defined (STM32F10X_HD_VL)
@@ -4834,11 +4823,11 @@ N #define  RCC_APB2ENR_IOPEEN                 ((uint32_t)0x00000040)         /*!
 N#endif /* STM32F10X_LD && STM32F10X_LD_VL */
 N
 N#if defined (STM32F10X_HD) || defined (STM32F10X_XL)
-X#if 1L || 0L
-N #define  RCC_APB2ENR_IOPFEN                 ((uint32_t)0x00000080)         /*!< I/O port F clock enable */
-N #define  RCC_APB2ENR_IOPGEN                 ((uint32_t)0x00000100)         /*!< I/O port G clock enable */
-N #define  RCC_APB2ENR_TIM8EN                 ((uint32_t)0x00002000)         /*!< TIM8 Timer clock enable */
-N #define  RCC_APB2ENR_ADC3EN                 ((uint32_t)0x00008000)         /*!< DMA1 clock enable */
+X#if 0L || 0L
+S #define  RCC_APB2ENR_IOPFEN                 ((uint32_t)0x00000080)         /*!< I/O port F clock enable */
+S #define  RCC_APB2ENR_IOPGEN                 ((uint32_t)0x00000100)         /*!< I/O port G clock enable */
+S #define  RCC_APB2ENR_TIM8EN                 ((uint32_t)0x00002000)         /*!< TIM8 Timer clock enable */
+S #define  RCC_APB2ENR_ADC3EN                 ((uint32_t)0x00008000)         /*!< DMA1 clock enable */
 N#endif
 N
 N#if defined (STM32F10X_HD_VL)
@@ -4877,19 +4866,19 @@ N #define  RCC_APB1ENR_I2C2EN                 ((uint32_t)0x00400000)        /*!<
 N#endif /* STM32F10X_LD && STM32F10X_LD_VL */
 N
 N#if defined (STM32F10X_HD) || defined (STM32F10X_MD) || defined  (STM32F10X_LD)
-X#if 1L || 0L || 0L
+X#if 0L || 1L || 0L
 N #define  RCC_APB1ENR_USBEN                  ((uint32_t)0x00800000)        /*!< USB Device clock enable */
 N#endif
 N
 N#if defined (STM32F10X_HD) || defined  (STM32F10X_CL)
-X#if 1L || 0L
-N #define  RCC_APB1ENR_TIM5EN                 ((uint32_t)0x00000008)        /*!< Timer 5 clock enable */
-N #define  RCC_APB1ENR_TIM6EN                 ((uint32_t)0x00000010)        /*!< Timer 6 clock enable */
-N #define  RCC_APB1ENR_TIM7EN                 ((uint32_t)0x00000020)        /*!< Timer 7 clock enable */
-N #define  RCC_APB1ENR_SPI3EN                 ((uint32_t)0x00008000)        /*!< SPI 3 clock enable */
-N #define  RCC_APB1ENR_UART4EN                ((uint32_t)0x00080000)        /*!< UART 4 clock enable */
-N #define  RCC_APB1ENR_UART5EN                ((uint32_t)0x00100000)        /*!< UART 5 clock enable */
-N #define  RCC_APB1ENR_DACEN                  ((uint32_t)0x20000000)        /*!< DAC interface clock enable */
+X#if 0L || 0L
+S #define  RCC_APB1ENR_TIM5EN                 ((uint32_t)0x00000008)        /*!< Timer 5 clock enable */
+S #define  RCC_APB1ENR_TIM6EN                 ((uint32_t)0x00000010)        /*!< Timer 6 clock enable */
+S #define  RCC_APB1ENR_TIM7EN                 ((uint32_t)0x00000020)        /*!< Timer 7 clock enable */
+S #define  RCC_APB1ENR_SPI3EN                 ((uint32_t)0x00008000)        /*!< SPI 3 clock enable */
+S #define  RCC_APB1ENR_UART4EN                ((uint32_t)0x00080000)        /*!< UART 4 clock enable */
+S #define  RCC_APB1ENR_UART5EN                ((uint32_t)0x00100000)        /*!< UART 5 clock enable */
+S #define  RCC_APB1ENR_DACEN                  ((uint32_t)0x20000000)        /*!< DAC interface clock enable */
 N#endif
 N
 N#if defined (STM32F10X_LD_VL) || defined  (STM32F10X_MD_VL) || defined  (STM32F10X_HD_VL)
@@ -28859,375 +28848,196 @@ N  * @}
 N  */
 N
 N/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
-L 17 "..\User\stm32f10x_it.h" 2
-N
-N/* 类型定义 ------------------------------------------------------------------*/
-N/* 常量定义 ------------------------------------------------------------------*/
-N/* 宏定义 --------------------------------------------------------------------*/
-N/* 函数定义------------------------------------------------------------------ */
-N
-Nvoid NMI_Handler(void);
-Nvoid HardFault_Handler(void);
-Nvoid MemManage_Handler(void);
-Nvoid BusFault_Handler(void);
-Nvoid UsageFault_Handler(void);
-Nvoid SVC_Handler(void);
-Nvoid DebugMon_Handler(void);
-Nvoid PendSV_Handler(void);
-Nvoid SysTick_Handler(void);
-N
-N#endif /* __STM32F10x_IT_H */
-N
-N/************************************文件结束*********************************/
 L 5 "..\bsp_lib\delay.h" 2
-N//#include "sys.h"  
-N//////////////////////////////////////////////////////////////////////////////////	 
-N//本程序只供学习使用，未经作者许可，不得用于其它任何用途
-N//ALIENTEK STM32开发板
-N//使用SysTick的普通计数模式对延迟进行管理（适合STM32F10x系列）
-N//包括delay_us,delay_ms
-N//正点原子@ALIENTEK
-N//技术论坛:www.openedv.com
-N//创建日期:2010/1/1
-N//版本：V1.8
-N//版权所有，盗版必究。
-N//Copyright(C) 广州市星翼电子科技有限公司 2009-2019
-N//All rights reserved
-N//********************************************************************************
-N//V1.2修改说明
-N//修正了中断中调用出现死循环的错误
-N//防止延时不准确,采用do while结构!
-N//V1.3修改说明
-N//增加了对UCOSII延时的支持.
-N//如果使用ucosII,delay_init会自动设置SYSTICK的值,使之与ucos的TICKS_PER_SEC对应.
-N//delay_ms和delay_us也进行了针对ucos的改造.
-N//delay_us可以在ucos下使用,而且准确度很高,更重要的是没有占用额外的定时器.
-N//delay_ms在ucos下,可以当成OSTimeDly来用,在未启动ucos时,它采用delay_us实现,从而准确延时
-N//可以用来初始化外设,在启动了ucos之后delay_ms根据延时的长短,选择OSTimeDly实现或者delay_us实现.
-N//V1.4修改说明 20110929
-N//修改了使用ucos,但是ucos未启动的时候,delay_ms中中断无法响应的bug.
-N//V1.5修改说明 20120902
-N//在delay_us加入ucos上锁，防止由于ucos打断delay_us的执行，可能导致的延时不准。
-N//V1.6修改说明 20150109
-N//在delay_ms加入OSLockNesting判断。
-N//V1.7修改说明 20150319
-N//修改OS支持方式,以支持任意OS(不限于UCOSII和UCOSIII,理论上任意OS都可以支持)
-N//添加:delay_osrunning/delay_ostickspersec/delay_osintnesting三个宏定义
-N//添加:delay_osschedlock/delay_osschedunlock/delay_ostimedly三个函数
-N//V1.8修改说明 20150519
-N//修正UCOSIII支持时的2个bug：
-N//delay_tickspersec改为：delay_ostickspersec
-N//delay_intnesting改为：delay_osintnesting
-N////////////////////////////////////////////////////////////////////////////////// 
-N	 
-Nvoid delay_init(void);
-Nvoid delay_ms(u16 nms);
-Nvoid delay_us(u32 nus);
 N
-N#endif
+Nvoid SysTick_Init(void);
+Nvoid Delay_us(__IO u32 nTime);	  //单位10us
+Xvoid Delay_us(volatile u32 nTime);	  
+N//void delay_ms(__IO u32 nTime); 
+Nextern void delay(int time);
 N
 N
+Nvoid delay_Init(u8 SYSCLK);
+N
+Nvoid delay_uss(u32 nus);
+Nvoid delay_mss(u16 nms);
 N
 N
+N#define Delay_ms(x) Delay_us(1000*x)//单位ms
+N
+N#endif 
+N/*----------------------德飞莱 技术论坛：www.doflye.net--------------------------*/
+W "..\bsp_lib\delay.h" 22 2 last line of file ends without a newline
+N 
+L 8 "..\bsp_lib\delay.c" 2
+N
+Nstatic __IO u32 TimingDelay;
+Xstatic volatile u32 TimingDelay;
 N
 N
+N//#include "SysTick.h"
+N
+Nstatic u8  fac_us=0;							//us?????			   
+Nstatic u16 fac_ms=0;							//ms?????
+N
+N//void SysTick_Init(u8 SYSCLK)
 N
 N
+N/*-------------------------------------------------------------------------------
+N程序名称：SysTick_Init
+N程序描述：启动系统滴答定时器 SysTick
+N输入参数：无
+N返回参数：无
+N备    注：使用此功能之前需要调用此函数，初始化寄存器等参数
+N---------------------------------------------------------------------------------*/
+N//void SysTick_Init(void)
+N//{
+N//	 // SystemFrequency / 1000     1ms中断一次
+N//	 // SystemFrequency / 100000	 10us中断一次
+N//	 // SystemFrequency / 1000000  1us中断一次
+N//	 
+N//	if (SysTick_Config(SystemCoreClock / 1000000))	// 1ms中断一次
+N//	{ 
+N//		/* Capture error */ 
+N//		while (1);
+N//	}
+N//}
 N
 N
+N/*-------------------------------------------------------------------------------
+N程序名称：Delay_us
+N程序描述：延时nTime us  
+N输入参数：nTime
+N返回参数：无
+N备    注：无
+N---------------------------------------------------------------------------------*/
+Nvoid Delay_us(__IO u32 nTime)
+Xvoid Delay_us(volatile u32 nTime)
+N{ 
+N	TimingDelay = nTime;	
 N
+N	while(TimingDelay != 0);
+N}
 N
+N/*-------------------------------------------------------------------------------
+N程序名称：Delay_ms
+N程序描述：延时nTime us  
+N输入参数：nTime
+N返回参数：无
+N备    注：无
+N---------------------------------------------------------------------------------*/
+N//void delay_ms(__IO u32 nTime)
+N//{ 
+N//	TimingDelay = nTime;	
 N
+N//	while(TimingDelay != 0);
+N//}
 N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-L 2 "..\bsp_lib\delay.c" 2
-N////////////////////////////////////////////////////////////////////////////////// 	 
-N//如果需要使用OS,则包括下面的头文件即可.
-N#if SYSTEM_SUPPORT_OS
-S#include "includes.h"					//ucos 使用	  
-N#endif
-N//////////////////////////////////////////////////////////////////////////////////	 
-N//本程序只供学习使用，未经作者许可，不得用于其它任何用途
-N//ALIENTEK STM32开发板
-N//使用SysTick的普通计数模式对延迟进行管理（适合STM32F10x系列）
-N//包括delay_us,delay_ms
-N//正点原子@ALIENTEK
-N//技术论坛:www.openedv.com
-N//创建日期:2010/1/1
-N//版本：V1.8
-N//版权所有，盗版必究。
-N//Copyright(C) 广州市星翼电子科技有限公司 2009-2019
-N//All rights reserved
-N//********************************************************************************
-N//V1.2修改说明
-N//修正了中断中调用出现死循环的错误
-N//防止延时不准确,采用do while结构!
-N//V1.3修改说明
-N//增加了对UCOSII延时的支持.
-N//如果使用ucosII,delay_init会自动设置SYSTICK的值,使之与ucos的TICKS_PER_SEC对应.
-N//delay_ms和delay_us也进行了针对ucos的改造.
-N//delay_us可以在ucos下使用,而且准确度很高,更重要的是没有占用额外的定时器.
-N//delay_ms在ucos下,可以当成OSTimeDly来用,在未启动ucos时,它采用delay_us实现,从而准确延时
-N//可以用来初始化外设,在启动了ucos之后delay_ms根据延时的长短,选择OSTimeDly实现或者delay_us实现.
-N//V1.4修改说明 20110929
-N//修改了使用ucos,但是ucos未启动的时候,delay_ms中中断无法响应的bug.
-N//V1.5修改说明 20120902
-N//在delay_us加入ucos上锁，防止由于ucos打断delay_us的执行，可能导致的延时不准。
-N//V1.6修改说明 20150109
-N//在delay_ms加入OSLockNesting判断。
-N//V1.7修改说明 20150319
-N//修改OS支持方式,以支持任意OS(不限于UCOSII和UCOSIII,理论上任意OS都可以支持)
-N//添加:delay_osrunning/delay_ostickspersec/delay_osintnesting三个宏定义
-N//添加:delay_osschedlock/delay_osschedunlock/delay_ostimedly三个函数
-N//V1.8修改说明 20150519
-N//修正UCOSIII支持时的2个bug：
-N//delay_tickspersec改为：delay_ostickspersec
-N//delay_intnesting改为：delay_osintnesting
-N//////////////////////////////////////////////////////////////////////////////////  
-N
-Nstatic u8  fac_us=0;							//us延时倍乘数			   
-Nstatic u16 fac_ms=0;							//ms延时倍乘数,在ucos下,代表每个节拍的ms数
-N	
-N	
-N#if SYSTEM_SUPPORT_OS							//如果SYSTEM_SUPPORT_OS定义了,说明要支持OS了(不限于UCOS).
-S//当delay_us/delay_ms需要支持OS的时候需要三个与OS相关的宏定义和函数来支持
-S//首先是3个宏定义:
-S//    delay_osrunning:用于表示OS当前是否正在运行,以决定是否可以使用相关函数
-S//delay_ostickspersec:用于表示OS设定的时钟节拍,delay_init将根据这个参数来初始哈systick
-S// delay_osintnesting:用于表示OS中断嵌套级别,因为中断里面不可以调度,delay_ms使用该参数来决定如何运行
-S//然后是3个函数:
-S//  delay_osschedlock:用于锁定OS任务调度,禁止调度
-S//delay_osschedunlock:用于解锁OS任务调度,重新开启调度
-S//    delay_ostimedly:用于OS延时,可以引起任务调度.
-S
-S//本例程仅作UCOSII和UCOSIII的支持,其他OS,请自行参考着移植
-S//支持UCOSII
-S#ifdef 	OS_CRITICAL_METHOD						//OS_CRITICAL_METHOD定义了,说明要支持UCOSII				
-S#define delay_osrunning		OSRunning			//OS是否运行标记,0,不运行;1,在运行
-S#define delay_ostickspersec	OS_TICKS_PER_SEC	//OS时钟节拍,即每秒调度次数
-S#define delay_osintnesting 	OSIntNesting		//中断嵌套级别,即中断嵌套次数
-S#endif
-S
-S//支持UCOSIII
-S#ifdef 	CPU_CFG_CRITICAL_METHOD					//CPU_CFG_CRITICAL_METHOD定义了,说明要支持UCOSIII	
-S#define delay_osrunning		OSRunning			//OS是否运行标记,0,不运行;1,在运行
-S#define delay_ostickspersec	OSCfg_TickRate_Hz	//OS时钟节拍,即每秒调度次数
-S#define delay_osintnesting 	OSIntNestingCtr		//中断嵌套级别,即中断嵌套次数
-S#endif
-S
-S
-S//us级延时时,关闭任务调度(防止打断us级延迟)
-Svoid delay_osschedlock(void)
-S{
-S#ifdef CPU_CFG_CRITICAL_METHOD   				//使用UCOSIII
-S	OS_ERR err; 
-S	OSSchedLock(&err);							//UCOSIII的方式,禁止调度，防止打断us延时
-S#else											//否则UCOSII
-S	OSSchedLock();								//UCOSII的方式,禁止调度，防止打断us延时
-S#endif
-S}
-S
-S//us级延时时,恢复任务调度
-Svoid delay_osschedunlock(void)
-S{	
-S#ifdef CPU_CFG_CRITICAL_METHOD   				//使用UCOSIII
-S	OS_ERR err; 
-S	OSSchedUnlock(&err);						//UCOSIII的方式,恢复调度
-S#else											//否则UCOSII
-S	OSSchedUnlock();							//UCOSII的方式,恢复调度
-S#endif
-S}
-S
-S//调用OS自带的延时函数延时
-S//ticks:延时的节拍数
-Svoid delay_ostimedly(u32 ticks)
-S{
-S#ifdef CPU_CFG_CRITICAL_METHOD
-S	OS_ERR err; 
-S	OSTimeDly(ticks,OS_OPT_TIME_PERIODIC,&err);	//UCOSIII延时采用周期模式
-S#else
-S	OSTimeDly(ticks);							//UCOSII延时
-S#endif 
-S}
-S 
-S//systick中断服务函数,使用ucos时用到
-Svoid SysTick_Handler(void)
-S{	
-S	if(delay_osrunning==1)						//OS开始跑了,才执行正常的调度处理
-S	{
-S		OSIntEnter();							//进入中断
-S		OSTimeTick();       					//调用ucos的时钟服务程序               
-S		OSIntExit();       	 					//触发任务切换软中断
-S	}
-S}
-N#endif
-N
-N			   
-N//初始化延迟函数
-N//当使用OS的时候,此函数会初始化OS的时钟节拍
-N//SYSTICK的时钟固定为HCLK时钟的1/8
-N//SYSCLK:系统时钟
-Nvoid delay_init()
+N/*-------------------------------------------------------------------------------
+N程序名称：TimingDelay_Decrement
+N程序描述：数字递减直到0  
+N输入参数：无
+N返回参数：无
+N备    注：需要在中断函数SysTick_Handler()中调用
+N---------------------------------------------------------------------------------*/
+Nvoid TimingDelay_Decrement(void)
 N{
-N#if SYSTEM_SUPPORT_OS  							//如果需要支持OS.
-S	u32 reload;
+N	if (TimingDelay != 0x00)
+N	{ 
+N	TimingDelay--;
+N	}
+N}
+N/*-------------------------------------------------------------------------------
+N程序名称：delay
+N程序描述：计数延时  
+N输入参数：无
+N返回参数：无
+N备    注：LORA中断读寄存器值
+N---------------------------------------------------------------------------------*/
+N#if 0
+Svoid delay(int time)
+S{
+S int i;
+S while(time--)
+S {
+S  i=500;
+S  while(i--);
+S }
+S}
 N#endif
-N	SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8);	//选择外部时钟  HCLK/8
-X	SysTick_CLKSourceConfig(((uint32_t)0xFFFFFFFB));	
-N	fac_us=SystemCoreClock/8000000;				//为系统时钟的1/8  
-N#if SYSTEM_SUPPORT_OS  							//如果需要支持OS.
-S	reload=SystemCoreClock/8000000;				//每秒钟的计数次数 单位为M  
-S	reload*=1000000/delay_ostickspersec;		//根据delay_ostickspersec设定溢出时间
-S												//reload为24位寄存器,最大值:16777216,在72M下,约合1.86s左右	
-S	fac_ms=1000/delay_ostickspersec;			//代表OS可以延时的最少单位	   
-S
-S	SysTick->CTRL|=SysTick_CTRL_TICKINT_Msk;   	//开启SYSTICK中断
-S	SysTick->LOAD=reload; 						//每1/delay_ostickspersec秒中断一次	
-S	SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk;   	//开启SYSTICK    
-S
-N#else
-N	fac_ms=(u16)fac_us*1000;					//非OS下,代表每个ms需要的systick时钟数   
-N#endif
+N
+N
+N//??:???????misc.c??????
+N//???????
+N//SYSTICK??????AHB???1/8
+N//SYSCLK:??????
+Nvoid delay_Init(u8 SYSCLK)
+N{
+N	SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8); 
+X	SysTick_CLKSourceConfig(((uint32_t)0xFFFFFFFB)); 
+N	fac_us=SYSCLK/8;					
+N	fac_ms=(u16)fac_us*1000;				   
 N}								    
 N
-N#if SYSTEM_SUPPORT_OS  							//如果需要支持OS.
-S//延时nus
-S//nus为要延时的us数.		    								   
-Svoid delay_us(u32 nus)
-S{		
-S	u32 ticks;
-S	u32 told,tnow,tcnt=0;
-S	u32 reload=SysTick->LOAD;					//LOAD的值	    	 
-S	ticks=nus*fac_us; 							//需要的节拍数	  		 
-S	tcnt=0;
-S	delay_osschedlock();						//阻止OS调度，防止打断us延时
-S	told=SysTick->VAL;        					//刚进入时的计数器值
-S	while(1)
-S	{
-S		tnow=SysTick->VAL;	
-S		if(tnow!=told)
-S		{	    
-S			if(tnow<told)tcnt+=told-tnow;		//这里注意一下SYSTICK是一个递减的计数器就可以了.
-S			else tcnt+=reload-tnow+told;	    
-S			told=tnow;
-S			if(tcnt>=ticks)break;				//时间超过/等于要延迟的时间,则退出.
-S		}  
-S	};
-S	delay_osschedunlock();						//恢复OS调度									    
-S}
-S//延时nms
-S//nms:要延时的ms数
-Svoid delay_ms(u16 nms)
-S{	
-S	if(delay_osrunning&&delay_osintnesting==0)	//如果OS已经在跑了,并且不是在中断里面(中断里面不能任务调度)	    
-S	{		 
-S		if(nms>=fac_ms)							//延时的时间大于OS的最少时间周期 
-S		{ 
-S   			delay_ostimedly(nms/fac_ms);		//OS延时
-S		}
-S		nms%=fac_ms;							//OS已经无法提供这么小的延时了,采用普通方式延时    
-S	}
-S	delay_us((u32)(nms*1000));					//普通方式延时  
-S}
-N#else //不用OS时
-N//延时nus
-N//nus为要延时的us数.		    								   
-Nvoid delay_us(u32 nus)
+N
+N/*******************************************************************************
+N* ? ? ?: delay_us
+N* ????	: us??,
+N* ?    ?: nus:????us?
+N??:nus??,????798915us(????2^24/fac_us@fac_us=21)
+N* ?    ?: ?
+N*******************************************************************************/		    								   
+Nvoid delay_uss(u32 nus)
 N{		
 N	u32 temp;	    	 
-N	SysTick->LOAD=nus*fac_us; 					//时间加载	  		 
+N	SysTick->LOAD=nus*fac_us; 					//????	  		 
 X	((SysTick_Type *) ((0xE000E000) + 0x0010))->LOAD=nus*fac_us; 					
-N	SysTick->VAL=0x00;        					//清空计数器
+N	SysTick->VAL=0x00;        					//?????
 X	((SysTick_Type *) ((0xE000E000) + 0x0010))->VAL=0x00;        					
-N	SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk ;	//开始倒数	  
+N	SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk ;	//????	  
 X	((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL|=(1ul << 0) ;	
 N	do
 N	{
 N		temp=SysTick->CTRL;
 X		temp=((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL;
-N	}while((temp&0x01)&&!(temp&(1<<16)));		//等待时间到达   
-N	SysTick->CTRL&=~SysTick_CTRL_ENABLE_Msk;	//关闭计数器
+N	}while((temp&0x01)&&!(temp&(1<<16)));		//??????   
+N	SysTick->CTRL&=~SysTick_CTRL_ENABLE_Msk;	//?????
 X	((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL&=~(1ul << 0);	
-N	SysTick->VAL =0X00;      					 //清空计数器	 
+N	SysTick->VAL =0X00;      					 //?????	 
 X	((SysTick_Type *) ((0xE000E000) + 0x0010))->VAL =0X00;      					 
 N}
-N//延时nms
-N//注意nms的范围
-N//SysTick->LOAD为24位寄存器,所以,最大延时为:
-N//nms<=0xffffff*8*1000/SYSCLK
-N//SYSCLK单位为Hz,nms单位为ms
-N//对72M条件下,nms<=1864 
-Nvoid delay_ms(u16 nms)
-N{	 		  	  
-N	u32 temp;		   
-N	SysTick->LOAD=(u32)nms*fac_ms;				//时间加载(SysTick->LOAD为24bit)
-X	((SysTick_Type *) ((0xE000E000) + 0x0010))->LOAD=(u32)nms*fac_ms;				
-N	SysTick->VAL =0x00;							//清空计数器
-X	((SysTick_Type *) ((0xE000E000) + 0x0010))->VAL =0x00;							
-N	SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk ;	//开始倒数  
-X	((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL|=(1ul << 0) ;	
-N	do
-N	{
-N		temp=SysTick->CTRL;
-X		temp=((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL;
-N	}while((temp&0x01)&&!(temp&(1<<16)));		//等待时间到达   
-N	SysTick->CTRL&=~SysTick_CTRL_ENABLE_Msk;	//关闭计数器
-X	((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL&=~(1ul << 0);	
-N	SysTick->VAL =0X00;       					//清空计数器	  	    
-X	((SysTick_Type *) ((0xE000E000) + 0x0010))->VAL =0X00;       					
+N
+N
+N/*******************************************************************************
+N* ? ? ?         : delay_ms
+N* ????         : ms??,
+N* ?    ?         : nms:????ms?
+N                    ??:nms??,SysTick->LOAD?24????,
+N                    ????0xffffff*8*1000/SYSCLK
+N                    ?72M???,nms<=1864ms 
+N* ?    ?         : ?
+N*******************************************************************************/
+Nvoid delay_mss(u16 nms)
+N{                 
+N    u32 temp;          
+N    SysTick->LOAD=(u32)nms*fac_ms;              //????(SysTick->LOAD?24bit)
+X    ((SysTick_Type *) ((0xE000E000) + 0x0010))->LOAD=(u32)nms*fac_ms;              
+N    SysTick->VAL =0x00;                         //?????
+X    ((SysTick_Type *) ((0xE000E000) + 0x0010))->VAL =0x00;                         
+N    SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk ;    //????  
+X    ((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL|=(1ul << 0) ;    
+N    do
+N    {
+N        temp=SysTick->CTRL;
+X        temp=((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL;
+N    }while((temp&0x01)&&!(temp&(1<<16)));       //??????   
+N    SysTick->CTRL&=~SysTick_CTRL_ENABLE_Msk;    //?????
+X    ((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL&=~(1ul << 0);    
+N    SysTick->VAL =0X00;                         //?????         
+X    ((SysTick_Type *) ((0xE000E000) + 0x0010))->VAL =0X00;                         
 N} 
-N#endif 
 N
 N
 N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
+N/*----------------------德飞莱 技术论坛：www.doflye.net--------------------------*/
 N

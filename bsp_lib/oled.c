@@ -190,9 +190,10 @@ void OLED_DrawBMP(unsigned char x0, unsigned char y0,unsigned char x1, unsigned 
 	for(y=y0;y<y1;y++)
 	{
 		OLED_Set_Pos(x0,y);
+		//Setadd12864(x0,y);
     for(x=x0;x<x1;x++)
 	    {      
-	    	OLED_WR_Byte(BMP[j++],OLED_DATA);	    	
+	    	//OLED_WR_Byte(BMP[j++],OLED_DATA);	    	
 	    }
 	}
 } 

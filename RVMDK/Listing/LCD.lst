@@ -1,0 +1,19 @@
+L 1 "..\bsp_lib\LCD.C"
+N/******************************************************************************/
+N/**
+W "..\bsp_lib\LCD.C" 3 1 nested comment is not allowed
+N/** 模 块 名： -------------------Virtual_UART.C-----------------------------
+W "..\bsp_lib\LCD.C" 4 1 nested comment is not allowed
+N/**            -----------------虚拟串口调试------------------------------*/
+N/** 功能描述： 
+W "..\bsp_lib\LCD.C" 6 1 nested comment is not allowed
+N/**
+W "..\bsp_lib\LCD.C" 7 1 nested comment is not allowed
+N/** 创 建 人： 创思通信        	日期：2012-11-28    */
+N/** 修 改 人：                 	日期：2012-11-28    */
+N/** 其他说明： 
+W "..\bsp_lib\LCD.C" 10 1 nested comment is not allowed
+N/******************************************************************************/
+N
+C "..\bsp_lib\LCD.C" 12 22 cannot open source input file "Includes.h": No such file or directory
+N#include "Includes.h"

@@ -15,7 +15,7 @@
 #define Y_WIDTH 	64	
 
 
-
+#include "stm32f10x.h"
 
 
 
@@ -48,6 +48,20 @@ extern void LCD_Init(void);
 //OLED¿ØÖÆÓÃº¯Êý
 
 extern void Init_display(void);
+
+void display_map(unsigned char *p);//P ?????????
+
+void display_string_8x16(u16 page,u16 column,u8 *text);
+
+
+void Delayms(u16 ms);
+
+void LCD_ShowCHinese(u8 *p,u8 uCol,u8 uPage);
+void disp_hz(u8 *hz,u8 uCol,u8 uPage);
+void Setadd12864(u8 xl,u8 yl);
+extern void LCD_ShowCHinese(u8 *p,u8 uCol,u8 uPage);
+
+void disp_ch(unsigned char c,u8 uCol,u8 uPage);
 
 #endif
 

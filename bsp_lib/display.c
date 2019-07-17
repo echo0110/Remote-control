@@ -157,7 +157,7 @@ void oled_show_line2(u8 index, char chr){
 			}
 			break;
 		default:
-			break;
+			break;  
 	}
 	return;
 }

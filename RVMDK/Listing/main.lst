@@ -1135,7 +1135,7 @@ N   application
 N  */
 N
 N#if !defined (STM32F10X_LD) && !defined (STM32F10X_LD_VL) && !defined (STM32F10X_MD) && !defined (STM32F10X_MD_VL) && !defined (STM32F10X_HD) && !defined (STM32F10X_HD_VL) && !defined (STM32F10X_XL) && !defined (STM32F10X_CL) 
-X#if !0L && !0L && !0L && !0L && !1L && !0L && !0L && !0L 
+X#if !0L && !0L && !1L && !0L && !0L && !0L && !0L && !0L 
 S  /* #define STM32F10X_LD */     /*!< STM32F10X_LD: STM32 Low density devices */
 S  /* #define STM32F10X_LD_VL */  /*!< STM32F10X_LD_VL: STM32 Low density Value Line devices */  
 S  /* #define STM32F10X_MD */     /*!< STM32F10X_MD: STM32 Medium density devices */
@@ -1166,7 +1166,7 @@ N - Connectivity line devices are STM32F105xx and STM32F107xx microcontrollers.
 N  */
 N
 N#if !defined (STM32F10X_LD) && !defined (STM32F10X_LD_VL) && !defined (STM32F10X_MD) && !defined (STM32F10X_MD_VL) && !defined (STM32F10X_HD) && !defined (STM32F10X_HD_VL) && !defined (STM32F10X_XL) && !defined (STM32F10X_CL)
-X#if !0L && !0L && !0L && !0L && !1L && !0L && !0L && !0L
+X#if !0L && !0L && !1L && !0L && !0L && !0L && !0L && !0L
 S #error "Please select first the target STM32F10x device used in your application (in stm32f10x.h file)"
 N#endif
 N
@@ -1318,31 +1318,31 @@ S  TIM7_IRQn                   = 55      /*!< TIM7 Interrupt                    
 N#endif /* STM32F10X_LD_VL */
 N
 N#ifdef STM32F10X_MD
-S  ADC1_2_IRQn                 = 18,     /*!< ADC1 and ADC2 global Interrupt                       */
-S  USB_HP_CAN1_TX_IRQn         = 19,     /*!< USB Device High Priority or CAN1 TX Interrupts       */
-S  USB_LP_CAN1_RX0_IRQn        = 20,     /*!< USB Device Low Priority or CAN1 RX0 Interrupts       */
-S  CAN1_RX1_IRQn               = 21,     /*!< CAN1 RX1 Interrupt                                   */
-S  CAN1_SCE_IRQn               = 22,     /*!< CAN1 SCE Interrupt                                   */
-S  EXTI9_5_IRQn                = 23,     /*!< External Line[9:5] Interrupts                        */
-S  TIM1_BRK_IRQn               = 24,     /*!< TIM1 Break Interrupt                                 */
-S  TIM1_UP_IRQn                = 25,     /*!< TIM1 Update Interrupt                                */
-S  TIM1_TRG_COM_IRQn           = 26,     /*!< TIM1 Trigger and Commutation Interrupt               */
-S  TIM1_CC_IRQn                = 27,     /*!< TIM1 Capture Compare Interrupt                       */
-S  TIM2_IRQn                   = 28,     /*!< TIM2 global Interrupt                                */
-S  TIM3_IRQn                   = 29,     /*!< TIM3 global Interrupt                                */
-S  TIM4_IRQn                   = 30,     /*!< TIM4 global Interrupt                                */
-S  I2C1_EV_IRQn                = 31,     /*!< I2C1 Event Interrupt                                 */
-S  I2C1_ER_IRQn                = 32,     /*!< I2C1 Error Interrupt                                 */
-S  I2C2_EV_IRQn                = 33,     /*!< I2C2 Event Interrupt                                 */
-S  I2C2_ER_IRQn                = 34,     /*!< I2C2 Error Interrupt                                 */
-S  SPI1_IRQn                   = 35,     /*!< SPI1 global Interrupt                                */
-S  SPI2_IRQn                   = 36,     /*!< SPI2 global Interrupt                                */
-S  USART1_IRQn                 = 37,     /*!< USART1 global Interrupt                              */
-S  USART2_IRQn                 = 38,     /*!< USART2 global Interrupt                              */
-S  USART3_IRQn                 = 39,     /*!< USART3 global Interrupt                              */
-S  EXTI15_10_IRQn              = 40,     /*!< External Line[15:10] Interrupts                      */
-S  RTCAlarm_IRQn               = 41,     /*!< RTC Alarm through EXTI Line Interrupt                */
-S  USBWakeUp_IRQn              = 42      /*!< USB Device WakeUp from suspend through EXTI Line Interrupt */  
+N  ADC1_2_IRQn                 = 18,     /*!< ADC1 and ADC2 global Interrupt                       */
+N  USB_HP_CAN1_TX_IRQn         = 19,     /*!< USB Device High Priority or CAN1 TX Interrupts       */
+N  USB_LP_CAN1_RX0_IRQn        = 20,     /*!< USB Device Low Priority or CAN1 RX0 Interrupts       */
+N  CAN1_RX1_IRQn               = 21,     /*!< CAN1 RX1 Interrupt                                   */
+N  CAN1_SCE_IRQn               = 22,     /*!< CAN1 SCE Interrupt                                   */
+N  EXTI9_5_IRQn                = 23,     /*!< External Line[9:5] Interrupts                        */
+N  TIM1_BRK_IRQn               = 24,     /*!< TIM1 Break Interrupt                                 */
+N  TIM1_UP_IRQn                = 25,     /*!< TIM1 Update Interrupt                                */
+N  TIM1_TRG_COM_IRQn           = 26,     /*!< TIM1 Trigger and Commutation Interrupt               */
+N  TIM1_CC_IRQn                = 27,     /*!< TIM1 Capture Compare Interrupt                       */
+N  TIM2_IRQn                   = 28,     /*!< TIM2 global Interrupt                                */
+N  TIM3_IRQn                   = 29,     /*!< TIM3 global Interrupt                                */
+N  TIM4_IRQn                   = 30,     /*!< TIM4 global Interrupt                                */
+N  I2C1_EV_IRQn                = 31,     /*!< I2C1 Event Interrupt                                 */
+N  I2C1_ER_IRQn                = 32,     /*!< I2C1 Error Interrupt                                 */
+N  I2C2_EV_IRQn                = 33,     /*!< I2C2 Event Interrupt                                 */
+N  I2C2_ER_IRQn                = 34,     /*!< I2C2 Error Interrupt                                 */
+N  SPI1_IRQn                   = 35,     /*!< SPI1 global Interrupt                                */
+N  SPI2_IRQn                   = 36,     /*!< SPI2 global Interrupt                                */
+N  USART1_IRQn                 = 37,     /*!< USART1 global Interrupt                              */
+N  USART2_IRQn                 = 38,     /*!< USART2 global Interrupt                              */
+N  USART3_IRQn                 = 39,     /*!< USART3 global Interrupt                              */
+N  EXTI15_10_IRQn              = 40,     /*!< External Line[15:10] Interrupts                      */
+N  RTCAlarm_IRQn               = 41,     /*!< RTC Alarm through EXTI Line Interrupt                */
+N  USBWakeUp_IRQn              = 42      /*!< USB Device WakeUp from suspend through EXTI Line Interrupt */  
 N#endif /* STM32F10X_MD */  
 N
 N#ifdef STM32F10X_MD_VL
@@ -1372,48 +1372,48 @@ S  TIM7_IRQn                   = 55      /*!< TIM7 Interrupt                    
 N#endif /* STM32F10X_MD_VL */
 N
 N#ifdef STM32F10X_HD
-N  ADC1_2_IRQn                 = 18,     /*!< ADC1 and ADC2 global Interrupt                       */
-N  USB_HP_CAN1_TX_IRQn         = 19,     /*!< USB Device High Priority or CAN1 TX Interrupts       */
-N  USB_LP_CAN1_RX0_IRQn        = 20,     /*!< USB Device Low Priority or CAN1 RX0 Interrupts       */
-N  CAN1_RX1_IRQn               = 21,     /*!< CAN1 RX1 Interrupt                                   */
-N  CAN1_SCE_IRQn               = 22,     /*!< CAN1 SCE Interrupt                                   */
-N  EXTI9_5_IRQn                = 23,     /*!< External Line[9:5] Interrupts                        */
-N  TIM1_BRK_IRQn               = 24,     /*!< TIM1 Break Interrupt                                 */
-N  TIM1_UP_IRQn                = 25,     /*!< TIM1 Update Interrupt                                */
-N  TIM1_TRG_COM_IRQn           = 26,     /*!< TIM1 Trigger and Commutation Interrupt               */
-N  TIM1_CC_IRQn                = 27,     /*!< TIM1 Capture Compare Interrupt                       */
-N  TIM2_IRQn                   = 28,     /*!< TIM2 global Interrupt                                */
-N  TIM3_IRQn                   = 29,     /*!< TIM3 global Interrupt                                */
-N  TIM4_IRQn                   = 30,     /*!< TIM4 global Interrupt                                */
-N  I2C1_EV_IRQn                = 31,     /*!< I2C1 Event Interrupt                                 */
-N  I2C1_ER_IRQn                = 32,     /*!< I2C1 Error Interrupt                                 */
-N  I2C2_EV_IRQn                = 33,     /*!< I2C2 Event Interrupt                                 */
-N  I2C2_ER_IRQn                = 34,     /*!< I2C2 Error Interrupt                                 */
-N  SPI1_IRQn                   = 35,     /*!< SPI1 global Interrupt                                */
-N  SPI2_IRQn                   = 36,     /*!< SPI2 global Interrupt                                */
-N  USART1_IRQn                 = 37,     /*!< USART1 global Interrupt                              */
-N  USART2_IRQn                 = 38,     /*!< USART2 global Interrupt                              */
-N  USART3_IRQn                 = 39,     /*!< USART3 global Interrupt                              */
-N  EXTI15_10_IRQn              = 40,     /*!< External Line[15:10] Interrupts                      */
-N  RTCAlarm_IRQn               = 41,     /*!< RTC Alarm through EXTI Line Interrupt                */
-N  USBWakeUp_IRQn              = 42,     /*!< USB Device WakeUp from suspend through EXTI Line Interrupt */
-N  TIM8_BRK_IRQn               = 43,     /*!< TIM8 Break Interrupt                                 */
-N  TIM8_UP_IRQn                = 44,     /*!< TIM8 Update Interrupt                                */
-N  TIM8_TRG_COM_IRQn           = 45,     /*!< TIM8 Trigger and Commutation Interrupt               */
-N  TIM8_CC_IRQn                = 46,     /*!< TIM8 Capture Compare Interrupt                       */
-N  ADC3_IRQn                   = 47,     /*!< ADC3 global Interrupt                                */
-N  FSMC_IRQn                   = 48,     /*!< FSMC global Interrupt                                */
-N  SDIO_IRQn                   = 49,     /*!< SDIO global Interrupt                                */
-N  TIM5_IRQn                   = 50,     /*!< TIM5 global Interrupt                                */
-N  SPI3_IRQn                   = 51,     /*!< SPI3 global Interrupt                                */
-N  UART4_IRQn                  = 52,     /*!< UART4 global Interrupt                               */
-N  UART5_IRQn                  = 53,     /*!< UART5 global Interrupt                               */
-N  TIM6_IRQn                   = 54,     /*!< TIM6 global Interrupt                                */
-N  TIM7_IRQn                   = 55,     /*!< TIM7 global Interrupt                                */
-N  DMA2_Channel1_IRQn          = 56,     /*!< DMA2 Channel 1 global Interrupt                      */
-N  DMA2_Channel2_IRQn          = 57,     /*!< DMA2 Channel 2 global Interrupt                      */
-N  DMA2_Channel3_IRQn          = 58,     /*!< DMA2 Channel 3 global Interrupt                      */
-N  DMA2_Channel4_5_IRQn        = 59      /*!< DMA2 Channel 4 and Channel 5 global Interrupt        */
+S  ADC1_2_IRQn                 = 18,     /*!< ADC1 and ADC2 global Interrupt                       */
+S  USB_HP_CAN1_TX_IRQn         = 19,     /*!< USB Device High Priority or CAN1 TX Interrupts       */
+S  USB_LP_CAN1_RX0_IRQn        = 20,     /*!< USB Device Low Priority or CAN1 RX0 Interrupts       */
+S  CAN1_RX1_IRQn               = 21,     /*!< CAN1 RX1 Interrupt                                   */
+S  CAN1_SCE_IRQn               = 22,     /*!< CAN1 SCE Interrupt                                   */
+S  EXTI9_5_IRQn                = 23,     /*!< External Line[9:5] Interrupts                        */
+S  TIM1_BRK_IRQn               = 24,     /*!< TIM1 Break Interrupt                                 */
+S  TIM1_UP_IRQn                = 25,     /*!< TIM1 Update Interrupt                                */
+S  TIM1_TRG_COM_IRQn           = 26,     /*!< TIM1 Trigger and Commutation Interrupt               */
+S  TIM1_CC_IRQn                = 27,     /*!< TIM1 Capture Compare Interrupt                       */
+S  TIM2_IRQn                   = 28,     /*!< TIM2 global Interrupt                                */
+S  TIM3_IRQn                   = 29,     /*!< TIM3 global Interrupt                                */
+S  TIM4_IRQn                   = 30,     /*!< TIM4 global Interrupt                                */
+S  I2C1_EV_IRQn                = 31,     /*!< I2C1 Event Interrupt                                 */
+S  I2C1_ER_IRQn                = 32,     /*!< I2C1 Error Interrupt                                 */
+S  I2C2_EV_IRQn                = 33,     /*!< I2C2 Event Interrupt                                 */
+S  I2C2_ER_IRQn                = 34,     /*!< I2C2 Error Interrupt                                 */
+S  SPI1_IRQn                   = 35,     /*!< SPI1 global Interrupt                                */
+S  SPI2_IRQn                   = 36,     /*!< SPI2 global Interrupt                                */
+S  USART1_IRQn                 = 37,     /*!< USART1 global Interrupt                              */
+S  USART2_IRQn                 = 38,     /*!< USART2 global Interrupt                              */
+S  USART3_IRQn                 = 39,     /*!< USART3 global Interrupt                              */
+S  EXTI15_10_IRQn              = 40,     /*!< External Line[15:10] Interrupts                      */
+S  RTCAlarm_IRQn               = 41,     /*!< RTC Alarm through EXTI Line Interrupt                */
+S  USBWakeUp_IRQn              = 42,     /*!< USB Device WakeUp from suspend through EXTI Line Interrupt */
+S  TIM8_BRK_IRQn               = 43,     /*!< TIM8 Break Interrupt                                 */
+S  TIM8_UP_IRQn                = 44,     /*!< TIM8 Update Interrupt                                */
+S  TIM8_TRG_COM_IRQn           = 45,     /*!< TIM8 Trigger and Commutation Interrupt               */
+S  TIM8_CC_IRQn                = 46,     /*!< TIM8 Capture Compare Interrupt                       */
+S  ADC3_IRQn                   = 47,     /*!< ADC3 global Interrupt                                */
+S  FSMC_IRQn                   = 48,     /*!< FSMC global Interrupt                                */
+S  SDIO_IRQn                   = 49,     /*!< SDIO global Interrupt                                */
+S  TIM5_IRQn                   = 50,     /*!< TIM5 global Interrupt                                */
+S  SPI3_IRQn                   = 51,     /*!< SPI3 global Interrupt                                */
+S  UART4_IRQn                  = 52,     /*!< UART4 global Interrupt                               */
+S  UART5_IRQn                  = 53,     /*!< UART5 global Interrupt                               */
+S  TIM6_IRQn                   = 54,     /*!< TIM6 global Interrupt                                */
+S  TIM7_IRQn                   = 55,     /*!< TIM7 global Interrupt                                */
+S  DMA2_Channel1_IRQn          = 56,     /*!< DMA2 Channel 1 global Interrupt                      */
+S  DMA2_Channel2_IRQn          = 57,     /*!< DMA2 Channel 2 global Interrupt                      */
+S  DMA2_Channel3_IRQn          = 58,     /*!< DMA2 Channel 3 global Interrupt                      */
+S  DMA2_Channel4_5_IRQn        = 59      /*!< DMA2 Channel 4 and Channel 5 global Interrupt        */
 N#endif /* STM32F10X_HD */  
 N
 N#ifdef STM32F10X_HD_VL
@@ -5735,11 +5735,11 @@ N #define  RCC_APB2RSTR_IOPERST               ((uint32_t)0x00000040)        /*!<
 N#endif /* STM32F10X_LD && STM32F10X_LD_VL */
 N
 N#if defined (STM32F10X_HD) || defined (STM32F10X_XL)
-X#if 1L || 0L
-N #define  RCC_APB2RSTR_IOPFRST               ((uint32_t)0x00000080)        /*!< I/O port F reset */
-N #define  RCC_APB2RSTR_IOPGRST               ((uint32_t)0x00000100)        /*!< I/O port G reset */
-N #define  RCC_APB2RSTR_TIM8RST               ((uint32_t)0x00002000)        /*!< TIM8 Timer reset */
-N #define  RCC_APB2RSTR_ADC3RST               ((uint32_t)0x00008000)        /*!< ADC3 interface reset */
+X#if 0L || 0L
+S #define  RCC_APB2RSTR_IOPFRST               ((uint32_t)0x00000080)        /*!< I/O port F reset */
+S #define  RCC_APB2RSTR_IOPGRST               ((uint32_t)0x00000100)        /*!< I/O port G reset */
+S #define  RCC_APB2RSTR_TIM8RST               ((uint32_t)0x00002000)        /*!< TIM8 Timer reset */
+S #define  RCC_APB2RSTR_ADC3RST               ((uint32_t)0x00008000)        /*!< ADC3 interface reset */
 N#endif
 N
 N#if defined (STM32F10X_HD_VL)
@@ -5778,19 +5778,19 @@ N #define  RCC_APB1RSTR_I2C2RST               ((uint32_t)0x00400000)        /*!<
 N#endif /* STM32F10X_LD && STM32F10X_LD_VL */
 N
 N#if defined (STM32F10X_HD) || defined (STM32F10X_MD) || defined (STM32F10X_LD) || defined  (STM32F10X_XL)
-X#if 1L || 0L || 0L || 0L
+X#if 0L || 1L || 0L || 0L
 N #define  RCC_APB1RSTR_USBRST                ((uint32_t)0x00800000)        /*!< USB Device reset */
 N#endif
 N
 N#if defined (STM32F10X_HD) || defined  (STM32F10X_CL) || defined  (STM32F10X_XL)
-X#if 1L || 0L || 0L
-N #define  RCC_APB1RSTR_TIM5RST                ((uint32_t)0x00000008)        /*!< Timer 5 reset */
-N #define  RCC_APB1RSTR_TIM6RST                ((uint32_t)0x00000010)        /*!< Timer 6 reset */
-N #define  RCC_APB1RSTR_TIM7RST                ((uint32_t)0x00000020)        /*!< Timer 7 reset */
-N #define  RCC_APB1RSTR_SPI3RST                ((uint32_t)0x00008000)        /*!< SPI 3 reset */
-N #define  RCC_APB1RSTR_UART4RST               ((uint32_t)0x00080000)        /*!< UART 4 reset */
-N #define  RCC_APB1RSTR_UART5RST               ((uint32_t)0x00100000)        /*!< UART 5 reset */
-N #define  RCC_APB1RSTR_DACRST                 ((uint32_t)0x20000000)        /*!< DAC interface reset */
+X#if 0L || 0L || 0L
+S #define  RCC_APB1RSTR_TIM5RST                ((uint32_t)0x00000008)        /*!< Timer 5 reset */
+S #define  RCC_APB1RSTR_TIM6RST                ((uint32_t)0x00000010)        /*!< Timer 6 reset */
+S #define  RCC_APB1RSTR_TIM7RST                ((uint32_t)0x00000020)        /*!< Timer 7 reset */
+S #define  RCC_APB1RSTR_SPI3RST                ((uint32_t)0x00008000)        /*!< SPI 3 reset */
+S #define  RCC_APB1RSTR_UART4RST               ((uint32_t)0x00080000)        /*!< UART 4 reset */
+S #define  RCC_APB1RSTR_UART5RST               ((uint32_t)0x00100000)        /*!< UART 5 reset */
+S #define  RCC_APB1RSTR_DACRST                 ((uint32_t)0x20000000)        /*!< DAC interface reset */
 N#endif
 N
 N#if defined (STM32F10X_LD_VL) || defined  (STM32F10X_MD_VL) || defined  (STM32F10X_HD_VL)
@@ -5829,14 +5829,14 @@ N#define  RCC_AHBENR_FLITFEN                  ((uint16_t)0x0010)            /*!<
 N#define  RCC_AHBENR_CRCEN                    ((uint16_t)0x0040)            /*!< CRC clock enable */
 N
 N#if defined (STM32F10X_HD) || defined  (STM32F10X_CL) || defined  (STM32F10X_HD_VL)
-X#if 1L || 0L || 0L
-N #define  RCC_AHBENR_DMA2EN                  ((uint16_t)0x0002)            /*!< DMA2 clock enable */
+X#if 0L || 0L || 0L
+S #define  RCC_AHBENR_DMA2EN                  ((uint16_t)0x0002)            /*!< DMA2 clock enable */
 N#endif
 N
 N#if defined (STM32F10X_HD) || defined (STM32F10X_XL)
-X#if 1L || 0L
-N #define  RCC_AHBENR_FSMCEN                  ((uint16_t)0x0100)            /*!< FSMC clock enable */
-N #define  RCC_AHBENR_SDIOEN                  ((uint16_t)0x0400)            /*!< SDIO clock enable */
+X#if 0L || 0L
+S #define  RCC_AHBENR_FSMCEN                  ((uint16_t)0x0100)            /*!< FSMC clock enable */
+S #define  RCC_AHBENR_SDIOEN                  ((uint16_t)0x0400)            /*!< SDIO clock enable */
 N#endif
 N
 N#if defined (STM32F10X_HD_VL)
@@ -5881,11 +5881,11 @@ N #define  RCC_APB2ENR_IOPEEN                 ((uint32_t)0x00000040)         /*!
 N#endif /* STM32F10X_LD && STM32F10X_LD_VL */
 N
 N#if defined (STM32F10X_HD) || defined (STM32F10X_XL)
-X#if 1L || 0L
-N #define  RCC_APB2ENR_IOPFEN                 ((uint32_t)0x00000080)         /*!< I/O port F clock enable */
-N #define  RCC_APB2ENR_IOPGEN                 ((uint32_t)0x00000100)         /*!< I/O port G clock enable */
-N #define  RCC_APB2ENR_TIM8EN                 ((uint32_t)0x00002000)         /*!< TIM8 Timer clock enable */
-N #define  RCC_APB2ENR_ADC3EN                 ((uint32_t)0x00008000)         /*!< DMA1 clock enable */
+X#if 0L || 0L
+S #define  RCC_APB2ENR_IOPFEN                 ((uint32_t)0x00000080)         /*!< I/O port F clock enable */
+S #define  RCC_APB2ENR_IOPGEN                 ((uint32_t)0x00000100)         /*!< I/O port G clock enable */
+S #define  RCC_APB2ENR_TIM8EN                 ((uint32_t)0x00002000)         /*!< TIM8 Timer clock enable */
+S #define  RCC_APB2ENR_ADC3EN                 ((uint32_t)0x00008000)         /*!< DMA1 clock enable */
 N#endif
 N
 N#if defined (STM32F10X_HD_VL)
@@ -5924,19 +5924,19 @@ N #define  RCC_APB1ENR_I2C2EN                 ((uint32_t)0x00400000)        /*!<
 N#endif /* STM32F10X_LD && STM32F10X_LD_VL */
 N
 N#if defined (STM32F10X_HD) || defined (STM32F10X_MD) || defined  (STM32F10X_LD)
-X#if 1L || 0L || 0L
+X#if 0L || 1L || 0L
 N #define  RCC_APB1ENR_USBEN                  ((uint32_t)0x00800000)        /*!< USB Device clock enable */
 N#endif
 N
 N#if defined (STM32F10X_HD) || defined  (STM32F10X_CL)
-X#if 1L || 0L
-N #define  RCC_APB1ENR_TIM5EN                 ((uint32_t)0x00000008)        /*!< Timer 5 clock enable */
-N #define  RCC_APB1ENR_TIM6EN                 ((uint32_t)0x00000010)        /*!< Timer 6 clock enable */
-N #define  RCC_APB1ENR_TIM7EN                 ((uint32_t)0x00000020)        /*!< Timer 7 clock enable */
-N #define  RCC_APB1ENR_SPI3EN                 ((uint32_t)0x00008000)        /*!< SPI 3 clock enable */
-N #define  RCC_APB1ENR_UART4EN                ((uint32_t)0x00080000)        /*!< UART 4 clock enable */
-N #define  RCC_APB1ENR_UART5EN                ((uint32_t)0x00100000)        /*!< UART 5 clock enable */
-N #define  RCC_APB1ENR_DACEN                  ((uint32_t)0x20000000)        /*!< DAC interface clock enable */
+X#if 0L || 0L
+S #define  RCC_APB1ENR_TIM5EN                 ((uint32_t)0x00000008)        /*!< Timer 5 clock enable */
+S #define  RCC_APB1ENR_TIM6EN                 ((uint32_t)0x00000010)        /*!< Timer 6 clock enable */
+S #define  RCC_APB1ENR_TIM7EN                 ((uint32_t)0x00000020)        /*!< Timer 7 clock enable */
+S #define  RCC_APB1ENR_SPI3EN                 ((uint32_t)0x00008000)        /*!< SPI 3 clock enable */
+S #define  RCC_APB1ENR_UART4EN                ((uint32_t)0x00080000)        /*!< UART 4 clock enable */
+S #define  RCC_APB1ENR_UART5EN                ((uint32_t)0x00100000)        /*!< UART 5 clock enable */
+S #define  RCC_APB1ENR_DACEN                  ((uint32_t)0x20000000)        /*!< DAC interface clock enable */
 N#endif
 N
 N#if defined (STM32F10X_LD_VL) || defined  (STM32F10X_MD_VL) || defined  (STM32F10X_HD_VL)
@@ -29953,6 +29953,8 @@ N#define BUTTON_DEL             11
 N#define BUTTON_FUN             12
 N#define BUTTON_COLON           13 //":"
 N
+N#include "stm32f10x.h"
+N
 Nvoid button_init(void);
 Nint get_key(void);
 Nint get_addr(unsigned char *addr);
@@ -30104,7 +30106,7 @@ N#define X_WIDTH 	128
 N#define Y_WIDTH 	64	
 N
 N
-N
+N#include "stm32f10x.h"
 N
 N
 N
@@ -30138,136 +30140,103 @@ N//OLED控制用函数
 N
 Nextern void Init_display(void);
 N
+Nvoid display_map(unsigned char *p);//P ?????????
+N
+Nvoid display_string_8x16(u16 page,u16 column,u8 *text);
+N
+N
+Nvoid Delayms(u16 ms);
+N
+Nvoid LCD_ShowCHinese(u8 *p,u8 uCol,u8 uPage);
+Nvoid disp_hz(u8 *hz,u8 uCol,u8 uPage);
+Nvoid Setadd12864(u8 xl,u8 yl);
+Nextern void LCD_ShowCHinese(u8 *p,u8 uCol,u8 uPage);
+N
+Nvoid disp_ch(unsigned char c,u8 uCol,u8 uPage);
+N
 N#endif
 N
 L 10 "..\User\main.c" 2
 N#include "delay.h"
 L 1 "..\bsp_lib\delay.h" 1
-N#ifndef __DELAY_H
-N#define __DELAY_H 
+N#ifndef __SYSTICK_H
+N#define __SYSTICK_H
 N
-N#include "stm32f10x_it.h"
-L 1 "..\User\stm32f10x_it.h" 1
-N/*******************************************************************************
-N** 文件名: 		stm32f10x_it.h
-N** 版本：  		1.0
-N** 工作环境: 	RealView MDK-ARM 4.20
-N** 作者: 		XXX
-N** 生成日期: 	2011-04-10
-N** 功能:		中断头文件声明
-N** 相关文件:	无
-N** 修改日志：	2011-04-10   创建文档
-N*******************************************************************************/
-N/* 防止重定义-----------------------------------------------------------------*/
-N#ifndef __STM32F10x_IT_H
-N#define __STM32F10x_IT_H
-N
-N/* 包含的头文件---------------------------------------------------------------*/
 N#include "stm32f10x.h"
 N
-N/* 类型定义 ------------------------------------------------------------------*/
-N/* 常量定义 ------------------------------------------------------------------*/
-N/* 宏定义 --------------------------------------------------------------------*/
-N/* 函数定义------------------------------------------------------------------ */
+Nvoid SysTick_Init(void);
+Nvoid Delay_us(__IO u32 nTime);	  //单位10us
+Xvoid Delay_us(volatile u32 nTime);	  
+N//void delay_ms(__IO u32 nTime); 
+Nextern void delay(int time);
 N
-Nvoid NMI_Handler(void);
-Nvoid HardFault_Handler(void);
-Nvoid MemManage_Handler(void);
-Nvoid BusFault_Handler(void);
-Nvoid UsageFault_Handler(void);
-Nvoid SVC_Handler(void);
-Nvoid DebugMon_Handler(void);
-Nvoid PendSV_Handler(void);
-Nvoid SysTick_Handler(void);
 N
-N#endif /* __STM32F10x_IT_H */
+Nvoid delay_Init(u8 SYSCLK);
 N
-N/************************************文件结束*********************************/
-L 5 "..\bsp_lib\delay.h" 2
-N//#include "sys.h"  
-N//////////////////////////////////////////////////////////////////////////////////	 
-N//本程序只供学习使用，未经作者许可，不得用于其它任何用途
-N//ALIENTEK STM32开发板
-N//使用SysTick的普通计数模式对延迟进行管理（适合STM32F10x系列）
-N//包括delay_us,delay_ms
-N//正点原子@ALIENTEK
-N//技术论坛:www.openedv.com
-N//创建日期:2010/1/1
-N//版本：V1.8
-N//版权所有，盗版必究。
-N//Copyright(C) 广州市星翼电子科技有限公司 2009-2019
-N//All rights reserved
-N//********************************************************************************
-N//V1.2修改说明
-N//修正了中断中调用出现死循环的错误
-N//防止延时不准确,采用do while结构!
-N//V1.3修改说明
-N//增加了对UCOSII延时的支持.
-N//如果使用ucosII,delay_init会自动设置SYSTICK的值,使之与ucos的TICKS_PER_SEC对应.
-N//delay_ms和delay_us也进行了针对ucos的改造.
-N//delay_us可以在ucos下使用,而且准确度很高,更重要的是没有占用额外的定时器.
-N//delay_ms在ucos下,可以当成OSTimeDly来用,在未启动ucos时,它采用delay_us实现,从而准确延时
-N//可以用来初始化外设,在启动了ucos之后delay_ms根据延时的长短,选择OSTimeDly实现或者delay_us实现.
-N//V1.4修改说明 20110929
-N//修改了使用ucos,但是ucos未启动的时候,delay_ms中中断无法响应的bug.
-N//V1.5修改说明 20120902
-N//在delay_us加入ucos上锁，防止由于ucos打断delay_us的执行，可能导致的延时不准。
-N//V1.6修改说明 20150109
-N//在delay_ms加入OSLockNesting判断。
-N//V1.7修改说明 20150319
-N//修改OS支持方式,以支持任意OS(不限于UCOSII和UCOSIII,理论上任意OS都可以支持)
-N//添加:delay_osrunning/delay_ostickspersec/delay_osintnesting三个宏定义
-N//添加:delay_osschedlock/delay_osschedunlock/delay_ostimedly三个函数
-N//V1.8修改说明 20150519
-N//修正UCOSIII支持时的2个bug：
-N//delay_tickspersec改为：delay_ostickspersec
-N//delay_intnesting改为：delay_osintnesting
-N////////////////////////////////////////////////////////////////////////////////// 
-N	 
-Nvoid delay_init(void);
-Nvoid delay_ms(u16 nms);
-Nvoid delay_us(u32 nus);
+Nvoid delay_uss(u32 nus);
+Nvoid delay_mss(u16 nms);
+N
+N
+N#define Delay_ms(x) Delay_us(1000*x)//单位ms
+N
+N#endif 
+N/*----------------------德飞莱 技术论坛：www.doflye.net--------------------------*/
+W "..\bsp_lib\delay.h" 22 2 last line of file ends without a newline
+N 
+L 11 "..\User\main.c" 2
+N#include "st7565.h"
+L 1 "..\bsp_lib\st7565.h" 1
+N#ifndef __ST7565_H
+N#define __ST7565_H
+N
+N#include "stm32f10x.h"
+N
+N#define lcd_bk_high() GPIO_SetBits(GPIOB, GPIO_Pin_10);     
+N#define lcd_bk_low()  GPIO_ResetBits(GPIOB, GPIO_Pin_10); 
+N
+N#define lcd_cs_high() GPIO_SetBits(GPIOA, GPIO_Pin_0);     
+N#define lcd_cs_low()  GPIO_ResetBits(GPIOA, GPIO_Pin_0); 
+N
+N#define lcd_rst_high() GPIO_SetBits(GPIOA, GPIO_Pin_1); //rst     
+N#define lcd_rst_low()  GPIO_ResetBits(GPIOA, GPIO_Pin_1); 
+N
+N#define lcd_sck_high() GPIO_SetBits(GPIOB, GPIO_Pin_6);     
+N#define lcd_sck_low()  GPIO_ResetBits(GPIOB, GPIO_Pin_6); 
+N
+N#define lcd_sda_high() GPIO_SetBits(GPIOB, GPIO_Pin_7);     
+N#define lcd_sda_low()  GPIO_ResetBits(GPIOB, GPIO_Pin_7);
+N
+N#define lcd_a0_high() GPIO_SetBits(GPIOA, GPIO_Pin_2);     
+N#define lcd_a0_low()  GPIO_ResetBits(GPIOA, GPIO_Pin_2); 
+N
+Nextern void Init_St7565(void);
+N
+Nvoid delayms(uint16_t ms);
+Nvoid Init_St7565(void);
+N
+Nvoid LCD_P8x16Str(unsigned char x,unsigned char y,unsigned char ch[]);
+N
+Nvoid St7565_WriteCmd(uint8_t com);
+N
+Nvoid St7565_WriteDat(uint8_t dat);
+N
+Nvoid LCD_show_line1_bmp(u8 index);
+Nvoid LCD_DrawBMP(unsigned char x0, unsigned char y0,unsigned char x1, unsigned char y1,unsigned char BMP[]);
 N
 N#endif
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-L 11 "..\User\main.c" 2
+L 12 "..\User\main.c" 2
 N
 N#define KEY_NUM                0
 N#define KEY_FUN                1
+N
+N
+N
 N
 Nvoid Delay_Ms(unsigned int delay);
 Nnrf24l01_t nrf24l01;
 Nstatic int fun_flag = KEY_FUN;//按键复用标志
 Xstatic int fun_flag = 1;
-Nunsigned char addr[5];
+Nunsigned char addr[5]={0x34,0x43,0x10,0x10,0x01};
 N
 N//有限状态机 FSM
 Ntypedef enum FSM_status{
@@ -30289,23 +30258,21 @@ Nvoid FSM_link_start(struct FSM *me){
 N	int key;
 N	unsigned char buf[32] = {0};
 N	
-N	oled_show_line1(INPUT_TYPE, "N");
-X	oled_show_line1(0, "N");
-N	oled_show_line1_bmp(BMP_NO_SIGNAL);
-X	oled_show_line1_bmp(1);
+N	LCD_P8x16Str(5,0,(unsigned char*)"N");//oled_show_line1(INPUT_TYPE, "N");
+N	LCD_show_line1_bmp(BMP_NO_SIGNAL);//oled_show_line1_bmp(BMP_NO_SIGNAL);
+X	LCD_show_line1_bmp(1);
 N	oled_clear_line(LINE2);
 X	oled_clear_line(2);
 N	oled_clear_line(LINE3);
 X	oled_clear_line(4);
-N
+N  save_addr(addr);
 N	if(read_addr(addr) != -1){
-W "..\User\main.c" 46 11 argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+W "..\User\main.c" 50 11 argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
 N		sprintf(buf, "%d:%d:%d:%d:%d\0", addr[0], addr[1], addr[2], addr[3], addr[4]);
-N		OLED_ShowString(0, 2, buf);
-N		OLED_ShowCHinese(0,LINE4,22);
-X		OLED_ShowCHinese(0,6,22);
-N		OLED_ShowCHinese(7*16,LINE4,23);
-X		OLED_ShowCHinese(7*16,6,23);
+N		LCD_P8x16Str(5,1,buf);//OLED_ShowString(0, 2, buf);
+N		LCD_ShowCHinese((u8*)"是",LINE4,5);//5--行  line4---列//OLED_ShowCHinese(0,LINE4,22);
+X		LCD_ShowCHinese((u8*)"是",6,5);
+N		LCD_ShowCHinese((u8*)"否",6*16,5);//OLED_ShowCHinese(7*16,LINE4,23);
 N		while(1){
 N			key = get_key();
 N			if(BUTTON_FUN == key){
@@ -30431,17 +30398,20 @@ N		oled_clear_line(LINE3);
 X		oled_clear_line(4);
 N		if(fun_flag == KEY_FUN){
 X		if(fun_flag == 1){
-N			oled_show_line1(INPUT_TYPE, "N");
-X			oled_show_line1(0, "N");
+N			//oled_show_line1(INPUT_TYPE, "N");
+N			LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)"N");
+X			LCD_P8x16Str(0,0,(unsigned char*)"N");
 N			fun_flag = KEY_NUM;
 X			fun_flag = 0;
 N			tmp = 0;
-N			oled_show_line2(INPUT_NUM, BUTTON_OK);
-X			oled_show_line2(6, 10);
+N			//oled_show_line2(INPUT_NUM, BUTTON_OK);
+N			LCD_P8x16Str(0,INPUT_NUM,(unsigned char*)"_");
+X			LCD_P8x16Str(0,6,(unsigned char*)"_");
 N		}else if(fun_flag == KEY_NUM){
 X		}else if(fun_flag == 0){
-N			oled_show_line1(INPUT_TYPE, "F");
-X			oled_show_line1(0, "F");
+N			//oled_show_line1(INPUT_TYPE, "F");
+N			LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)"F");
+X			LCD_P8x16Str(0,0,(unsigned char*)"F");
 N			fun_flag = KEY_FUN;
 X			fun_flag = 1;
 N		}
@@ -30557,7 +30527,7 @@ N	}
 N	data[1] = 2;//数据长度
 N	data[2] = (key>>8)&0xFF;
 N	data[3] = key&0xFF;
-W "..\User\main.c" 248 20 argument of type "u8 *" is incompatible with parameter of type "char *"
+W "..\User\main.c" 255 20 argument of type "u8 *" is incompatible with parameter of type "char *"
 N	data[4] = fun_xor(data, 4);
 N	for(i=5;i<32;i++){
 N		data[i] = 0;
@@ -30573,27 +30543,24 @@ Nint main(void)
 N{
 N	int key;
 N	RCC_Configuration();   //初始化系统
-N	NVIC_Configuration();
-N	delay_init();	    //延时函数初始化	  
+N	NVIC_Configuration();	
 N	spi_init();
 N	button_init();
-N	OLED_Init();
+N	//OLED_Init();
 N	LCD_Init();
-N	OLED_Clear();
+N	//OLED_Clear();
 N	ad_init();
-N	
-N	Init_display();//init  12864 LCD
-N
-N  while (1){
+N  Init_St7565();	 
+N   while (1){	
 N		key = get_key();
 N		me.key = key;
 N		display_by_key(key, &me);
 N		FSM_dispatch(me);
 X		(me . action(&me));
-N		//OLED_ShowString(8*16, 0, "T");
-N		//OLED_ShowString(32, 0, "T");
-N		//OLED_ShowString(0, 4, "T");
-N		//OLED_ShowString(0, 6, "T");
 N  }
 N}
+N
+N
+N
+N
 N

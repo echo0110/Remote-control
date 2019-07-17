@@ -8,6 +8,8 @@
 #define BUTTON_FUN             12
 #define BUTTON_COLON           13 //":"
 
+#include "stm32f10x.h"
+
 void button_init(void);
 int get_key(void);
 int get_addr(unsigned char *addr);

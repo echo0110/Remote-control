@@ -29,3 +29,6 @@
 .\output\12864.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h
 .\output\12864.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h
 .\output\12864.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h
+.\output\12864.o: ..\bsp_lib\delay.h
+.\output\12864.o: ..\bsp_lib\st7565.h
+.\output\12864.o: ..\bsp_lib\button.h

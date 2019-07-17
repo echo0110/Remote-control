@@ -8,14 +8,18 @@
 
 #include "12864.h"
 #include "delay.h"
+#include "st7565.h"
 
 #define KEY_NUM                0
 #define KEY_FUN                1
 
+
+
+
 void Delay_Ms(unsigned int delay);
 nrf24l01_t nrf24l01;
 static int fun_flag = KEY_FUN;//按键复用标志
-unsigned char addr[5];
+unsigned char addr[5]={0x34,0x43,0x10,0x10,0x01};
 
 //有限状态机 FSM
 typedef enum FSM_status{
@@ -37,16 +41,16 @@ void FSM_link_start(struct FSM *me){
 	int key;
 	unsigned char buf[32] = {0};
 	
-	oled_show_line1(INPUT_TYPE, "N");
-	oled_show_line1_bmp(BMP_NO_SIGNAL);
+	LCD_P8x16Str(5,0,(unsigned char*)"N");//oled_show_line1(INPUT_TYPE, "N");
+	LCD_show_line1_bmp(BMP_NO_SIGNAL);//oled_show_line1_bmp(BMP_NO_SIGNAL);
 	oled_clear_line(LINE2);
 	oled_clear_line(LINE3);
-
+  save_addr(addr);
 	if(read_addr(addr) != -1){
 		sprintf(buf, "%d:%d:%d:%d:%d\0", addr[0], addr[1], addr[2], addr[3], addr[4]);
-		OLED_ShowString(0, 2, buf);
-		OLED_ShowCHinese(0,LINE4,22);
-		OLED_ShowCHinese(7*16,LINE4,23);
+		LCD_P8x16Str(5,1,buf);//OLED_ShowString(0, 2, buf);
+		LCD_ShowCHinese((u8*)"是",LINE4,5);//5--行  line4---列//OLED_ShowCHinese(0,LINE4,22);
+		LCD_ShowCHinese((u8*)"否",6*16,5);//OLED_ShowCHinese(7*16,LINE4,23);
 		while(1){
 			key = get_key();
 			if(BUTTON_FUN == key){
@@ -147,12 +151,15 @@ void display_by_key(int key, struct FSM *me){
 		oled_clear_line(LINE2);
 		oled_clear_line(LINE3);
 		if(fun_flag == KEY_FUN){
-			oled_show_line1(INPUT_TYPE, "N");
+			//oled_show_line1(INPUT_TYPE, "N");
+			LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)"N");
 			fun_flag = KEY_NUM;
 			tmp = 0;
-			oled_show_line2(INPUT_NUM, BUTTON_OK);
+			//oled_show_line2(INPUT_NUM, BUTTON_OK);
+			LCD_P8x16Str(0,INPUT_NUM,(unsigned char*)"_");
 		}else if(fun_flag == KEY_NUM){
-			oled_show_line1(INPUT_TYPE, "F");
+			//oled_show_line1(INPUT_TYPE, "F");
+			LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)"F");
 			fun_flag = KEY_FUN;
 		}
 		me->key = -1;
@@ -260,26 +267,23 @@ int main(void)
 {
 	int key;
 	RCC_Configuration();   //初始化系统
-	NVIC_Configuration();
-	delay_init();	    //延时函数初始化	  
+	NVIC_Configuration();	
 	spi_init();
 	button_init();
-	OLED_Init();
+	//OLED_Init();
 	LCD_Init();
-	OLED_Clear();
+	//OLED_Clear();
 	ad_init();
-	
-	Init_display();//init  12864 LCD
-
-  while (1){
+  Init_St7565();	 
+   while (1){	
 		key = get_key();
 		me.key = key;
 		display_by_key(key, &me);
 		FSM_dispatch(me);
-		//OLED_ShowString(8*16, 0, "T");
-		//OLED_ShowString(32, 0, "T");
-		//OLED_ShowString(0, 4, "T");
-		//OLED_ShowString(0, 6, "T");
   }
 }
+
+
+
+
 

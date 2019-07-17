@@ -33,6 +33,7 @@
 ".\output\oled.o"
 ".\output\display.o"
 ".\output\12864.o"
+".\output\st7565.o"
 ".\output\delay.o"
 --strict --scatter ".\Output\Project.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
