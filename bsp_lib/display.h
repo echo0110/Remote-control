@@ -1,11 +1,21 @@
 #ifndef __DISPLAY_H__
 #define __DISPLAY_H__
 
+////显示行
+//#define LINE0      0    //F和N
+//#define LINE1      1//2 //nrf2401  address
+//#define LINE5      5//4 //是和否
+//#define LINE4      6
+
 //显示行
-#define LINE1      0
-#define LINE2      2
-#define LINE3      4
+#define LINE1      0    //F和N
+#define LINE2      1//2 //nrf2401  address
+#define LINE3      5//4 //是和否
 #define LINE4      6
+
+
+//LCD   显示行
+#define LCD_LINE4      5
 
 //line1 内容显示位置
 #define INPUT_TYPE                     0

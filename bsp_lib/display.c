@@ -141,19 +141,23 @@ void oled_show_line2(u8 index, char chr){
 		case INPUT_NUM:
 			if(BUTTON_OK == chr){
 				x_pos = 0;
-				OLED_ShowChar(0, LINE2, '_');
+				//OLED_ShowChar(0, LINE2, '_');
 			}else if(BUTTON_DEL == chr){
-				OLED_ShowChar(x_pos*8, LINE2, ' ');
+				//OLED_ShowChar(x_pos*8, LINE2, ' ');				
+				lcd_ShowChar(x_pos*8, LINE2, ' ');
 				x_pos = x_pos>0 ? x_pos-1 : 0;
-				OLED_ShowChar(x_pos*8, LINE2, '_');
+				//OLED_ShowChar(x_pos*8, LINE2, '_');
+				lcd_ShowChar(x_pos*8, LINE2, ' ');
 			}else{
 				if(BUTTON_FUN == chr || BUTTON_COLON == chr){
 					return;
 				}
 				chr += 0x30;
-				OLED_ShowChar(x_pos*8, LINE2, chr);
+				//OLED_ShowChar(x_pos*8, LINE2, chr);
+				lcd_ShowChar(x_pos*8, LINE2, ' ');
 				x_pos ++;
-				OLED_ShowChar(x_pos*8, LINE2, '_');
+				//OLED_ShowChar(x_pos*8, LINE2, '_');
+				lcd_ShowChar(x_pos*8, LINE2, ' ');
 			}
 			break;
 		default:

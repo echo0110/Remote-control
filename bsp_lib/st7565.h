@@ -34,5 +34,10 @@ void St7565_WriteDat(uint8_t dat);
 
 void LCD_show_line1_bmp(u8 index);
 void LCD_DrawBMP(unsigned char x0, unsigned char y0,unsigned char x1, unsigned char y1,unsigned char BMP[]);
+void ClearDisplay();
+
+
+void Setadd(uint8_t xl,uint8_t yl);
+extern const unsigned char SF8X16[];
 
 #endif

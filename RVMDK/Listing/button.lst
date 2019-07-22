@@ -28865,11 +28865,21 @@ L 1 "..\bsp_lib\display.h" 1
 N#ifndef __DISPLAY_H__
 N#define __DISPLAY_H__
 N
+N////显示行
+N//#define LINE0      0    //F和N
+N//#define LINE1      1//2 //nrf2401  address
+N//#define LINE5      5//4 //是和否
+N//#define LINE4      6
+N
 N//显示行
-N#define LINE1      0
-N#define LINE2      2
-N#define LINE3      4
+N#define LINE1      0    //F和N
+N#define LINE2      1//2 //nrf2401  address
+N#define LINE3      5//4 //是和否
 N#define LINE4      6
+N
+N
+N//LCD   显示行
+N#define LCD_LINE4      5
 N
 N//line1 内容显示位置
 N#define INPUT_TYPE                     0
@@ -29061,7 +29071,7 @@ N			oled_show_line3(ADDR_ERROR, 0);
 X			oled_show_line3(5, 0);
 N			Delay_Ms(2000);
 N			oled_clear_line(LINE3);
-X			oled_clear_line(4);
+X			oled_clear_line(5);
 N			return ADDR_TYPE_ERROR;
 X			return -2;
 W "..\bsp_lib\button.c" 145 4 statement is unreachable

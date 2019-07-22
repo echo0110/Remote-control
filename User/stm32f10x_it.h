@@ -30,6 +30,8 @@ void DebugMon_Handler(void);
 void PendSV_Handler(void);
 void SysTick_Handler(void);
 
+extern u8 key6_flag;
+
 #endif /* __STM32F10x_IT_H */
 
 /************************************ÎÄ¼þ½áÊø*********************************/

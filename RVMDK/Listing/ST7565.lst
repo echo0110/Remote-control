@@ -28877,6 +28877,12 @@ Nvoid St7565_WriteDat(uint8_t dat);
 N
 Nvoid LCD_show_line1_bmp(u8 index);
 Nvoid LCD_DrawBMP(unsigned char x0, unsigned char y0,unsigned char x1, unsigned char y1,unsigned char BMP[]);
+W "..\bsp_lib\st7565.h" 37 6 Deprecated declaration ClearDisplay - give arg types
+Nvoid ClearDisplay();
+N
+N
+Nvoid Setadd(uint8_t xl,uint8_t yl);
+Nextern const unsigned char SF8X16[];
 N
 N#endif
 L 4 "..\bsp_lib\ST7565.C" 2
@@ -29436,11 +29442,21 @@ L 1 "..\bsp_lib\display.h" 1
 N#ifndef __DISPLAY_H__
 N#define __DISPLAY_H__
 N
+N////显示行
+N//#define LINE0      0    //F和N
+N//#define LINE1      1//2 //nrf2401  address
+N//#define LINE5      5//4 //是和否
+N//#define LINE4      6
+N
 N//显示行
-N#define LINE1      0
-N#define LINE2      2
-N#define LINE3      4
+N#define LINE1      0    //F和N
+N#define LINE2      1//2 //nrf2401  address
+N#define LINE3      5//4 //是和否
 N#define LINE4      6
+N
+N
+N//LCD   显示行
+N#define LCD_LINE4      5
 N
 N//line1 内容显示位置
 N#define INPUT_TYPE                     0
@@ -29981,148 +29997,7 @@ N   pos = X+Y ;
 N   St7565_WriteCmd(pos);     //显示地址
 N}
 N
-N
-Nvoid lcd_show_line2(u8 index, char chr){
-N	static u8 x_pos = 0;
-N
-N	if(index != INPUT_NUM){
-X	if(index != 6){
-N		oled_clear_line(LINE2);
-X		oled_clear_line(2);
-N	}
-N	switch(index){
-N		case INPUT_ADDR:						
-X		case 1:						
-N		  LCD_ShowCHinese("nihao",96,0);Delayms(1000);//OLED_ShowCHinese(0,LINE2,6);
-N			LCD_ShowCHinese("nihao",96,0);Delayms(1000);//OLED_ShowCHinese(16,LINE2,7);
-N			OLED_ShowCHinese(32,LINE2,8);
-X			OLED_ShowCHinese(32,2,8);
-N			OLED_ShowCHinese(48,LINE2,9);	
-X			OLED_ShowCHinese(48,2,9);	
-N			OLED_ShowCHinese(64,LINE2,10);
-X			OLED_ShowCHinese(64,2,10);
-N			OLED_ShowCHinese(80,LINE2,11);
-X			OLED_ShowCHinese(80,2,11);
-N			OLED_ShowCHinese(96,LINE2,12);
-X			OLED_ShowCHinese(96,2,12);
-N			OLED_ShowCHinese(112,LINE2,13);		
-X			OLED_ShowCHinese(112,2,13);		
-N			break;
-N		
-N		case FUN_LIGHT_OFF:
-X		case 2:
-N			OLED_ShowCHinese(0,LINE2,28);
-X			OLED_ShowCHinese(0,2,28);
-N			OLED_ShowCHinese(16,LINE2,29);			
-X			OLED_ShowCHinese(16,2,29);			
-N			break;
-N		case FUN_LIGHT_RED:
-X		case 3:
-N			OLED_ShowCHinese(0,LINE2,24);
-X			OLED_ShowCHinese(0,2,24);
-N			OLED_ShowCHinese(16,LINE2,25);				
-X			OLED_ShowCHinese(16,2,25);				
-N			break;
-N		case FUN_YELLOW_FLASH:
-X		case 4:
-N			OLED_ShowCHinese(0,LINE2,26);
-X			OLED_ShowCHinese(0,2,26);
-N			OLED_ShowCHinese(16,LINE2,27);				
-X			OLED_ShowCHinese(16,2,27);				
-N			break;
-N		case FUN_EAST_WEST_STRAIGHT:
-X		case 5:
-N			OLED_ShowCHinese(0,LINE2,30);
-X			OLED_ShowCHinese(0,2,30);
-N			OLED_ShowCHinese(16,LINE2,31);	
-X			OLED_ShowCHinese(16,2,31);	
-N			OLED_ShowCHinese(32,LINE2,34);
-X			OLED_ShowCHinese(32,2,34);
-N			OLED_ShowCHinese(48,LINE2,35);			
-X			OLED_ShowCHinese(48,2,35);			
-N			break;	
-N		case FUN_SOUTH_NORTH_STRAIGHT:
-X		case 7:
-N			OLED_ShowCHinese(0,LINE2,32);
-X			OLED_ShowCHinese(0,2,32);
-N			OLED_ShowCHinese(16,LINE2,33);	
-X			OLED_ShowCHinese(16,2,33);	
-N			OLED_ShowCHinese(32,LINE2,34);
-X			OLED_ShowCHinese(32,2,34);
-N			OLED_ShowCHinese(48,LINE2,35);			
-X			OLED_ShowCHinese(48,2,35);			
-N			break;
-N		case FUN_EAST_WEST_TURN_LEFT:
-X		case 8:
-N			OLED_ShowCHinese(0,LINE2,30);
-X			OLED_ShowCHinese(0,2,30);
-N			OLED_ShowCHinese(16,LINE2,31);	
-X			OLED_ShowCHinese(16,2,31);	
-N			OLED_ShowCHinese(32,LINE2,36);
-X			OLED_ShowCHinese(32,2,36);
-N			OLED_ShowCHinese(48,LINE2,37);			
-X			OLED_ShowCHinese(48,2,37);			
-N			break;	
-N		case FUN_SOUTH_NORTH_TURN_LEFT:
-X		case 9:
-N			OLED_ShowCHinese(0,LINE2,32);
-X			OLED_ShowCHinese(0,2,32);
-N			OLED_ShowCHinese(16,LINE2,33);	
-X			OLED_ShowCHinese(16,2,33);	
-N			OLED_ShowCHinese(32,LINE2,36);
-X			OLED_ShowCHinese(32,2,36);
-N			OLED_ShowCHinese(48,LINE2,37);			
-X			OLED_ShowCHinese(48,2,37);			
-N			break;
-N		case FUN_HANDLE_CONTROL_CANCEL:
-X		case 10:
-N			OLED_ShowCHinese(0,LINE2,40);
-X			OLED_ShowCHinese(0,2,40);
-N			OLED_ShowCHinese(16,LINE2,41);	
-X			OLED_ShowCHinese(16,2,41);	
-N			OLED_ShowCHinese(32,LINE2,42);
-X			OLED_ShowCHinese(32,2,42);
-N			OLED_ShowCHinese(48,LINE2,43);
-X			OLED_ShowCHinese(48,2,43);
-N			OLED_ShowCHinese(64,LINE2,44);
-X			OLED_ShowCHinese(64,2,44);
-N			OLED_ShowCHinese(80,LINE2,45);		
-X			OLED_ShowCHinese(80,2,45);		
-N			break;
-N		case INPUT_NUM:
-X		case 6:
-N			if(BUTTON_OK == chr){
-X			if(10 == chr){
-N				x_pos = 0;
-N				OLED_ShowChar(0, LINE2, '_');
-X				OLED_ShowChar(0, 2, '_');
-N  			}else if(BUTTON_DEL == chr){
-X  			}else if(11 == chr){
-N				OLED_ShowChar(x_pos*8, LINE2, ' ');
-X				OLED_ShowChar(x_pos*8, 2, ' ');
-N				x_pos = x_pos>0 ? x_pos-1 : 0;
-N				OLED_ShowChar(x_pos*8, LINE2, '_');
-X				OLED_ShowChar(x_pos*8, 2, '_');
-N			}else{
-N				if(BUTTON_FUN == chr || BUTTON_COLON == chr){
-X				if(12 == chr || 13 == chr){
-N					return;
-N				}
-N				chr += 0x30;
-N				OLED_ShowChar(x_pos*8, LINE2, chr);
-X				OLED_ShowChar(x_pos*8, 2, chr);
-N				x_pos ++;
-N				OLED_ShowChar(x_pos*8, LINE2, '_');
-X				OLED_ShowChar(x_pos*8, 2, '_');
-N			}
-N			break;
-N		default:
-N			break;
-N	}
-N	return;
-N}
-N
-N
+N 
 Nvoid LCD_show_line1_bmp(u8 index){
 N
 N	switch(index){

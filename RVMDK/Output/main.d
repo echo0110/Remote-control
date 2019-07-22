@@ -37,3 +37,4 @@
 .\output\main.o: ..\bsp_lib\12864.h
 .\output\main.o: ..\bsp_lib\delay.h
 .\output\main.o: ..\bsp_lib\st7565.h
+.\output\main.o: ..\bsp_lib\lcd_display.h

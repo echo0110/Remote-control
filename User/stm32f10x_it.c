@@ -17,20 +17,38 @@ typedef struct key{
 	unsigned int touch_flag;//按下
 	unsigned int untouch_flag;//松开 防止连续触发
 	const char key_value;
+	//char key_value;
 	//char busy;
 }key_t;
 
+u8 key6_flag=0;
 static unsigned int cnt = 0;
 static unsigned int delay_cnt = 0;
 											 //                   delay  touch  untouch  key_value
+//static key_t key[14] = {{GPIOC, GPIO_Pin_6,   0,     0,      1,       2},
+//												{GPIOC, GPIO_Pin_7,   0,     0,      1,       5},
+//												{GPIOC, GPIO_Pin_8,   0,     0,      1,       8},
+//                        {GPIOC, GPIO_Pin_9,   0,     0,      1,       0},
+//                        {GPIOA, GPIO_Pin_8,   0,     0,      1,       11},
+//                        {GPIOA, GPIO_Pin_9,   0,     0,      1,       9},
+//                        {GPIOA, GPIO_Pin_10,  0,     0,      1,       6},
+//                        {GPIOA, GPIO_Pin_11,  0,     0,      1,       3},
+//                        {GPIOA, GPIO_Pin_12,  0,     0,      1,       13},
+//                        {GPIOB, GPIO_Pin_11,  0,     0,      1,       12},
+//												{GPIOB, GPIO_Pin_12,  0,     0,      1,       1},
+//												{GPIOB, GPIO_Pin_13,  0,     0,      1,       4},
+//												{GPIOB, GPIO_Pin_14,  0,     0,      1,       7},
+//												{GPIOB, GPIO_Pin_15,  0,     0,      1,       10},
+//												 };
+
 static key_t key[14] = {{GPIOC, GPIO_Pin_6,   0,     0,      1,       2},
 												{GPIOC, GPIO_Pin_7,   0,     0,      1,       5},
 												{GPIOC, GPIO_Pin_8,   0,     0,      1,       8},
                         {GPIOC, GPIO_Pin_9,   0,     0,      1,       0},
-                        {GPIOA, GPIO_Pin_8,   0,     0,      1,       11},
-                        {GPIOA, GPIO_Pin_9,   0,     0,      1,       9},
-                        {GPIOA, GPIO_Pin_10,  0,     0,      1,       6},
-                        {GPIOA, GPIO_Pin_11,  0,     0,      1,       3},
+                        {GPIOA, GPIO_Pin_11,   0,     0,      1,       11},
+                        {GPIOA, GPIO_Pin_10,   0,     0,      1,       9},
+                        {GPIOA, GPIO_Pin_9,  0,     0,      1,       6},
+                        {GPIOA, GPIO_Pin_8,  0,     0,      1,       3},//key
                         {GPIOA, GPIO_Pin_12,  0,     0,      1,       13},
                         {GPIOB, GPIO_Pin_11,  0,     0,      1,       12},
 												{GPIOB, GPIO_Pin_12,  0,     0,      1,       1},
@@ -38,6 +56,7 @@ static key_t key[14] = {{GPIOC, GPIO_Pin_6,   0,     0,      1,       2},
 												{GPIOB, GPIO_Pin_14,  0,     0,      1,       7},
 												{GPIOB, GPIO_Pin_15,  0,     0,      1,       10},
 												 };
+
 
 void put_key(char button);
 
@@ -71,6 +90,11 @@ void key_prograss(void){
 #endif
 	for(i=0; i<14; i++){
   		if(!GPIO_ReadInputDataBit(key[i].GPIOx, key[i].GPIO_Pin)){
+			if(!GPIO_ReadInputDataBit(key[i].GPIOx, key[i].GPIO_Pin))
+			{
+			
+			
+			}
 			key[i].touch_flag = 1;
 			key[i].delay++;
 			if((key[i].delay > 50) && key[i].untouch_flag){

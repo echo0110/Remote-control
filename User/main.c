@@ -9,6 +9,8 @@
 #include "12864.h"
 #include "delay.h"
 #include "st7565.h"
+#include "lcd_display.h"
+#include "display.h"
 
 #define KEY_NUM                0
 #define KEY_FUN                1
@@ -48,7 +50,7 @@ void FSM_link_start(struct FSM *me){
   save_addr(addr);
 	if(read_addr(addr) != -1){
 		sprintf(buf, "%d:%d:%d:%d:%d\0", addr[0], addr[1], addr[2], addr[3], addr[4]);
-		LCD_P8x16Str(5,1,buf);//OLED_ShowString(0, 2, buf);
+		LCD_P8x16Str(LCD_LINE4,1,buf);//OLED_ShowString(0, 2, buf);
 		LCD_ShowCHinese((u8*)"是",LINE4,5);//5--行  line4---列//OLED_ShowCHinese(0,LINE4,22);
 		LCD_ShowCHinese((u8*)"否",6*16,5);//OLED_ShowCHinese(7*16,LINE4,23);
 		while(1){
@@ -76,20 +78,25 @@ void FSM_link_start(struct FSM *me){
 
 	if(NRF24L01_Send(buf)){
 		//提示连接不成功
-		oled_show_line3(CONNECT_STATUS_FAIL, 0);
-		oled_show_line1(INPUT_TYPE, "N");
-		oled_show_line1_bmp(BMP_NO_SIGNAL);
-		oled_clear_line(LINE2);
+//		oled_show_line3(CONNECT_STATUS_FAIL, 0);
+//		oled_show_line1(INPUT_TYPE, "N");
+//		oled_show_line1_bmp(BMP_NO_SIGNAL);
+//		oled_clear_line(LINE2);
+		lcd_show_line3(CONNECT_STATUS_FAIL, 0);//oled_show_line3(CONNECT_STATUS_OK, 0);
+		LCD_P8x16Str(5,0,(unsigned char*)"N");//oled_show_line1(INPUT_TYPE, "F");
+		LCD_show_line1_bmp(BMP_NO_SIGNAL);
+		
 		
 		me->status = LINK_START;
 		me->action = FSM_link_start;
 		Delay_Ms(2000);
 	}else{
 		//提示连接成功
-		oled_show_line3(CONNECT_STATUS_OK, 0);
-		oled_show_line1(INPUT_TYPE, "F");
-		oled_show_line1_bmp(BMP_SIGNAL);
-		oled_clear_line(LINE2);
+		lcd_clear_line(1);
+		lcd_show_line3(CONNECT_STATUS_OK, 0);//oled_show_line3(CONNECT_STATUS_OK, 0);
+		lcd_show_line1(INPUT_TYPE,(unsigned char*)"F");//oled_show_line1(INPUT_TYPE, "F");
+		LCD_show_line1_bmp(BMP_SIGNAL);
+		//lcd_clear_line(LINE3);
 		
 		me->status = LINK_CONNECTED;
 		me->action = FSM_link_connected;
@@ -105,16 +112,19 @@ void FSM_link_connected(struct FSM *me){
 	unsigned char buf[32] = {0};
 	
 	if(me->key!=-1){
-		oled_show_line3(SENDING, 0);
+		//oled_show_line3(SENDING, 0);
+		lcd_show_line3(SENDING, 0);
 		Delay_Ms(150);
 		key_trans(me->key, buf);
 		disable_key();
 		if(NRF24L01_Send(buf)==0){
 			//提示发送成功
-			oled_show_line3(SEND_OK, 0);
+			//oled_show_line3(SEND_OK, 0);
+			lcd_show_line3(SEND_OK, 0);
 		}else{
 			//提示发送不成功
-			oled_show_line3(SEND_FAIL, 0);
+//			oled_show_line3(SEND_FAIL, 0);
+			lcd_show_line3(SEND_FAIL, 0);
 			NRF24L01_TX_Mode(addr);
 		}
 		enable_key();
@@ -152,13 +162,22 @@ void display_by_key(int key, struct FSM *me){
 		oled_clear_line(LINE3);
 		if(fun_flag == KEY_FUN){
 			//oled_show_line1(INPUT_TYPE, "N");
-			LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)"N");
+			lcd_clear_line(1);
+			lcd_clear_line(2);
+			lcd_clear_line(3);
+			lcd_clear_line(4);
+			lcd_show_line1(INPUT_TYPE,(unsigned char*)"N");
 			fun_flag = KEY_NUM;
 			tmp = 0;
 			//oled_show_line2(INPUT_NUM, BUTTON_OK);
-			LCD_P8x16Str(0,INPUT_NUM,(unsigned char*)"_");
+			  lcd_show_line2(INPUT_NUM,BUTTON_OK);
+//			LCD_P8x16Str(0,INPUT_NUM,(unsigned char*)"_");
 		}else if(fun_flag == KEY_NUM){
 			//oled_show_line1(INPUT_TYPE, "F");
+			lcd_clear_line(1);
+			lcd_clear_line(2);
+			lcd_clear_line(3);
+			lcd_clear_line(4);
 			LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)"F");
 			fun_flag = KEY_FUN;
 		}
@@ -174,32 +193,42 @@ void display_by_key(int key, struct FSM *me){
 			}
 			switch(key){
 				case 0:
-					oled_show_line2(FUN_LIGHT_OFF, key);
+					//oled_show_line2(FUN_LIGHT_OFF, key);
+				  lcd_show_line2(FUN_LIGHT_OFF, key);
 					break;	
 				case 1:
-					oled_show_line2(FUN_LIGHT_RED, key);
+					//oled_show_line2(FUN_LIGHT_RED, key);
+				  lcd_show_line2(FUN_LIGHT_RED, key);
 					break;				
 				case 2:
-					oled_show_line2(FUN_YELLOW_FLASH, key);
+					//oled_show_line2(FUN_YELLOW_FLASH, key);
+				  lcd_show_line2(FUN_YELLOW_FLASH, key);
 					break;				
 				case 3:
-					oled_show_line2(FUN_EAST_WEST_STRAIGHT, key);
+					//oled_show_line2(FUN_EAST_WEST_STRAIGHT, key);
+				  lcd_show_line2(FUN_EAST_WEST_STRAIGHT, key);
 					break;				
 				case 4:
-					oled_show_line2(FUN_SOUTH_NORTH_STRAIGHT, key);
+					//oled_show_line2(FUN_SOUTH_NORTH_STRAIGHT, key);
+				  lcd_show_line2(FUN_SOUTH_NORTH_STRAIGHT, key);
 					break;				
 				case 5:
-					oled_show_line2(FUN_EAST_WEST_TURN_LEFT, key);
+					//oled_show_line2(FUN_EAST_WEST_TURN_LEFT, key);
+				  lcd_show_line2(FUN_EAST_WEST_TURN_LEFT, key);
 					break;				
 				case 6:
-					oled_show_line2(FUN_SOUTH_NORTH_TURN_LEFT, key);
+					//oled_show_line2(FUN_SOUTH_NORTH_TURN_LEFT, key);
+				  lcd_show_line2(FUN_SOUTH_NORTH_TURN_LEFT, key);
 					break;
 				
 				case 7:
-					oled_show_line2(FUN_HANDLE_CONTROL_CANCEL, key);
+					//oled_show_line2(FUN_HANDLE_CONTROL_CANCEL, key);
+				  lcd_show_line2(FUN_HANDLE_CONTROL_CANCEL, key);
 					break;
 				
-				case 8:			
+				case 8:
+          lcd_show_line2(FUN_EAST_WEST_TURN_LEFT, key);
+					break;						
 				case 9:
 				case 10:
 				case 11:
@@ -211,14 +240,24 @@ void display_by_key(int key, struct FSM *me){
 					break;
 			}
 		}else if(KEY_NUM == fun_flag){//用户自定义方案号
-			oled_clear_line(LINE2);
-			oled_clear_line(LINE3);
+			//oled_clear_line(LINE2);			
+			//oled_clear_line(LINE3);			
+			lcd_clear_line(1);
+			lcd_clear_line(2);
+			lcd_clear_line(3);
+			lcd_clear_line(4);
 			tmp = 0;
-			oled_show_line2(INPUT_NUM, BUTTON_OK);
+			//oled_show_line2(INPUT_NUM, BUTTON_OK);
+			lcd_show_line2(INPUT_NUM, BUTTON_OK);
 			while(key != BUTTON_OK){				
 				if(BUTTON_FUN == key){//切换功能
-					oled_clear_line(LINE2);
-					oled_show_line1(INPUT_TYPE, "F");
+					//oled_clear_line(LINE2);
+					//oled_show_line1(INPUT_TYPE, "F");
+					lcd_clear_line(1);
+					lcd_clear_line(2);
+			    lcd_clear_line(3);
+			    lcd_clear_line(4);
+					lcd_show_line1(INPUT_TYPE,(unsigned char*)"F");
 					fun_flag = KEY_FUN;
 					me->key = -1;
 					tmp = 0;
@@ -230,7 +269,8 @@ void display_by_key(int key, struct FSM *me){
 					}else if(BUTTON_DEL == key){
 						tmp /= 10;
 					}
-					oled_show_line2(INPUT_NUM, key);
+					//oled_show_line2(INPUT_NUM, key);
+					lcd_show_line2(INPUT_NUM, key);
 				}
 				key = get_key();
 			}
@@ -276,6 +316,8 @@ int main(void)
 	ad_init();
   Init_St7565();	 
    while (1){	
+		 
+		//disp_ch('_',5,4);
 		key = get_key();
 		me.key = key;
 		display_by_key(key, &me);

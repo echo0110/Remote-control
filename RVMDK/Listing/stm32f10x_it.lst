@@ -28881,6 +28881,8 @@ Nvoid DebugMon_Handler(void);
 Nvoid PendSV_Handler(void);
 Nvoid SysTick_Handler(void);
 N
+Nextern u8 key6_flag;
+N
 N#endif /* __STM32F10x_IT_H */
 N
 N/************************************文件结束*********************************/
@@ -28893,12 +28895,30 @@ N	unsigned int delay;    //
 N	unsigned int touch_flag;//按下
 N	unsigned int untouch_flag;//松开 防止连续触发
 N	const char key_value;
+N	//char key_value;
 N	//char busy;
 N}key_t;
 N
+Nu8 key6_flag=0;
 Nstatic unsigned int cnt = 0;
 Nstatic unsigned int delay_cnt = 0;
 N											 //                   delay  touch  untouch  key_value
+N//static key_t key[14] = {{GPIOC, GPIO_Pin_6,   0,     0,      1,       2},
+N//												{GPIOC, GPIO_Pin_7,   0,     0,      1,       5},
+N//												{GPIOC, GPIO_Pin_8,   0,     0,      1,       8},
+N//                        {GPIOC, GPIO_Pin_9,   0,     0,      1,       0},
+N//                        {GPIOA, GPIO_Pin_8,   0,     0,      1,       11},
+N//                        {GPIOA, GPIO_Pin_9,   0,     0,      1,       9},
+N//                        {GPIOA, GPIO_Pin_10,  0,     0,      1,       6},
+N//                        {GPIOA, GPIO_Pin_11,  0,     0,      1,       3},
+N//                        {GPIOA, GPIO_Pin_12,  0,     0,      1,       13},
+N//                        {GPIOB, GPIO_Pin_11,  0,     0,      1,       12},
+N//												{GPIOB, GPIO_Pin_12,  0,     0,      1,       1},
+N//												{GPIOB, GPIO_Pin_13,  0,     0,      1,       4},
+N//												{GPIOB, GPIO_Pin_14,  0,     0,      1,       7},
+N//												{GPIOB, GPIO_Pin_15,  0,     0,      1,       10},
+N//												 };
+N
 Nstatic key_t key[14] = {{GPIOC, GPIO_Pin_6,   0,     0,      1,       2},
 Xstatic key_t key[14] = {{((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), ((uint16_t)0x0040),   0,     0,      1,       2},
 N												{GPIOC, GPIO_Pin_7,   0,     0,      1,       5},
@@ -28907,14 +28927,14 @@ N												{GPIOC, GPIO_Pin_8,   0,     0,      1,       8},
 X												{((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), ((uint16_t)0x0100),   0,     0,      1,       8},
 N                        {GPIOC, GPIO_Pin_9,   0,     0,      1,       0},
 X                        {((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), ((uint16_t)0x0200),   0,     0,      1,       0},
-N                        {GPIOA, GPIO_Pin_8,   0,     0,      1,       11},
-X                        {((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), ((uint16_t)0x0100),   0,     0,      1,       11},
-N                        {GPIOA, GPIO_Pin_9,   0,     0,      1,       9},
-X                        {((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), ((uint16_t)0x0200),   0,     0,      1,       9},
-N                        {GPIOA, GPIO_Pin_10,  0,     0,      1,       6},
-X                        {((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), ((uint16_t)0x0400),  0,     0,      1,       6},
-N                        {GPIOA, GPIO_Pin_11,  0,     0,      1,       3},
-X                        {((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), ((uint16_t)0x0800),  0,     0,      1,       3},
+N                        {GPIOA, GPIO_Pin_11,   0,     0,      1,       11},
+X                        {((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), ((uint16_t)0x0800),   0,     0,      1,       11},
+N                        {GPIOA, GPIO_Pin_10,   0,     0,      1,       9},
+X                        {((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), ((uint16_t)0x0400),   0,     0,      1,       9},
+N                        {GPIOA, GPIO_Pin_9,  0,     0,      1,       6},
+X                        {((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), ((uint16_t)0x0200),  0,     0,      1,       6},
+N                        {GPIOA, GPIO_Pin_8,  0,     0,      1,       3},//key
+X                        {((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), ((uint16_t)0x0100),  0,     0,      1,       3},
 N                        {GPIOA, GPIO_Pin_12,  0,     0,      1,       13},
 X                        {((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0800)), ((uint16_t)0x1000),  0,     0,      1,       13},
 N                        {GPIOB, GPIO_Pin_11,  0,     0,      1,       12},
@@ -28928,6 +28948,7 @@ X												{((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0C00)), 
 N												{GPIOB, GPIO_Pin_15,  0,     0,      1,       10},
 X												{((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x0C00)), ((uint16_t)0x8000),  0,     0,      1,       10},
 N												 };
+N
 N
 Nvoid put_key(char button);
 N
@@ -28961,6 +28982,11 @@ S	}
 N#endif
 N	for(i=0; i<14; i++){
 N  		if(!GPIO_ReadInputDataBit(key[i].GPIOx, key[i].GPIO_Pin)){
+N			if(!GPIO_ReadInputDataBit(key[i].GPIOx, key[i].GPIO_Pin))
+N			{
+N			
+N			
+N			}
 N			key[i].touch_flag = 1;
 N			key[i].delay++;
 N			if((key[i].delay > 50) && key[i].untouch_flag){
