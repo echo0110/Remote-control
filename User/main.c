@@ -166,6 +166,13 @@ void display_by_key(int key, struct FSM *me){
 			lcd_clear_line(2);
 			lcd_clear_line(3);
 			lcd_clear_line(4);
+//			LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)" ");
+//			LCD_P8x16Str(1,INPUT_TYPE,(unsigned char*)" ");
+//			LCD_P8x16Str(2,INPUT_TYPE,(unsigned char*)" ");
+//			LCD_P8x16Str(3,INPUT_TYPE,(unsigned char*)" ");
+//			LCD_P8x16Str(4,INPUT_TYPE,(unsigned char*)" ");
+			LCD_P8x16Str(5,INPUT_TYPE,(unsigned char*)" ");
+		
 			lcd_show_line1(INPUT_TYPE,(unsigned char*)"N");
 			fun_flag = KEY_NUM;
 			tmp = 0;
@@ -178,7 +185,9 @@ void display_by_key(int key, struct FSM *me){
 			lcd_clear_line(2);
 			lcd_clear_line(3);
 			lcd_clear_line(4);
-			LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)"F");
+			LCD_P8x16Str(5,INPUT_TYPE,(unsigned char*)" ");
+			//LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)"F");
+			lcd_show_line1(INPUT_TYPE,(unsigned char*)"F");
 			fun_flag = KEY_FUN;
 		}
 		me->key = -1;

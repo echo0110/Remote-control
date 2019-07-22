@@ -30443,6 +30443,14 @@ N			lcd_clear_line(1);
 N			lcd_clear_line(2);
 N			lcd_clear_line(3);
 N			lcd_clear_line(4);
+N//			LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)" ");
+N//			LCD_P8x16Str(1,INPUT_TYPE,(unsigned char*)" ");
+N//			LCD_P8x16Str(2,INPUT_TYPE,(unsigned char*)" ");
+N//			LCD_P8x16Str(3,INPUT_TYPE,(unsigned char*)" ");
+N//			LCD_P8x16Str(4,INPUT_TYPE,(unsigned char*)" ");
+N			LCD_P8x16Str(5,INPUT_TYPE,(unsigned char*)" ");
+X			LCD_P8x16Str(5,0,(unsigned char*)" ");
+N		
 N			lcd_show_line1(INPUT_TYPE,(unsigned char*)"N");
 X			lcd_show_line1(0,(unsigned char*)"N");
 N			fun_flag = KEY_NUM;
@@ -30459,8 +30467,11 @@ N			lcd_clear_line(1);
 N			lcd_clear_line(2);
 N			lcd_clear_line(3);
 N			lcd_clear_line(4);
-N			LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)"F");
-X			LCD_P8x16Str(0,0,(unsigned char*)"F");
+N			LCD_P8x16Str(5,INPUT_TYPE,(unsigned char*)" ");
+X			LCD_P8x16Str(5,0,(unsigned char*)" ");
+N			//LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)"F");
+N			lcd_show_line1(INPUT_TYPE,(unsigned char*)"F");
+X			lcd_show_line1(0,(unsigned char*)"F");
 N			fun_flag = KEY_FUN;
 X			fun_flag = 1;
 N		}
@@ -30595,7 +30606,7 @@ N	}
 N	data[1] = 2;//数据长度
 N	data[2] = (key>>8)&0xFF;
 N	data[3] = key&0xFF;
-W "..\User\main.c" 295 20 argument of type "u8 *" is incompatible with parameter of type "char *"
+W "..\User\main.c" 304 20 argument of type "u8 *" is incompatible with parameter of type "char *"
 N	data[4] = fun_xor(data, 4);
 N	for(i=5;i<32;i++){
 N		data[i] = 0;
