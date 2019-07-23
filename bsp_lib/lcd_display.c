@@ -48,14 +48,15 @@ void lcd_show_line2(u8 index, char chr){
 	}
 	switch(index){
 		case INPUT_ADDR:
-			OLED_ShowCHinese(0,LINE2,6);
-			OLED_ShowCHinese(16,LINE2,7);
-			OLED_ShowCHinese(32,LINE2,8);
-			OLED_ShowCHinese(48,LINE2,9);	
-			OLED_ShowCHinese(64,LINE2,10);
-			OLED_ShowCHinese(80,LINE2,11);
-			OLED_ShowCHinese(96,LINE2,12);
-			OLED_ShowCHinese(112,LINE2,13);		
+//			OLED_ShowCHinese(0,LINE2,6);
+//			OLED_ShowCHinese(16,LINE2,7);
+//			OLED_ShowCHinese(32,LINE2,8);
+//			OLED_ShowCHinese(48,LINE2,9);	
+//			OLED_ShowCHinese(64,LINE2,10);
+//			OLED_ShowCHinese(80,LINE2,11);
+//			OLED_ShowCHinese(96,LINE2,12);
+//			OLED_ShowCHinese(112,LINE2,13);	
+        LCD_ShowCHinese((u8*)"输入信号机地址",0,2);				
 			break;
 		
 		case FUN_LIGHT_OFF:
@@ -190,12 +191,13 @@ void lcd_show_line3(u8 index,  char chr){
 		  LCD_ShowCHinese((u8*)"发送成功",0,LINE3);
 			break;
 		case ADDR_ERROR:
-			OLED_ShowCHinese(0,LINE3,11);
-			OLED_ShowCHinese(16,LINE3,12);
-			OLED_ShowCHinese(32,LINE3,18);
-			OLED_ShowCHinese(48,LINE3,19);
-			OLED_ShowCHinese(64,LINE3,20);
-			OLED_ShowCHinese(80,LINE3,21);		
+//			OLED_ShowCHinese(0,LINE3,11);
+//			OLED_ShowCHinese(16,LINE3,12);
+//			OLED_ShowCHinese(32,LINE3,18);
+//			OLED_ShowCHinese(48,LINE3,19);
+//			OLED_ShowCHinese(64,LINE3,20);
+//			OLED_ShowCHinese(80,LINE3,21);	
+      LCD_ShowCHinese((u8*)"地址格式错误",0,LINE3);		
 			break;
 		case SENDING:
 //			OLED_ShowCHinese(0,LINE3,38);
@@ -209,18 +211,22 @@ void lcd_show_line3(u8 index,  char chr){
 				x_pos = 0;
 			}else if(BUTTON_DEL == chr){
 				//OLED_ShowChar(x_pos*8, LINE3, ' ');
-				lcd_ShowChar(x_pos*8, LINE3, ' ');
+				//lcd_ShowChar(x_pos*8, LINE3, ' ');
+				disp_ch(' ',x_pos*8,4);
 				x_pos = x_pos>0 ? x_pos-1 : 0;
 				//OLED_ShowChar(x_pos*8, LINE3, '_');
-				lcd_ShowChar(x_pos*8, LINE3, ' ');
+				//lcd_ShowChar(x_pos*8, LINE3, ' ');
+				disp_ch(' ',x_pos*8,4);
 			}else{
 				chr = BUTTON_COLON == chr ? ':' : chr+0x30;//转成字符
 				if(x_pos<19){
 					//OLED_ShowChar(x_pos*8, LINE3, chr);
-					lcd_ShowChar(x_pos*8, LINE3, ' ');
+					//lcd_ShowChar(x_pos*8, LINE3, ' ');
+					disp_ch(chr,x_pos*8,4);
 					x_pos ++;
 					//OLED_ShowChar(x_pos*8, LINE3, '_');
-					lcd_ShowChar(x_pos*8, LINE3, ' ');
+					//lcd_ShowChar(x_pos*8, LINE3, ' ');
+					disp_ch('_',x_pos*8,4);
 				}
 			}
 			break;

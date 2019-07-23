@@ -30301,7 +30301,11 @@ N	oled_clear_line(LINE3);
 X	oled_clear_line(5);
 N  save_addr(addr);
 N	if(read_addr(addr) != -1){
-W "..\User\main.c" 52 11 argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+N		lcd_clear_line(1);
+N		lcd_clear_line(2);
+N		lcd_clear_line(3);
+N		lcd_clear_line(4);
+W "..\User\main.c" 56 11 argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
 N		sprintf(buf, "%d:%d:%d:%d:%d\0", addr[0], addr[1], addr[2], addr[3], addr[4]);
 N		LCD_P8x16Str(LCD_LINE4,1,buf);//OLED_ShowString(0, 2, buf);
 X		LCD_P8x16Str(5,1,buf);
@@ -30315,14 +30319,15 @@ X			if(12 == key){
 N				break;
 N			}else if(BUTTON_COLON == key){
 X			}else if(13 == key){
-N				oled_clear_line(LINE2);
-X				oled_clear_line(1);
-N				oled_clear_line(LINE3);
-X				oled_clear_line(5);
-N				oled_clear_line(LINE4);
-X				oled_clear_line(6);
-N				oled_show_line2(INPUT_ADDR, 0);
-X				oled_show_line2(1, 0);
+N//				oled_clear_line(LINE2);
+N//				oled_clear_line(LINE3);
+N//				oled_clear_line(LINE4);
+N//				oled_show_line2(INPUT_ADDR, 0);
+N				lcd_clear_line(2);
+N				lcd_clear_line(3);
+N				lcd_clear_line(4);
+N				lcd_show_line2(INPUT_ADDR, 0);
+X				lcd_show_line2(1, 0);
 N				while(get_addr(addr)!= 0);
 N				break;
 N			}
@@ -30530,16 +30535,17 @@ X				  lcd_show_line2(10, key);
 N					break;
 N				
 N				case 8:
-N          lcd_show_line2(FUN_EAST_WEST_TURN_LEFT, key);
-X          lcd_show_line2(8, key);
+N          //lcd_show_line2(FUN_EAST_WEST_TURN_LEFT, key);
+N				  lcd_clear_line(1);
 N					break;						
 N				case 9:
+N				  lcd_clear_line(1);
+N					break;	
 N				case 10:
 N				case 11:
 N				case 12:		
 N				case 13:
-N					oled_clear_line(LINE2);
-X					oled_clear_line(1);
+N					//oled_clear_line(LINE2);			 
 N					break;					
 N				default:
 N					break;
@@ -30606,7 +30612,7 @@ N	}
 N	data[1] = 2;//数据长度
 N	data[2] = (key>>8)&0xFF;
 N	data[3] = key&0xFF;
-W "..\User\main.c" 304 20 argument of type "u8 *" is incompatible with parameter of type "char *"
+W "..\User\main.c" 315 20 argument of type "u8 *" is incompatible with parameter of type "char *"
 N	data[4] = fun_xor(data, 4);
 N	for(i=5;i<32;i++){
 N		data[i] = 0;

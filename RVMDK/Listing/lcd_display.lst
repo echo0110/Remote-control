@@ -29173,22 +29173,15 @@ N	}
 N	switch(index){
 N		case INPUT_ADDR:
 X		case 1:
-N			OLED_ShowCHinese(0,LINE2,6);
-X			OLED_ShowCHinese(0,1,6);
-N			OLED_ShowCHinese(16,LINE2,7);
-X			OLED_ShowCHinese(16,1,7);
-N			OLED_ShowCHinese(32,LINE2,8);
-X			OLED_ShowCHinese(32,1,8);
-N			OLED_ShowCHinese(48,LINE2,9);	
-X			OLED_ShowCHinese(48,1,9);	
-N			OLED_ShowCHinese(64,LINE2,10);
-X			OLED_ShowCHinese(64,1,10);
-N			OLED_ShowCHinese(80,LINE2,11);
-X			OLED_ShowCHinese(80,1,11);
-N			OLED_ShowCHinese(96,LINE2,12);
-X			OLED_ShowCHinese(96,1,12);
-N			OLED_ShowCHinese(112,LINE2,13);		
-X			OLED_ShowCHinese(112,1,13);		
+N//			OLED_ShowCHinese(0,LINE2,6);
+N//			OLED_ShowCHinese(16,LINE2,7);
+N//			OLED_ShowCHinese(32,LINE2,8);
+N//			OLED_ShowCHinese(48,LINE2,9);	
+N//			OLED_ShowCHinese(64,LINE2,10);
+N//			OLED_ShowCHinese(80,LINE2,11);
+N//			OLED_ShowCHinese(96,LINE2,12);
+N//			OLED_ShowCHinese(112,LINE2,13);	
+N        LCD_ShowCHinese((u8*)"输入信号机地址",0,2);				
 N			break;
 N		
 N		case FUN_LIGHT_OFF:
@@ -29345,18 +29338,14 @@ X		  LCD_ShowCHinese((u8*)"发送成功",0,5);
 N			break;
 N		case ADDR_ERROR:
 X		case 5:
-N			OLED_ShowCHinese(0,LINE3,11);
-X			OLED_ShowCHinese(0,5,11);
-N			OLED_ShowCHinese(16,LINE3,12);
-X			OLED_ShowCHinese(16,5,12);
-N			OLED_ShowCHinese(32,LINE3,18);
-X			OLED_ShowCHinese(32,5,18);
-N			OLED_ShowCHinese(48,LINE3,19);
-X			OLED_ShowCHinese(48,5,19);
-N			OLED_ShowCHinese(64,LINE3,20);
-X			OLED_ShowCHinese(64,5,20);
-N			OLED_ShowCHinese(80,LINE3,21);		
-X			OLED_ShowCHinese(80,5,21);		
+N//			OLED_ShowCHinese(0,LINE3,11);
+N//			OLED_ShowCHinese(16,LINE3,12);
+N//			OLED_ShowCHinese(32,LINE3,18);
+N//			OLED_ShowCHinese(48,LINE3,19);
+N//			OLED_ShowCHinese(64,LINE3,20);
+N//			OLED_ShowCHinese(80,LINE3,21);	
+N      LCD_ShowCHinese((u8*)"地址格式错误",0,LINE3);		
+X      LCD_ShowCHinese((u8*)"地址格式错误",0,5);		
 N			break;
 N		case SENDING:
 X		case 7:
@@ -29375,23 +29364,23 @@ N				x_pos = 0;
 N			}else if(BUTTON_DEL == chr){
 X			}else if(11 == chr){
 N				//OLED_ShowChar(x_pos*8, LINE3, ' ');
-N				lcd_ShowChar(x_pos*8, LINE3, ' ');
-X				lcd_ShowChar(x_pos*8, 5, ' ');
+N				//lcd_ShowChar(x_pos*8, LINE3, ' ');
+N				disp_ch(' ',x_pos*8,4);
 N				x_pos = x_pos>0 ? x_pos-1 : 0;
 N				//OLED_ShowChar(x_pos*8, LINE3, '_');
-N				lcd_ShowChar(x_pos*8, LINE3, ' ');
-X				lcd_ShowChar(x_pos*8, 5, ' ');
+N				//lcd_ShowChar(x_pos*8, LINE3, ' ');
+N				disp_ch(' ',x_pos*8,4);
 N			}else{
 N				chr = BUTTON_COLON == chr ? ':' : chr+0x30;//转成字符
 X				chr = 13 == chr ? ':' : chr+0x30;
 N				if(x_pos<19){
 N					//OLED_ShowChar(x_pos*8, LINE3, chr);
-N					lcd_ShowChar(x_pos*8, LINE3, ' ');
-X					lcd_ShowChar(x_pos*8, 5, ' ');
+N					//lcd_ShowChar(x_pos*8, LINE3, ' ');
+N					disp_ch(chr,x_pos*8,4);
 N					x_pos ++;
 N					//OLED_ShowChar(x_pos*8, LINE3, '_');
-N					lcd_ShowChar(x_pos*8, LINE3, ' ');
-X					lcd_ShowChar(x_pos*8, 5, ' ');
+N					//lcd_ShowChar(x_pos*8, LINE3, ' ');
+N					disp_ch('_',x_pos*8,4);
 N				}
 N			}
 N			break;

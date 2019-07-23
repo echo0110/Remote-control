@@ -49,6 +49,10 @@ void FSM_link_start(struct FSM *me){
 	oled_clear_line(LINE3);
   save_addr(addr);
 	if(read_addr(addr) != -1){
+		lcd_clear_line(1);
+		lcd_clear_line(2);
+		lcd_clear_line(3);
+		lcd_clear_line(4);
 		sprintf(buf, "%d:%d:%d:%d:%d\0", addr[0], addr[1], addr[2], addr[3], addr[4]);
 		LCD_P8x16Str(LCD_LINE4,1,buf);//OLED_ShowString(0, 2, buf);
 		LCD_ShowCHinese((u8*)"ÊÇ",LINE4,5);//5--ÐÐ  line4---ÁÐ//OLED_ShowCHinese(0,LINE4,22);
@@ -58,10 +62,14 @@ void FSM_link_start(struct FSM *me){
 			if(BUTTON_FUN == key){
 				break;
 			}else if(BUTTON_COLON == key){
-				oled_clear_line(LINE2);
-				oled_clear_line(LINE3);
-				oled_clear_line(LINE4);
-				oled_show_line2(INPUT_ADDR, 0);
+//				oled_clear_line(LINE2);
+//				oled_clear_line(LINE3);
+//				oled_clear_line(LINE4);
+//				oled_show_line2(INPUT_ADDR, 0);
+				lcd_clear_line(2);
+				lcd_clear_line(3);
+				lcd_clear_line(4);
+				lcd_show_line2(INPUT_ADDR, 0);
 				while(get_addr(addr)!= 0);
 				break;
 			}
@@ -236,14 +244,17 @@ void display_by_key(int key, struct FSM *me){
 					break;
 				
 				case 8:
-          lcd_show_line2(FUN_EAST_WEST_TURN_LEFT, key);
+          //lcd_show_line2(FUN_EAST_WEST_TURN_LEFT, key);
+				  lcd_clear_line(1);
 					break;						
 				case 9:
+				  lcd_clear_line(1);
+					break;	
 				case 10:
 				case 11:
 				case 12:		
 				case 13:
-					oled_clear_line(LINE2);
+					//oled_clear_line(LINE2);			 
 					break;					
 				default:
 					break;

@@ -28916,6 +28916,23 @@ Nvoid oled_show_line2(u8 index, char chr);
 Nvoid oled_show_line3(u8 index,  char chr);
 N#endif
 L 4 "..\bsp_lib\button.c" 2
+N#include "lcd_display.h"
+L 1 "..\bsp_lib\lcd_display.h" 1
+N#ifndef __lcd_DISPLAY_H__
+N#define __lcd_DISPLAY_H__
+N#include "stm32f10x.h"
+Nvoid lcd_clear_line(int x);
+Nvoid lcd_show_line3(u8 index,  char chr);
+N//void lcd_show_line1(unsigned char x,unsigned char y,unsigned char ch[]);
+Nvoid lcd_show_line2(u8 index, char chr);
+Nvoid lcd_show_line1(u8 x, u8 *chr);
+N
+Nvoid lcd_ShowChar(u8 x,u8 y,u8 chr);
+N
+N
+N
+N#endif
+L 5 "..\bsp_lib\button.c" 2
 N
 Nvoid Delay_Ms(unsigned int delay);
 N
@@ -28962,8 +28979,8 @@ X	GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), &G
 N	GPIO_ResetBits(GPIOC,GPIO_Pin_10);
 X	GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)),((uint16_t)0x0400));
 N	return;
-W "..\bsp_lib\button.c" 18 19 variable "NVIC_InitStructure" was declared but never referenced
-W "..\bsp_lib\button.c" 19 19 variable "EXTI_InitStructure" was declared but never referenced
+W "..\bsp_lib\button.c" 19 19 variable "NVIC_InitStructure" was declared but never referenced
+W "..\bsp_lib\button.c" 20 19 variable "EXTI_InitStructure" was declared but never referenced
 N}
 N
 N
@@ -29067,14 +29084,16 @@ N			i = 0;
 N		}
 N		
 N		if(i>3 || addr_pos>5 || tmp>255){
-N			oled_show_line3(ADDR_ERROR, 0);
-X			oled_show_line3(5, 0);
+N			//oled_show_line3(ADDR_ERROR, 0);
+N			lcd_show_line3(ADDR_ERROR, 0);
+X			lcd_show_line3(5, 0);
 N			Delay_Ms(2000);
-N			oled_clear_line(LINE3);
-X			oled_clear_line(5);
+N			//oled_clear_line(LINE3);
+N			lcd_clear_line(LINE3);
+X			lcd_clear_line(5);
 N			return ADDR_TYPE_ERROR;
 X			return -2;
-W "..\bsp_lib\button.c" 145 4 statement is unreachable
+W "..\bsp_lib\button.c" 148 4 statement is unreachable
 N			break;
 N		}
 N		
@@ -29118,8 +29137,9 @@ N				buf[i] = c;
 N				i++;
 N			}
 N		}
-N		oled_show_line3(INPUT_NUM, c);
-X		oled_show_line3(6, c);
+N		//oled_show_line3(INPUT_NUM, c);
+N		lcd_show_line3(INPUT_NUM, c);
+X		lcd_show_line3(6, c);
 N	}
 N	
 N	return ret;

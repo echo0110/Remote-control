@@ -1,6 +1,7 @@
 #include "stm32f10x.h"
 #include "button.h"
 #include "display.h"
+#include "lcd_display.h"
 
 void Delay_Ms(unsigned int delay);
 
@@ -138,9 +139,11 @@ int buf2addr(char *buf, int len, u8 *addr){
 		}
 		
 		if(i>3 || addr_pos>5 || tmp>255){
-			oled_show_line3(ADDR_ERROR, 0);
+			//oled_show_line3(ADDR_ERROR, 0);
+			lcd_show_line3(ADDR_ERROR, 0);
 			Delay_Ms(2000);
-			oled_clear_line(LINE3);
+			//oled_clear_line(LINE3);
+			lcd_clear_line(LINE3);
 			return ADDR_TYPE_ERROR;
 			break;
 		}
@@ -181,7 +184,8 @@ int get_addr(u8 *addr){
 				i++;
 			}
 		}
-		oled_show_line3(INPUT_NUM, c);
+		//oled_show_line3(INPUT_NUM, c);
+		lcd_show_line3(INPUT_NUM, c);
 	}
 	
 	return ret;

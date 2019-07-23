@@ -5,37 +5,37 @@
                           AREA ||i.beep||, CODE, READONLY, ALIGN=2
 
                   beep PROC
-;;;73     
-;;;74     void beep(u32 cnt){
+;;;74     
+;;;75     void beep(u32 cnt){
 000000  b510              PUSH     {r4,lr}
 000002  4604              MOV      r4,r0
-;;;75     	
-;;;76     	while(cnt --){
+;;;76     	
+;;;77     	while(cnt --){
 000004  e011              B        |L1.42|
                   |L1.6|
-;;;77     		GPIO_SetBits(GPIOC,GPIO_Pin_10);
+;;;78     		GPIO_SetBits(GPIOC,GPIO_Pin_10);
 000006  f44f6180          MOV      r1,#0x400
 00000a  480a              LDR      r0,|L1.52|
 00000c  f7fffffe          BL       GPIO_SetBits
-;;;78     		delay(0x8FF);
+;;;79     		delay(0x8FF);
 000010  f64000ff          MOV      r0,#0x8ff
 000014  f7fffffe          BL       delay
-;;;79     		GPIO_ResetBits(GPIOC,GPIO_Pin_10);
+;;;80     		GPIO_ResetBits(GPIOC,GPIO_Pin_10);
 000018  f44f6180          MOV      r1,#0x400
 00001c  4805              LDR      r0,|L1.52|
 00001e  f7fffffe          BL       GPIO_ResetBits
-;;;80     		delay(0x8FF);
+;;;81     		delay(0x8FF);
 000022  f64000ff          MOV      r0,#0x8ff
 000026  f7fffffe          BL       delay
                   |L1.42|
-00002a  0020              MOVS     r0,r4                 ;76
-00002c  f1a40401          SUB      r4,r4,#1              ;76
+00002a  0020              MOVS     r0,r4                 ;77
+00002c  f1a40401          SUB      r4,r4,#1              ;77
 000030  d1e9              BNE      |L1.6|
-;;;81     	}
-;;;82     	return;
-;;;83     }
+;;;82     	}
+;;;83     	return;
+;;;84     }
 000032  bd10              POP      {r4,pc}
-;;;84     
+;;;85     
                           ENDP
 
                   |L1.52|
@@ -44,33 +44,33 @@
                           AREA ||i.buf2addr||, CODE, READONLY, ALIGN=1
 
                   buf2addr PROC
-;;;106    
-;;;107    int buf2addr(char *buf, int len, u8 *addr){
+;;;107    
+;;;108    int buf2addr(char *buf, int len, u8 *addr){
 000000  e92d47f0          PUSH     {r4-r10,lr}
 000004  4604              MOV      r4,r0
 000006  468a              MOV      r10,r1
 000008  4691              MOV      r9,r2
-;;;108    	int tmp;
-;;;109    	int addr_pos = 0;
+;;;109    	int tmp;
+;;;110    	int addr_pos = 0;
 00000a  2700              MOVS     r7,#0
-;;;110    	int index = 0;
+;;;111    	int index = 0;
 00000c  2500              MOVS     r5,#0
-;;;111    	int i = 0;
+;;;112    	int i = 0;
 00000e  46a8              MOV      r8,r5
-;;;112    	
-;;;113    	do{
+;;;113    	
+;;;114    	do{
 000010  bf00              NOP      
                   |L2.18|
-;;;114    		if(buf[index] != BUTTON_COLON){
+;;;115    		if(buf[index] != BUTTON_COLON){
 000012  5d60              LDRB     r0,[r4,r5]
 000014  280d              CMP      r0,#0xd
 000016  d002              BEQ      |L2.30|
-;;;115    			i++;
+;;;116    			i++;
 000018  f1080801          ADD      r8,r8,#1
 00001c  e031              B        |L2.130|
                   |L2.30|
-;;;116    		}else{
-;;;117    			switch(i){
+;;;117    		}else{
+;;;118    			switch(i){
 00001e  f1b80f00          CMP      r8,#0
 000022  d009              BEQ      |L2.56|
 000024  f1b80f01          CMP      r8,#1
@@ -81,32 +81,32 @@
 000034  d11c              BNE      |L2.112|
 000036  e00d              B        |L2.84|
                   |L2.56|
-;;;118    				case 0:
-;;;119    					tmp = 0;
+;;;119    				case 0:
+;;;120    					tmp = 0;
 000038  2600              MOVS     r6,#0
-;;;120    					break;
+;;;121    					break;
 00003a  e01a              B        |L2.114|
                   |L2.60|
-;;;121    				case 1:
-;;;122    					tmp = buf[index-1];
+;;;122    				case 1:
+;;;123    					tmp = buf[index-1];
 00003c  1e68              SUBS     r0,r5,#1
 00003e  5c26              LDRB     r6,[r4,r0]
-;;;123    					break;
+;;;124    					break;
 000040  e017              B        |L2.114|
                   |L2.66|
-;;;124    				case 2:
-;;;125    					tmp = buf[index-2]*10 + buf[index-1];
+;;;125    				case 2:
+;;;126    					tmp = buf[index-2]*10 + buf[index-1];
 000042  1e68              SUBS     r0,r5,#1
 000044  5c21              LDRB     r1,[r4,r0]
 000046  1ea8              SUBS     r0,r5,#2
 000048  5c20              LDRB     r0,[r4,r0]
 00004a  eb000080          ADD      r0,r0,r0,LSL #2
 00004e  eb010640          ADD      r6,r1,r0,LSL #1
-;;;126    					break;
+;;;127    					break;
 000052  e00e              B        |L2.114|
                   |L2.84|
-;;;127    				case 3:
-;;;128    					tmp = buf[index-3]*100 + buf[index-2]*10 + buf[index-1];
+;;;128    				case 3:
+;;;129    					tmp = buf[index-3]*100 + buf[index-2]*10 + buf[index-1];
 000054  1ee8              SUBS     r0,r5,#3
 000056  5c20              LDRB     r0,[r4,r0]
 000058  2164              MOVS     r1,#0x64
@@ -118,30 +118,30 @@
 000068  1e68              SUBS     r0,r5,#1
 00006a  5c20              LDRB     r0,[r4,r0]
 00006c  180e              ADDS     r6,r1,r0
-;;;129    					break;
+;;;130    					break;
 00006e  e000              B        |L2.114|
                   |L2.112|
-;;;130    				default:
-;;;131    					break;
+;;;131    				default:
+;;;132    					break;
 000070  bf00              NOP      
                   |L2.114|
-000072  bf00              NOP                            ;120
-;;;132    			}
-;;;133    			if(tmp<256){
+000072  bf00              NOP                            ;121
+;;;133    			}
+;;;134    			if(tmp<256){
 000074  2eff              CMP      r6,#0xff
 000076  dc01              BGT      |L2.124|
-;;;134    				addr[addr_pos] = tmp;
+;;;135    				addr[addr_pos] = tmp;
 000078  f8096007          STRB     r6,[r9,r7]
                   |L2.124|
-;;;135    			}
-;;;136    			addr_pos ++;
+;;;136    			}
+;;;137    			addr_pos ++;
 00007c  1c7f              ADDS     r7,r7,#1
-;;;137    			i = 0;
+;;;138    			i = 0;
 00007e  f04f0800          MOV      r8,#0
                   |L2.130|
-;;;138    		}
-;;;139    		
-;;;140    		if(i>3 || addr_pos>5 || tmp>255){
+;;;139    		}
+;;;140    		
+;;;141    		if(i>3 || addr_pos>5 || tmp>255){
 000082  f1b80f03          CMP      r8,#3
 000086  dc03              BGT      |L2.144|
 000088  2f05              CMP      r7,#5
@@ -149,108 +149,110 @@
 00008c  2eff              CMP      r6,#0xff
 00008e  dd0e              BLE      |L2.174|
                   |L2.144|
-;;;141    			oled_show_line3(ADDR_ERROR, 0);
+;;;142    			//oled_show_line3(ADDR_ERROR, 0);
+;;;143    			lcd_show_line3(ADDR_ERROR, 0);
 000090  2100              MOVS     r1,#0
 000092  2005              MOVS     r0,#5
-000094  f7fffffe          BL       oled_show_line3
-;;;142    			Delay_Ms(2000);
+000094  f7fffffe          BL       lcd_show_line3
+;;;144    			Delay_Ms(2000);
 000098  f44f60fa          MOV      r0,#0x7d0
 00009c  f7fffffe          BL       Delay_Ms
-;;;143    			oled_clear_line(LINE3);
+;;;145    			//oled_clear_line(LINE3);
+;;;146    			lcd_clear_line(LINE3);
 0000a0  2005              MOVS     r0,#5
-0000a2  f7fffffe          BL       oled_clear_line
-;;;144    			return ADDR_TYPE_ERROR;
+0000a2  f7fffffe          BL       lcd_clear_line
+;;;147    			return ADDR_TYPE_ERROR;
 0000a6  f06f0001          MVN      r0,#1
                   |L2.170|
-;;;145    			break;
-;;;146    		}
-;;;147    		
-;;;148    		index ++;
-;;;149    	}while(len--);
-;;;150    	
-;;;151    	
-;;;152    	
-;;;153    	return 0;
-;;;154    }
+;;;148    			break;
+;;;149    		}
+;;;150    		
+;;;151    		index ++;
+;;;152    	}while(len--);
+;;;153    	
+;;;154    	
+;;;155    	
+;;;156    	return 0;
+;;;157    }
 0000aa  e8bd87f0          POP      {r4-r10,pc}
                   |L2.174|
-0000ae  1c6d              ADDS     r5,r5,#1              ;148
-0000b0  ea5f000a          MOVS     r0,r10                ;149
-0000b4  f1aa0a01          SUB      r10,r10,#1            ;149
+0000ae  1c6d              ADDS     r5,r5,#1              ;151
+0000b0  ea5f000a          MOVS     r0,r10                ;152
+0000b4  f1aa0a01          SUB      r10,r10,#1            ;152
 0000b8  d1ab              BNE      |L2.18|
-0000ba  bf00              NOP                            ;145
-0000bc  bf00              NOP                            ;153
+0000ba  bf00              NOP                            ;148
+0000bc  bf00              NOP                            ;156
 0000be  e7f4              B        |L2.170|
-;;;155    
+;;;158    
                           ENDP
 
 
                           AREA ||i.button_init||, CODE, READONLY, ALIGN=2
 
                   button_init PROC
-;;;15     
-;;;16     void button_init(void){
+;;;16     
+;;;17     void button_init(void){
 000000  b508              PUSH     {r3,lr}
-;;;17     	GPIO_InitTypeDef GPIO_InitStructure;
-;;;18     	NVIC_InitTypeDef NVIC_InitStructure;
-;;;19     	EXTI_InitTypeDef EXTI_InitStructure;
-;;;20     	
-;;;21     	//pin配置
-;;;22     	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12;
+;;;18     	GPIO_InitTypeDef GPIO_InitStructure;
+;;;19     	NVIC_InitTypeDef NVIC_InitStructure;
+;;;20     	EXTI_InitTypeDef EXTI_InitStructure;
+;;;21     	
+;;;22     	//pin配置
+;;;23     	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12;
 000002  f44f50f8          MOV      r0,#0x1f00
 000006  f8ad0000          STRH     r0,[sp,#0]
-;;;23     	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IPU;
+;;;24     	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IPU;
 00000a  2048              MOVS     r0,#0x48
 00000c  f88d0003          STRB     r0,[sp,#3]
-;;;24     	GPIO_Init(GPIOA, &GPIO_InitStructure);
+;;;25     	GPIO_Init(GPIOA, &GPIO_InitStructure);
 000010  4669              MOV      r1,sp
 000012  4816              LDR      r0,|L3.108|
 000014  f7fffffe          BL       GPIO_Init
-;;;25     
-;;;26     	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+;;;26     
+;;;27     	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
 000018  f44f4078          MOV      r0,#0xf800
 00001c  f8ad0000          STRH     r0,[sp,#0]
-;;;27     	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IPU;
+;;;28     	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IPU;
 000020  2048              MOVS     r0,#0x48
 000022  f88d0003          STRB     r0,[sp,#3]
-;;;28     	GPIO_Init(GPIOB, &GPIO_InitStructure);	
+;;;29     	GPIO_Init(GPIOB, &GPIO_InitStructure);	
 000026  4669              MOV      r1,sp
 000028  4811              LDR      r0,|L3.112|
 00002a  f7fffffe          BL       GPIO_Init
-;;;29     	
-;;;30     	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
+;;;30     	
+;;;31     	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
 00002e  f44f7070          MOV      r0,#0x3c0
 000032  f8ad0000          STRH     r0,[sp,#0]
-;;;31     	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IPU;
+;;;32     	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IPU;
 000036  2048              MOVS     r0,#0x48
 000038  f88d0003          STRB     r0,[sp,#3]
-;;;32     	GPIO_Init(GPIOC, &GPIO_InitStructure);	
+;;;33     	GPIO_Init(GPIOC, &GPIO_InitStructure);	
 00003c  4669              MOV      r1,sp
 00003e  480d              LDR      r0,|L3.116|
 000040  f7fffffe          BL       GPIO_Init
-;;;33     
-;;;34     	//Beep
-;;;35     	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_10;
+;;;34     
+;;;35     	//Beep
+;;;36     	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_10;
 000044  f44f6080          MOV      r0,#0x400
 000048  f8ad0000          STRH     r0,[sp,#0]
-;;;36     	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;
+;;;37     	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;
 00004c  2010              MOVS     r0,#0x10
 00004e  f88d0003          STRB     r0,[sp,#3]
-;;;37     	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+;;;38     	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 000052  2003              MOVS     r0,#3
 000054  f88d0002          STRB     r0,[sp,#2]
-;;;38     	GPIO_Init(GPIOC, &GPIO_InitStructure);
+;;;39     	GPIO_Init(GPIOC, &GPIO_InitStructure);
 000058  4669              MOV      r1,sp
 00005a  4806              LDR      r0,|L3.116|
 00005c  f7fffffe          BL       GPIO_Init
-;;;39     	GPIO_ResetBits(GPIOC,GPIO_Pin_10);
+;;;40     	GPIO_ResetBits(GPIOC,GPIO_Pin_10);
 000060  f44f6180          MOV      r1,#0x400
 000064  4803              LDR      r0,|L3.116|
 000066  f7fffffe          BL       GPIO_ResetBits
-;;;40     	return;
-;;;41     }
+;;;41     	return;
+;;;42     }
 00006a  bd08              POP      {r3,pc}
-;;;42     
+;;;43     
                           ENDP
 
                   |L3.108|
@@ -263,34 +265,34 @@
                           AREA ||i.delay||, CODE, READONLY, ALIGN=1
 
                   delay PROC
-;;;10     
-;;;11     void delay(u32 delay){
+;;;11     
+;;;12     void delay(u32 delay){
 000000  bf00              NOP      
                   |L4.2|
-;;;12     	while(delay--);
+;;;13     	while(delay--);
 000002  0001              MOVS     r1,r0
 000004  f1a00001          SUB      r0,r0,#1
 000008  d1fb              BNE      |L4.2|
-;;;13     	return;
-;;;14     }
+;;;14     	return;
+;;;15     }
 00000a  4770              BX       lr
-;;;15     
+;;;16     
                           ENDP
 
 
                           AREA ||i.disable_key||, CODE, READONLY, ALIGN=2
 
                   disable_key PROC
-;;;63     
-;;;64     void disable_key(void){
+;;;64     
+;;;65     void disable_key(void){
 000000  2000              MOVS     r0,#0
-;;;65     	key_enable = 0;
+;;;66     	key_enable = 0;
 000002  4901              LDR      r1,|L5.8|
 000004  6008              STR      r0,[r1,#0]  ; key_enable
-;;;66     	return;
-;;;67     }
+;;;67     	return;
+;;;68     }
 000006  4770              BX       lr
-;;;68     
+;;;69     
                           ENDP
 
                   |L5.8|
@@ -299,16 +301,16 @@
                           AREA ||i.enable_key||, CODE, READONLY, ALIGN=2
 
                   enable_key PROC
-;;;68     
-;;;69     void enable_key(void){
+;;;69     
+;;;70     void enable_key(void){
 000000  2001              MOVS     r0,#1
-;;;70     	key_enable = 1;
+;;;71     	key_enable = 1;
 000002  4901              LDR      r1,|L6.8|
 000004  6008              STR      r0,[r1,#0]  ; key_enable
-;;;71     	return;
-;;;72     }
+;;;72     	return;
+;;;73     }
 000006  4770              BX       lr
-;;;73     
+;;;74     
                           ENDP
 
                   |L6.8|
@@ -317,140 +319,141 @@
                           AREA ||i.get_addr||, CODE, READONLY, ALIGN=2
 
                   get_addr PROC
-;;;155    
-;;;156    int get_addr(u8 *addr){
+;;;158    
+;;;159    int get_addr(u8 *addr){
 000000  b570              PUSH     {r4-r6,lr}
 000002  4605              MOV      r5,r0
-;;;157    	int ret = -1;
+;;;160    	int ret = -1;
 000004  f04f36ff          MOV      r6,#0xffffffff
-;;;158    	int c;
-;;;159    	static char buf[20] = {0};
-;;;160    	static int i = 0;
-;;;161    	
-;;;162    	c = get_key();
+;;;161    	int c;
+;;;162    	static char buf[20] = {0};
+;;;163    	static int i = 0;
+;;;164    	
+;;;165    	c = get_key();
 000008  f7fffffe          BL       get_key
 00000c  4604              MOV      r4,r0
-;;;163    	if(c != -1){
+;;;166    	if(c != -1){
 00000e  1c60              ADDS     r0,r4,#1
 000010  2800              CMP      r0,#0
 000012  d04f              BEQ      |L7.180|
-;;;164    		if(BUTTON_FUN == c){
+;;;167    		if(BUTTON_FUN == c){
 000014  2c0c              CMP      r4,#0xc
 000016  d101              BNE      |L7.28|
-;;;165    			return ret;
+;;;168    			return ret;
 000018  4630              MOV      r0,r6
                   |L7.26|
-;;;166    		}else if(BUTTON_OK == c){
-;;;167    			if(i>0){
-;;;168    				buf[i] = BUTTON_COLON;
-;;;169    				i++;
-;;;170    				ret = buf2addr(buf, i, addr);
-;;;171    			}
-;;;172    			for(i=0; i<20; i++){
-;;;173    				buf[i] = 0;
+;;;169    		}else if(BUTTON_OK == c){
+;;;170    			if(i>0){
+;;;171    				buf[i] = BUTTON_COLON;
+;;;172    				i++;
+;;;173    				ret = buf2addr(buf, i, addr);
 ;;;174    			}
-;;;175    			i = 0;
-;;;176    		}else if(BUTTON_DEL == c){
-;;;177    			i = i>0 ? i-1 : 0;
-;;;178    		}else{
-;;;179    			if(i<19){
-;;;180    				buf[i] = c;
-;;;181    				i++;
-;;;182    			}
-;;;183    		}
-;;;184    		oled_show_line3(INPUT_NUM, c);
-;;;185    	}
-;;;186    	
-;;;187    	return ret;
-;;;188    }
+;;;175    			for(i=0; i<20; i++){
+;;;176    				buf[i] = 0;
+;;;177    			}
+;;;178    			i = 0;
+;;;179    		}else if(BUTTON_DEL == c){
+;;;180    			i = i>0 ? i-1 : 0;
+;;;181    		}else{
+;;;182    			if(i<19){
+;;;183    				buf[i] = c;
+;;;184    				i++;
+;;;185    			}
+;;;186    		}
+;;;187    		//oled_show_line3(INPUT_NUM, c);
+;;;188    		lcd_show_line3(INPUT_NUM, c);
+;;;189    	}
+;;;190    	
+;;;191    	return ret;
+;;;192    }
 00001a  bd70              POP      {r4-r6,pc}
                   |L7.28|
-00001c  2c0a              CMP      r4,#0xa               ;166
+00001c  2c0a              CMP      r4,#0xa               ;169
 00001e  d12a              BNE      |L7.118|
 000020  4825              LDR      r0,|L7.184|
-000022  6800              LDR      r0,[r0,#0]            ;167  ; i
-000024  2800              CMP      r0,#0                 ;167
+000022  6800              LDR      r0,[r0,#0]            ;170  ; i
+000024  2800              CMP      r0,#0                 ;170
 000026  dd10              BLE      |L7.74|
-000028  200d              MOVS     r0,#0xd               ;168
+000028  200d              MOVS     r0,#0xd               ;171
 00002a  4924              LDR      r1,|L7.188|
 00002c  4a22              LDR      r2,|L7.184|
-00002e  6812              LDR      r2,[r2,#0]            ;168  ; i
-000030  5488              STRB     r0,[r1,r2]            ;168
+00002e  6812              LDR      r2,[r2,#0]            ;171  ; i
+000030  5488              STRB     r0,[r1,r2]            ;171
 000032  4821              LDR      r0,|L7.184|
-000034  6800              LDR      r0,[r0,#0]            ;169  ; i
-000036  1c40              ADDS     r0,r0,#1              ;169
+000034  6800              LDR      r0,[r0,#0]            ;172  ; i
+000036  1c40              ADDS     r0,r0,#1              ;172
 000038  491f              LDR      r1,|L7.184|
-00003a  6008              STR      r0,[r1,#0]            ;169  ; i
-00003c  462a              MOV      r2,r5                 ;170
-00003e  4608              MOV      r0,r1                 ;170
-000040  6801              LDR      r1,[r0,#0]            ;170  ; i
+00003a  6008              STR      r0,[r1,#0]            ;172  ; i
+00003c  462a              MOV      r2,r5                 ;173
+00003e  4608              MOV      r0,r1                 ;173
+000040  6801              LDR      r1,[r0,#0]            ;173  ; i
 000042  481e              LDR      r0,|L7.188|
 000044  f7fffffe          BL       buf2addr
-000048  4606              MOV      r6,r0                 ;170
+000048  4606              MOV      r6,r0                 ;173
                   |L7.74|
-00004a  2000              MOVS     r0,#0                 ;172
+00004a  2000              MOVS     r0,#0                 ;175
 00004c  491a              LDR      r1,|L7.184|
-00004e  6008              STR      r0,[r1,#0]            ;172  ; i
+00004e  6008              STR      r0,[r1,#0]            ;175  ; i
 000050  e009              B        |L7.102|
                   |L7.82|
-000052  2000              MOVS     r0,#0                 ;173
+000052  2000              MOVS     r0,#0                 ;176
 000054  4919              LDR      r1,|L7.188|
 000056  4a18              LDR      r2,|L7.184|
-000058  6812              LDR      r2,[r2,#0]            ;173  ; i
-00005a  5488              STRB     r0,[r1,r2]            ;173
+000058  6812              LDR      r2,[r2,#0]            ;176  ; i
+00005a  5488              STRB     r0,[r1,r2]            ;176
 00005c  4816              LDR      r0,|L7.184|
-00005e  6800              LDR      r0,[r0,#0]            ;172  ; i
-000060  1c40              ADDS     r0,r0,#1              ;172
+00005e  6800              LDR      r0,[r0,#0]            ;175  ; i
+000060  1c40              ADDS     r0,r0,#1              ;175
 000062  4915              LDR      r1,|L7.184|
-000064  6008              STR      r0,[r1,#0]            ;172  ; i
+000064  6008              STR      r0,[r1,#0]            ;175  ; i
                   |L7.102|
 000066  4814              LDR      r0,|L7.184|
-000068  6800              LDR      r0,[r0,#0]            ;172  ; i
-00006a  2814              CMP      r0,#0x14              ;172
+000068  6800              LDR      r0,[r0,#0]            ;175  ; i
+00006a  2814              CMP      r0,#0x14              ;175
 00006c  dbf1              BLT      |L7.82|
-00006e  2000              MOVS     r0,#0                 ;175
+00006e  2000              MOVS     r0,#0                 ;178
 000070  4911              LDR      r1,|L7.184|
-000072  6008              STR      r0,[r1,#0]            ;175  ; i
+000072  6008              STR      r0,[r1,#0]            ;178  ; i
 000074  e01a              B        |L7.172|
                   |L7.118|
-000076  2c0b              CMP      r4,#0xb               ;176
+000076  2c0b              CMP      r4,#0xb               ;179
 000078  d10b              BNE      |L7.146|
 00007a  480f              LDR      r0,|L7.184|
-00007c  6800              LDR      r0,[r0,#0]            ;177  ; i
-00007e  2800              CMP      r0,#0                 ;177
+00007c  6800              LDR      r0,[r0,#0]            ;180  ; i
+00007e  2800              CMP      r0,#0                 ;180
 000080  dd03              BLE      |L7.138|
 000082  480d              LDR      r0,|L7.184|
-000084  6800              LDR      r0,[r0,#0]            ;177  ; i
-000086  1e40              SUBS     r0,r0,#1              ;177
+000084  6800              LDR      r0,[r0,#0]            ;180  ; i
+000086  1e40              SUBS     r0,r0,#1              ;180
 000088  e000              B        |L7.140|
                   |L7.138|
-00008a  2000              MOVS     r0,#0                 ;177
+00008a  2000              MOVS     r0,#0                 ;180
                   |L7.140|
 00008c  490a              LDR      r1,|L7.184|
-00008e  6008              STR      r0,[r1,#0]            ;177  ; i
+00008e  6008              STR      r0,[r1,#0]            ;180  ; i
 000090  e00c              B        |L7.172|
                   |L7.146|
 000092  4809              LDR      r0,|L7.184|
-000094  6800              LDR      r0,[r0,#0]            ;179  ; i
-000096  2813              CMP      r0,#0x13              ;179
+000094  6800              LDR      r0,[r0,#0]            ;182  ; i
+000096  2813              CMP      r0,#0x13              ;182
 000098  da08              BGE      |L7.172|
 00009a  4808              LDR      r0,|L7.188|
 00009c  4a06              LDR      r2,|L7.184|
-00009e  6812              LDR      r2,[r2,#0]            ;180  ; i
-0000a0  5484              STRB     r4,[r0,r2]            ;180
+00009e  6812              LDR      r2,[r2,#0]            ;183  ; i
+0000a0  5484              STRB     r4,[r0,r2]            ;183
 0000a2  4805              LDR      r0,|L7.184|
-0000a4  6800              LDR      r0,[r0,#0]            ;181  ; i
-0000a6  1c40              ADDS     r0,r0,#1              ;181
+0000a4  6800              LDR      r0,[r0,#0]            ;184  ; i
+0000a6  1c40              ADDS     r0,r0,#1              ;184
 0000a8  4903              LDR      r1,|L7.184|
-0000aa  6008              STR      r0,[r1,#0]            ;181  ; i
+0000aa  6008              STR      r0,[r1,#0]            ;184  ; i
                   |L7.172|
-0000ac  b2e1              UXTB     r1,r4                 ;184
-0000ae  2006              MOVS     r0,#6                 ;184
-0000b0  f7fffffe          BL       oled_show_line3
+0000ac  b2e1              UXTB     r1,r4                 ;188
+0000ae  2006              MOVS     r0,#6                 ;188
+0000b0  f7fffffe          BL       lcd_show_line3
                   |L7.180|
-0000b4  4630              MOV      r0,r6                 ;187
+0000b4  4630              MOV      r0,r6                 ;191
 0000b6  e7b0              B        |L7.26|
-;;;189    
+;;;193    
                           ENDP
 
                   |L7.184|
@@ -461,29 +464,29 @@
                           AREA ||i.get_key||, CODE, READONLY, ALIGN=2
 
                   get_key PROC
-;;;95     //没有按键返回-1
-;;;96     int get_key(void){
+;;;96     //没有按键返回-1
+;;;97     int get_key(void){
 000000  f04f30ff          MOV      r0,#0xffffffff
-;;;97     	int button = -1;
-;;;98     
-;;;99     	if(valid){
+;;;98     	int button = -1;
+;;;99     
+;;;100    	if(valid){
 000004  4904              LDR      r1,|L8.24|
 000006  6809              LDR      r1,[r1,#0]  ; valid
 000008  b121              CBZ      r1,|L8.20|
-;;;100    		button = key;
+;;;101    		button = key;
 00000a  4904              LDR      r1,|L8.28|
 00000c  6808              LDR      r0,[r1,#0]  ; key
-;;;101    		valid = 0;
+;;;102    		valid = 0;
 00000e  2100              MOVS     r1,#0
 000010  4a01              LDR      r2,|L8.24|
 000012  6011              STR      r1,[r2,#0]  ; valid
                   |L8.20|
-;;;102    	}
-;;;103    
-;;;104    	return button;
-;;;105    }
+;;;103    	}
+;;;104    
+;;;105    	return button;
+;;;106    }
 000014  4770              BX       lr
-;;;106    
+;;;107    
                           ENDP
 
 000016  0000              DCW      0x0000
@@ -495,31 +498,31 @@
                           AREA ||i.put_key||, CODE, READONLY, ALIGN=2
 
                   put_key PROC
-;;;84     
-;;;85     void put_key(char button){
+;;;85     
+;;;86     void put_key(char button){
 000000  b510              PUSH     {r4,lr}
 000002  4604              MOV      r4,r0
-;;;86     
-;;;87     	if(key_enable){
+;;;87     
+;;;88     	if(key_enable){
 000004  4805              LDR      r0,|L9.28|
 000006  6800              LDR      r0,[r0,#0]  ; key_enable
 000008  b138              CBZ      r0,|L9.26|
-;;;88     		key = button;
+;;;89     		key = button;
 00000a  4805              LDR      r0,|L9.32|
 00000c  6004              STR      r4,[r0,#0]  ; key
-;;;89     		valid = 1;
+;;;90     		valid = 1;
 00000e  2001              MOVS     r0,#1
 000010  4904              LDR      r1,|L9.36|
 000012  6008              STR      r0,[r1,#0]  ; valid
-;;;90     		beep(100);
+;;;91     		beep(100);
 000014  2064              MOVS     r0,#0x64
 000016  f7fffffe          BL       beep
                   |L9.26|
-;;;91     	}
-;;;92     	return;
-;;;93     }
+;;;92     	}
+;;;93     	return;
+;;;94     }
 00001a  bd10              POP      {r4,pc}
-;;;94     
+;;;95     
                           ENDP
 
                   |L9.28|

@@ -5,20 +5,20 @@
                           AREA ||i.lcd_ShowChar||, CODE, READONLY, ALIGN=2
 
                   lcd_ShowChar PROC
-;;;256    //size:选择字体 16/12 
-;;;257    void lcd_ShowChar(u8 x,u8 y,u8 chr)
+;;;262    //size:选择字体 16/12 
+;;;263    void lcd_ShowChar(u8 x,u8 y,u8 chr)
 000000  e92d41f0          PUSH     {r4-r8,lr}
-;;;258    {      	
+;;;264    {      	
 000004  4607              MOV      r7,r0
 000006  460d              MOV      r5,r1
 000008  4690              MOV      r8,r2
-;;;259    	  unsigned char c=0,i=0;	
+;;;265    	  unsigned char c=0,i=0;	
 00000a  2600              MOVS     r6,#0
 00000c  2400              MOVS     r4,#0
-;;;260    		c=chr-' ';//得到偏移后的值			
+;;;266    		c=chr-' ';//得到偏移后的值			
 00000e  f1a80020          SUB      r0,r8,#0x20
 000012  b2c6              UXTB     r6,r0
-;;;261    		if(x>Max_Column-1){x-=Max_Column;y=y+2;}
+;;;267    		if(x>Max_Column-1){x-=Max_Column;y=y+2;}
 000014  2f7f              CMP      r7,#0x7f
 000016  dd04              BLE      |L1.34|
 000018  f1a70080          SUB      r0,r7,#0x80
@@ -26,61 +26,61 @@
 00001e  1ca8              ADDS     r0,r5,#2
 000020  b2c5              UXTB     r5,r0
                   |L1.34|
-;;;262    		if(SIZE ==16)
-;;;263    			{
-;;;264    			//OLED_Set_Pos(x,y);
-;;;265          Setadd12864(x,y+1);				
+;;;268    		if(SIZE ==16)
+;;;269    			{
+;;;270    			//OLED_Set_Pos(x,y);
+;;;271          Setadd12864(x,y+1);				
 000022  1c68              ADDS     r0,r5,#1
 000024  b2c1              UXTB     r1,r0
 000026  4638              MOV      r0,r7
 000028  f7fffffe          BL       Setadd12864
-;;;266    			for(i=0;i<8;i++)
+;;;272    			for(i=0;i<8;i++)
 00002c  2400              MOVS     r4,#0
 00002e  e007              B        |L1.64|
                   |L1.48|
-;;;267    			//OLED_WR_Byte(F8X16[c*16+i],OLED_DATA);
-;;;268    		  St7565_WriteDat(F8X16[c*16+i]);
+;;;273    			//OLED_WR_Byte(F8X16[c*16+i],OLED_DATA);
+;;;274    		  St7565_WriteDat(F8X16[c*16+i]);
 000030  eb041106          ADD      r1,r4,r6,LSL #4
 000034  4a0d              LDR      r2,|L1.108|
 000036  5c50              LDRB     r0,[r2,r1]
 000038  f7fffffe          BL       St7565_WriteDat
-00003c  1c60              ADDS     r0,r4,#1              ;266
-00003e  b2c4              UXTB     r4,r0                 ;266
+00003c  1c60              ADDS     r0,r4,#1              ;272
+00003e  b2c4              UXTB     r4,r0                 ;272
                   |L1.64|
-000040  2c08              CMP      r4,#8                 ;266
+000040  2c08              CMP      r4,#8                 ;272
 000042  dbf5              BLT      |L1.48|
-;;;269    			//OLED_Set_Pos(x,y+1);
-;;;270    		  Setadd12864(x,y+1);
+;;;275    			//OLED_Set_Pos(x,y+1);
+;;;276    		  Setadd12864(x,y+1);
 000044  1c68              ADDS     r0,r5,#1
 000046  b2c1              UXTB     r1,r0
 000048  4638              MOV      r0,r7
 00004a  f7fffffe          BL       Setadd12864
-;;;271    			for(i=0;i<8;i++)
+;;;277    			for(i=0;i<8;i++)
 00004e  2400              MOVS     r4,#0
 000050  e007              B        |L1.98|
                   |L1.82|
-;;;272    			//OLED_WR_Byte(F8X16[c*16+i+8],OLED_DATA);
-;;;273    			St7565_WriteDat(F8X16[c*16+i]);
+;;;278    			//OLED_WR_Byte(F8X16[c*16+i+8],OLED_DATA);
+;;;279    			St7565_WriteDat(F8X16[c*16+i]);
 000052  eb041106          ADD      r1,r4,r6,LSL #4
 000056  4a05              LDR      r2,|L1.108|
 000058  5c50              LDRB     r0,[r2,r1]
 00005a  f7fffffe          BL       St7565_WriteDat
-00005e  1c60              ADDS     r0,r4,#1              ;271
-000060  b2c4              UXTB     r4,r0                 ;271
+00005e  1c60              ADDS     r0,r4,#1              ;277
+000060  b2c4              UXTB     r4,r0                 ;277
                   |L1.98|
-000062  2c08              CMP      r4,#8                 ;271
+000062  2c08              CMP      r4,#8                 ;277
 000064  dbf5              BLT      |L1.82|
-;;;274    			}
-;;;275    			else {	
-;;;276    				//OLED_Set_Pos(x,y+1);
-;;;277    				Setadd12864(x,y+1);
-;;;278    				for(i=0;i<6;i++)
-;;;279    				//OLED_WR_Byte(F6x8[c][i],OLED_DATA);
-;;;280    				St7565_WriteDat(F6x8[c][i]);				
-;;;281    			}
-;;;282    }
+;;;280    			}
+;;;281    			else {	
+;;;282    				//OLED_Set_Pos(x,y+1);
+;;;283    				Setadd12864(x,y+1);
+;;;284    				for(i=0;i<6;i++)
+;;;285    				//OLED_WR_Byte(F6x8[c][i],OLED_DATA);
+;;;286    				St7565_WriteDat(F6x8[c][i]);				
+;;;287    			}
+;;;288    }
 000066  e8bd81f0          POP      {r4-r8,pc}
-;;;283    
+;;;289    
                           ENDP
 
 00006a  0000              DCW      0x0000
@@ -90,47 +90,47 @@
                           AREA ||i.lcd_clear_line||, CODE, READONLY, ALIGN=2
 
                   lcd_clear_line PROC
-;;;233    
-;;;234    void lcd_clear_line(int x){
+;;;239    
+;;;240    void lcd_clear_line(int x){
 000000  b570              PUSH     {r4-r6,lr}
 000002  4604              MOV      r4,r0
-;;;235    	int i=16;
+;;;241    	int i=16;
 000004  2510              MOVS     r5,#0x10
-;;;236    	
-;;;237    	if(x<0 || x>6){
+;;;242    	
+;;;243    	if(x<0 || x>6){
 000006  2c00              CMP      r4,#0
 000008  db01              BLT      |L2.14|
 00000a  2c06              CMP      r4,#6
 00000c  dd00              BLE      |L2.16|
                   |L2.14|
-;;;238    		return;
-;;;239    	}
-;;;240    	
-;;;241    	while(i--){
-;;;242    		//OLED_ShowString(8*i, x, " ");
-;;;243    		//LCD_P8x16Str(x,8*i,(unsigned char*)" ");
-;;;244    		//LCD_ShowCHinese((unsigned char*)" ",8*i,x);
-;;;245    		LCD_P8x16Str(8*i,x,(unsigned char*)" ");
-;;;246    	}
-;;;247    	
-;;;248    	return;
-;;;249    }
+;;;244    		return;
+;;;245    	}
+;;;246    	
+;;;247    	while(i--){
+;;;248    		//OLED_ShowString(8*i, x, " ");
+;;;249    		//LCD_P8x16Str(x,8*i,(unsigned char*)" ");
+;;;250    		//LCD_ShowCHinese((unsigned char*)" ",8*i,x);
+;;;251    		LCD_P8x16Str(8*i,x,(unsigned char*)" ");
+;;;252    	}
+;;;253    	
+;;;254    	return;
+;;;255    }
 00000e  bd70              POP      {r4-r6,pc}
                   |L2.16|
 000010  e005              B        |L2.30|
                   |L2.18|
-000012  b2e1              UXTB     r1,r4                 ;245
-000014  06ea              LSLS     r2,r5,#27             ;245
-000016  0e10              LSRS     r0,r2,#24             ;245
+000012  b2e1              UXTB     r1,r4                 ;251
+000014  06ea              LSLS     r2,r5,#27             ;251
+000016  0e10              LSRS     r0,r2,#24             ;251
 000018  a204              ADR      r2,|L2.44|
 00001a  f7fffffe          BL       LCD_P8x16Str
                   |L2.30|
-00001e  0028              MOVS     r0,r5                 ;241
-000020  f1a50501          SUB      r5,r5,#1              ;241
+00001e  0028              MOVS     r0,r5                 ;247
+000020  f1a50501          SUB      r5,r5,#1              ;247
 000024  d1f5              BNE      |L2.18|
-000026  bf00              NOP                            ;248
+000026  bf00              NOP                            ;254
 000028  e7f1              B        |L2.14|
-;;;250    
+;;;256    
                           ENDP
 
 00002a  0000              DCW      0x0000
@@ -184,583 +184,555 @@
 000010  2d0b              CMP      r5,#0xb
 000012  d26e              BCS      |L4.242|
 000014  e8dff005          TBB      [pc,r5]
-000018  aa062f35          DCB      0xaa,0x06,0x2f,0x35
-00001c  3b415f47          DCB      0x3b,0x41,0x5f,0x47
-000020  4d535900          DCB      0x4d,0x53,0x59,0x00
+000018  87060c12          DCB      0x87,0x06,0x0c,0x12
+00001c  181e3c24          DCB      0x18,0x1e,0x3c,0x24
+000020  2a303600          DCB      0x2a,0x30,0x36,0x00
 ;;;50     		case INPUT_ADDR:
-;;;51     			OLED_ShowCHinese(0,LINE2,6);
-000024  2206              MOVS     r2,#6
-000026  2101              MOVS     r1,#1
-000028  2000              MOVS     r0,#0
-00002a  f7fffffe          BL       OLED_ShowCHinese
-;;;52     			OLED_ShowCHinese(16,LINE2,7);
-00002e  2207              MOVS     r2,#7
-000030  2101              MOVS     r1,#1
-000032  2010              MOVS     r0,#0x10
-000034  f7fffffe          BL       OLED_ShowCHinese
-;;;53     			OLED_ShowCHinese(32,LINE2,8);
-000038  2208              MOVS     r2,#8
-00003a  2101              MOVS     r1,#1
-00003c  2020              MOVS     r0,#0x20
-00003e  f7fffffe          BL       OLED_ShowCHinese
-;;;54     			OLED_ShowCHinese(48,LINE2,9);	
-000042  2209              MOVS     r2,#9
-000044  2101              MOVS     r1,#1
-000046  2030              MOVS     r0,#0x30
-000048  f7fffffe          BL       OLED_ShowCHinese
-;;;55     			OLED_ShowCHinese(64,LINE2,10);
-00004c  220a              MOVS     r2,#0xa
-00004e  2101              MOVS     r1,#1
-000050  2040              MOVS     r0,#0x40
-000052  f7fffffe          BL       OLED_ShowCHinese
-;;;56     			OLED_ShowCHinese(80,LINE2,11);
-000056  220b              MOVS     r2,#0xb
-000058  2101              MOVS     r1,#1
-00005a  2050              MOVS     r0,#0x50
-00005c  f7fffffe          BL       OLED_ShowCHinese
-;;;57     			OLED_ShowCHinese(96,LINE2,12);
-000060  220c              MOVS     r2,#0xc
-000062  2101              MOVS     r1,#1
-000064  2060              MOVS     r0,#0x60
-000066  f7fffffe          BL       OLED_ShowCHinese
-;;;58     			OLED_ShowCHinese(112,LINE2,13);		
-00006a  220d              MOVS     r2,#0xd
-00006c  2101              MOVS     r1,#1
-00006e  2070              MOVS     r0,#0x70
-000070  f7fffffe          BL       OLED_ShowCHinese
-;;;59     			break;
-000074  e07b              B        |L4.366|
-;;;60     		
-;;;61     		case FUN_LIGHT_OFF:
-;;;62     //			OLED_ShowCHinese(0,LINE2,28);
-;;;63     //			OLED_ShowCHinese(16,LINE2,29);		
-;;;64             LCD_ShowCHinese((u8*)"关灯",0,2);			
-000076  2202              MOVS     r2,#2
-000078  2100              MOVS     r1,#0
-00007a  a03e              ADR      r0,|L4.372|
-00007c  f7fffffe          BL       LCD_ShowCHinese
-;;;65     			break;
-000080  e075              B        |L4.366|
-;;;66     		case FUN_LIGHT_RED:
-;;;67     //			OLED_ShowCHinese(0,LINE2,24);
-;;;68     //			OLED_ShowCHinese(16,LINE2,25);
-;;;69             LCD_ShowCHinese((u8*)"全红",0,2);		
-000082  2202              MOVS     r2,#2
-000084  2100              MOVS     r1,#0
-000086  a03d              ADR      r0,|L4.380|
-000088  f7fffffe          BL       LCD_ShowCHinese
-;;;70     			break;
-00008c  e06f              B        |L4.366|
-;;;71     		case FUN_YELLOW_FLASH:
-;;;72     //			OLED_ShowCHinese(0,LINE2,26);
-;;;73     //			OLED_ShowCHinese(16,LINE2,27);
-;;;74             LCD_ShowCHinese((u8*)"黄闪",0,2);			
-00008e  2202              MOVS     r2,#2
-000090  2100              MOVS     r1,#0
-000092  a03c              ADR      r0,|L4.388|
-000094  f7fffffe          BL       LCD_ShowCHinese
-;;;75     			break;
-000098  e069              B        |L4.366|
-;;;76     		case FUN_EAST_WEST_STRAIGHT:
-;;;77     //			OLED_ShowCHinese(0,LINE2,30);
-;;;78     //			OLED_ShowCHinese(16,LINE2,31);	
-;;;79     //			OLED_ShowCHinese(32,LINE2,34);
-;;;80     //			OLED_ShowCHinese(48,LINE2,35);
-;;;81             LCD_ShowCHinese((u8*)"东西直行",0,2);			
-00009a  2202              MOVS     r2,#2
-00009c  2100              MOVS     r1,#0
-00009e  a03b              ADR      r0,|L4.396|
-0000a0  f7fffffe          BL       LCD_ShowCHinese
-;;;82     			break;	
-0000a4  e063              B        |L4.366|
-;;;83     		case FUN_SOUTH_NORTH_STRAIGHT:
-;;;84     //			OLED_ShowCHinese(0,LINE2,32);
-;;;85     //			OLED_ShowCHinese(16,LINE2,33);	
-;;;86     //			OLED_ShowCHinese(32,LINE2,34);
-;;;87     //			OLED_ShowCHinese(48,LINE2,35);		
-;;;88             LCD_ShowCHinese((u8*)"南北直行",0,2);			
-0000a6  2202              MOVS     r2,#2
-0000a8  2100              MOVS     r1,#0
-0000aa  a03b              ADR      r0,|L4.408|
-0000ac  f7fffffe          BL       LCD_ShowCHinese
-;;;89     			break;
-0000b0  e05d              B        |L4.366|
-;;;90     		case FUN_EAST_WEST_TURN_LEFT:
-;;;91     //			OLED_ShowCHinese(0,LINE2,30);
-;;;92     //			OLED_ShowCHinese(16,LINE2,31);	
-;;;93     //			OLED_ShowCHinese(32,LINE2,36);
-;;;94     //			OLED_ShowCHinese(48,LINE2,37);	
-;;;95             LCD_ShowCHinese((u8*)"东西左转",0,2);			
-0000b2  2202              MOVS     r2,#2
-0000b4  2100              MOVS     r1,#0
-0000b6  a03b              ADR      r0,|L4.420|
-0000b8  f7fffffe          BL       LCD_ShowCHinese
-;;;96     			break;	
-0000bc  e057              B        |L4.366|
-;;;97     		case FUN_SOUTH_NORTH_TURN_LEFT:
-;;;98     //			OLED_ShowCHinese(0,LINE2,32);
-;;;99     //			OLED_ShowCHinese(16,LINE2,33);	
-;;;100    //			OLED_ShowCHinese(32,LINE2,36);
-;;;101    //			OLED_ShowCHinese(48,LINE2,37);
-;;;102            LCD_ShowCHinese((u8*)"南北左转",0,2);				
-0000be  2202              MOVS     r2,#2
-0000c0  2100              MOVS     r1,#0
-0000c2  a03b              ADR      r0,|L4.432|
-0000c4  f7fffffe          BL       LCD_ShowCHinese
-;;;103    			break;
-0000c8  e051              B        |L4.366|
-;;;104    		case FUN_HANDLE_CONTROL_CANCEL:
-;;;105    //			OLED_ShowCHinese(0,LINE2,40);
-;;;106    //			OLED_ShowCHinese(16,LINE2,41);	
-;;;107    //			OLED_ShowCHinese(32,LINE2,42);
-;;;108    //			OLED_ShowCHinese(48,LINE2,43);
-;;;109    //			OLED_ShowCHinese(64,LINE2,44);
-;;;110    //			OLED_ShowCHinese(80,LINE2,45);	
-;;;111          LCD_ShowCHinese((u8*)"手动控制取消",0,2);			
-0000ca  2202              MOVS     r2,#2
-0000cc  2100              MOVS     r1,#0
-0000ce  a03b              ADR      r0,|L4.444|
-0000d0  f7fffffe          BL       LCD_ShowCHinese
-;;;112    			break;
-0000d4  e04b              B        |L4.366|
-;;;113    		case INPUT_NUM:
-;;;114    			if(BUTTON_OK == chr){
-0000d6  2c0a              CMP      r4,#0xa
-0000d8  d10c              BNE      |L4.244|
-;;;115    				x_pos = 0;
-0000da  2000              MOVS     r0,#0
-0000dc  493b              LDR      r1,|L4.460|
-0000de  7008              STRB     r0,[r1,#0]
-;;;116    				disp_ch('_',x_pos*8,2);
-0000e0  4608              MOV      r0,r1
-0000e2  7800              LDRB     r0,[r0,#0]  ; x_pos
-0000e4  06c0              LSLS     r0,r0,#27
-0000e6  0e01              LSRS     r1,r0,#24
-0000e8  2202              MOVS     r2,#2
-0000ea  205f              MOVS     r0,#0x5f
-0000ec  f7fffffe          BL       disp_ch
-0000f0  e03b              B        |L4.362|
+;;;51     //			OLED_ShowCHinese(0,LINE2,6);
+;;;52     //			OLED_ShowCHinese(16,LINE2,7);
+;;;53     //			OLED_ShowCHinese(32,LINE2,8);
+;;;54     //			OLED_ShowCHinese(48,LINE2,9);	
+;;;55     //			OLED_ShowCHinese(64,LINE2,10);
+;;;56     //			OLED_ShowCHinese(80,LINE2,11);
+;;;57     //			OLED_ShowCHinese(96,LINE2,12);
+;;;58     //			OLED_ShowCHinese(112,LINE2,13);	
+;;;59             LCD_ShowCHinese((u8*)"输入信号机地址",0,2);				
+000024  2202              MOVS     r2,#2
+000026  2100              MOVS     r1,#0
+000028  a041              ADR      r0,|L4.304|
+00002a  f7fffffe          BL       LCD_ShowCHinese
+;;;60     			break;
+00002e  e07b              B        |L4.296|
+;;;61     		
+;;;62     		case FUN_LIGHT_OFF:
+;;;63     //			OLED_ShowCHinese(0,LINE2,28);
+;;;64     //			OLED_ShowCHinese(16,LINE2,29);		
+;;;65             LCD_ShowCHinese((u8*)"关灯",0,2);			
+000030  2202              MOVS     r2,#2
+000032  2100              MOVS     r1,#0
+000034  a042              ADR      r0,|L4.320|
+000036  f7fffffe          BL       LCD_ShowCHinese
+;;;66     			break;
+00003a  e075              B        |L4.296|
+;;;67     		case FUN_LIGHT_RED:
+;;;68     //			OLED_ShowCHinese(0,LINE2,24);
+;;;69     //			OLED_ShowCHinese(16,LINE2,25);
+;;;70             LCD_ShowCHinese((u8*)"全红",0,2);		
+00003c  2202              MOVS     r2,#2
+00003e  2100              MOVS     r1,#0
+000040  a041              ADR      r0,|L4.328|
+000042  f7fffffe          BL       LCD_ShowCHinese
+;;;71     			break;
+000046  e06f              B        |L4.296|
+;;;72     		case FUN_YELLOW_FLASH:
+;;;73     //			OLED_ShowCHinese(0,LINE2,26);
+;;;74     //			OLED_ShowCHinese(16,LINE2,27);
+;;;75             LCD_ShowCHinese((u8*)"黄闪",0,2);			
+000048  2202              MOVS     r2,#2
+00004a  2100              MOVS     r1,#0
+00004c  a040              ADR      r0,|L4.336|
+00004e  f7fffffe          BL       LCD_ShowCHinese
+;;;76     			break;
+000052  e069              B        |L4.296|
+;;;77     		case FUN_EAST_WEST_STRAIGHT:
+;;;78     //			OLED_ShowCHinese(0,LINE2,30);
+;;;79     //			OLED_ShowCHinese(16,LINE2,31);	
+;;;80     //			OLED_ShowCHinese(32,LINE2,34);
+;;;81     //			OLED_ShowCHinese(48,LINE2,35);
+;;;82             LCD_ShowCHinese((u8*)"东西直行",0,2);			
+000054  2202              MOVS     r2,#2
+000056  2100              MOVS     r1,#0
+000058  a03f              ADR      r0,|L4.344|
+00005a  f7fffffe          BL       LCD_ShowCHinese
+;;;83     			break;	
+00005e  e063              B        |L4.296|
+;;;84     		case FUN_SOUTH_NORTH_STRAIGHT:
+;;;85     //			OLED_ShowCHinese(0,LINE2,32);
+;;;86     //			OLED_ShowCHinese(16,LINE2,33);	
+;;;87     //			OLED_ShowCHinese(32,LINE2,34);
+;;;88     //			OLED_ShowCHinese(48,LINE2,35);		
+;;;89             LCD_ShowCHinese((u8*)"南北直行",0,2);			
+000060  2202              MOVS     r2,#2
+000062  2100              MOVS     r1,#0
+000064  a03f              ADR      r0,|L4.356|
+000066  f7fffffe          BL       LCD_ShowCHinese
+;;;90     			break;
+00006a  e05d              B        |L4.296|
+;;;91     		case FUN_EAST_WEST_TURN_LEFT:
+;;;92     //			OLED_ShowCHinese(0,LINE2,30);
+;;;93     //			OLED_ShowCHinese(16,LINE2,31);	
+;;;94     //			OLED_ShowCHinese(32,LINE2,36);
+;;;95     //			OLED_ShowCHinese(48,LINE2,37);	
+;;;96             LCD_ShowCHinese((u8*)"东西左转",0,2);			
+00006c  2202              MOVS     r2,#2
+00006e  2100              MOVS     r1,#0
+000070  a03f              ADR      r0,|L4.368|
+000072  f7fffffe          BL       LCD_ShowCHinese
+;;;97     			break;	
+000076  e057              B        |L4.296|
+;;;98     		case FUN_SOUTH_NORTH_TURN_LEFT:
+;;;99     //			OLED_ShowCHinese(0,LINE2,32);
+;;;100    //			OLED_ShowCHinese(16,LINE2,33);	
+;;;101    //			OLED_ShowCHinese(32,LINE2,36);
+;;;102    //			OLED_ShowCHinese(48,LINE2,37);
+;;;103            LCD_ShowCHinese((u8*)"南北左转",0,2);				
+000078  2202              MOVS     r2,#2
+00007a  2100              MOVS     r1,#0
+00007c  a03f              ADR      r0,|L4.380|
+00007e  f7fffffe          BL       LCD_ShowCHinese
+;;;104    			break;
+000082  e051              B        |L4.296|
+;;;105    		case FUN_HANDLE_CONTROL_CANCEL:
+;;;106    //			OLED_ShowCHinese(0,LINE2,40);
+;;;107    //			OLED_ShowCHinese(16,LINE2,41);	
+;;;108    //			OLED_ShowCHinese(32,LINE2,42);
+;;;109    //			OLED_ShowCHinese(48,LINE2,43);
+;;;110    //			OLED_ShowCHinese(64,LINE2,44);
+;;;111    //			OLED_ShowCHinese(80,LINE2,45);	
+;;;112          LCD_ShowCHinese((u8*)"手动控制取消",0,2);			
+000084  2202              MOVS     r2,#2
+000086  2100              MOVS     r1,#0
+000088  a03f              ADR      r0,|L4.392|
+00008a  f7fffffe          BL       LCD_ShowCHinese
+;;;113    			break;
+00008e  e04b              B        |L4.296|
+;;;114    		case INPUT_NUM:
+;;;115    			if(BUTTON_OK == chr){
+000090  2c0a              CMP      r4,#0xa
+000092  d10b              BNE      |L4.172|
+;;;116    				x_pos = 0;
+000094  2000              MOVS     r0,#0
+000096  4940              LDR      r1,|L4.408|
+000098  7008              STRB     r0,[r1,#0]
+;;;117    				disp_ch('_',x_pos*8,2);
+00009a  4608              MOV      r0,r1
+00009c  7800              LDRB     r0,[r0,#0]  ; x_pos
+00009e  06c0              LSLS     r0,r0,#27
+0000a0  0e01              LSRS     r1,r0,#24
+0000a2  2202              MOVS     r2,#2
+0000a4  205f              MOVS     r0,#0x5f
+0000a6  f7fffffe          BL       disp_ch
+0000aa  e03b              B        |L4.292|
+                  |L4.172|
+;;;118    			}else if(BUTTON_DEL == chr){
+0000ac  2c0b              CMP      r4,#0xb
+0000ae  d11b              BNE      |L4.232|
+;;;119    				//OLED_ShowChar(x_pos*8, LINE2, ' ');
+;;;120    				disp_ch(' ',x_pos*8,2);
+0000b0  4839              LDR      r0,|L4.408|
+0000b2  7800              LDRB     r0,[r0,#0]  ; x_pos
+0000b4  06c0              LSLS     r0,r0,#27
+0000b6  0e01              LSRS     r1,r0,#24
+0000b8  2202              MOVS     r2,#2
+0000ba  2020              MOVS     r0,#0x20
+0000bc  f7fffffe          BL       disp_ch
+;;;121    				x_pos = x_pos>0 ? x_pos-1 : 0;
+0000c0  4835              LDR      r0,|L4.408|
+0000c2  7800              LDRB     r0,[r0,#0]  ; x_pos
+0000c4  2800              CMP      r0,#0
+0000c6  dd03              BLE      |L4.208|
+0000c8  4833              LDR      r0,|L4.408|
+0000ca  7800              LDRB     r0,[r0,#0]  ; x_pos
+0000cc  1e40              SUBS     r0,r0,#1
+0000ce  e000              B        |L4.210|
+                  |L4.208|
+0000d0  2000              MOVS     r0,#0
+                  |L4.210|
+0000d2  4931              LDR      r1,|L4.408|
+0000d4  7008              STRB     r0,[r1,#0]
+;;;122    				disp_ch('_',x_pos*8,2);
+0000d6  4608              MOV      r0,r1
+0000d8  7800              LDRB     r0,[r0,#0]  ; x_pos
+0000da  06c0              LSLS     r0,r0,#27
+0000dc  0e01              LSRS     r1,r0,#24
+0000de  2202              MOVS     r2,#2
+0000e0  205f              MOVS     r0,#0x5f
+0000e2  f7fffffe          BL       disp_ch
+0000e6  e01d              B        |L4.292|
+                  |L4.232|
+;;;123    			}else{
+;;;124    				if(BUTTON_FUN == chr || BUTTON_COLON == chr){
+0000e8  2c0c              CMP      r4,#0xc
+0000ea  d001              BEQ      |L4.240|
+0000ec  2c0d              CMP      r4,#0xd
+0000ee  d101              BNE      |L4.244|
+                  |L4.240|
+;;;125    					return;
+;;;126    				}
+;;;127    				chr += 0x30;
+;;;128    				disp_ch(chr,x_pos*8,2);
+;;;129    				x_pos ++;
+;;;130    				disp_ch('_',x_pos*8,2);
+;;;131    			}
+;;;132      			break;
+;;;133    		default:
+;;;134    			break;  
+;;;135    	}
+;;;136    	return;
+;;;137    }
+0000f0  bd70              POP      {r4-r6,pc}
                   |L4.242|
-0000f2  e03b              B        |L4.364|
+0000f2  e018              B        |L4.294|
                   |L4.244|
-;;;117    			}else if(BUTTON_DEL == chr){
-0000f4  2c0b              CMP      r4,#0xb
-0000f6  d11b              BNE      |L4.304|
-;;;118    				//OLED_ShowChar(x_pos*8, LINE2, ' ');
-;;;119    				disp_ch(' ',x_pos*8,2);
-0000f8  4834              LDR      r0,|L4.460|
-0000fa  7800              LDRB     r0,[r0,#0]  ; x_pos
-0000fc  06c0              LSLS     r0,r0,#27
-0000fe  0e01              LSRS     r1,r0,#24
-000100  2202              MOVS     r2,#2
-000102  2020              MOVS     r0,#0x20
-000104  f7fffffe          BL       disp_ch
-;;;120    				x_pos = x_pos>0 ? x_pos-1 : 0;
-000108  4830              LDR      r0,|L4.460|
-00010a  7800              LDRB     r0,[r0,#0]  ; x_pos
-00010c  2800              CMP      r0,#0
-00010e  dd03              BLE      |L4.280|
-000110  482e              LDR      r0,|L4.460|
-000112  7800              LDRB     r0,[r0,#0]  ; x_pos
-000114  1e40              SUBS     r0,r0,#1
-000116  e000              B        |L4.282|
-                  |L4.280|
-000118  2000              MOVS     r0,#0
-                  |L4.282|
-00011a  492c              LDR      r1,|L4.460|
-00011c  7008              STRB     r0,[r1,#0]
-;;;121    				disp_ch('_',x_pos*8,2);
-00011e  4608              MOV      r0,r1
-000120  7800              LDRB     r0,[r0,#0]  ; x_pos
-000122  06c0              LSLS     r0,r0,#27
-000124  0e01              LSRS     r1,r0,#24
-000126  2202              MOVS     r2,#2
-000128  205f              MOVS     r0,#0x5f
-00012a  f7fffffe          BL       disp_ch
-00012e  e01c              B        |L4.362|
-                  |L4.304|
-;;;122    			}else{
-;;;123    				if(BUTTON_FUN == chr || BUTTON_COLON == chr){
-000130  2c0c              CMP      r4,#0xc
-000132  d001              BEQ      |L4.312|
-000134  2c0d              CMP      r4,#0xd
-000136  d100              BNE      |L4.314|
-                  |L4.312|
-;;;124    					return;
-;;;125    				}
-;;;126    				chr += 0x30;
-;;;127    				disp_ch(chr,x_pos*8,2);
-;;;128    				x_pos ++;
-;;;129    				disp_ch('_',x_pos*8,2);
-;;;130    			}
-;;;131      			break;
-;;;132    		default:
-;;;133    			break;  
-;;;134    	}
-;;;135    	return;
-;;;136    }
-000138  bd70              POP      {r4-r6,pc}
-                  |L4.314|
-00013a  f1040030          ADD      r0,r4,#0x30           ;126
-00013e  b2c4              UXTB     r4,r0                 ;126
-000140  4822              LDR      r0,|L4.460|
-000142  7800              LDRB     r0,[r0,#0]            ;127  ; x_pos
-000144  06c0              LSLS     r0,r0,#27             ;127
-000146  0e01              LSRS     r1,r0,#24             ;127
-000148  2202              MOVS     r2,#2                 ;127
-00014a  4620              MOV      r0,r4                 ;127
-00014c  f7fffffe          BL       disp_ch
-000150  481e              LDR      r0,|L4.460|
-000152  7800              LDRB     r0,[r0,#0]            ;128  ; x_pos
-000154  1c40              ADDS     r0,r0,#1              ;128
-000156  491d              LDR      r1,|L4.460|
-000158  7008              STRB     r0,[r1,#0]            ;128
-00015a  4608              MOV      r0,r1                 ;129
-00015c  7800              LDRB     r0,[r0,#0]            ;129  ; x_pos
-00015e  06c0              LSLS     r0,r0,#27             ;129
-000160  0e01              LSRS     r1,r0,#24             ;129
-000162  2202              MOVS     r2,#2                 ;129
-000164  205f              MOVS     r0,#0x5f              ;129
-000166  f7fffffe          BL       disp_ch
-                  |L4.362|
-00016a  e000              B        |L4.366|
-                  |L4.364|
-00016c  bf00              NOP                            ;133
-                  |L4.366|
-00016e  bf00              NOP                            ;59
-000170  bf00              NOP                            ;135
-000172  e7e1              B        |L4.312|
-;;;137    
+0000f4  f1040030          ADD      r0,r4,#0x30           ;127
+0000f8  b2c4              UXTB     r4,r0                 ;127
+0000fa  4827              LDR      r0,|L4.408|
+0000fc  7800              LDRB     r0,[r0,#0]            ;128  ; x_pos
+0000fe  06c0              LSLS     r0,r0,#27             ;128
+000100  0e01              LSRS     r1,r0,#24             ;128
+000102  2202              MOVS     r2,#2                 ;128
+000104  4620              MOV      r0,r4                 ;128
+000106  f7fffffe          BL       disp_ch
+00010a  4823              LDR      r0,|L4.408|
+00010c  7800              LDRB     r0,[r0,#0]            ;129  ; x_pos
+00010e  1c40              ADDS     r0,r0,#1              ;129
+000110  4921              LDR      r1,|L4.408|
+000112  7008              STRB     r0,[r1,#0]            ;129
+000114  4608              MOV      r0,r1                 ;130
+000116  7800              LDRB     r0,[r0,#0]            ;130  ; x_pos
+000118  06c0              LSLS     r0,r0,#27             ;130
+00011a  0e01              LSRS     r1,r0,#24             ;130
+00011c  2202              MOVS     r2,#2                 ;130
+00011e  205f              MOVS     r0,#0x5f              ;130
+000120  f7fffffe          BL       disp_ch
+                  |L4.292|
+000124  e000              B        |L4.296|
+                  |L4.294|
+000126  bf00              NOP                            ;134
+                  |L4.296|
+000128  bf00              NOP                            ;60
+00012a  bf00              NOP                            ;136
+00012c  e7e0              B        |L4.240|
+;;;138    
                           ENDP
 
-                  |L4.372|
-000174  b9d8b5c6          DCB      185,216,181,198,0
+00012e  0000              DCW      0x0000
+                  |L4.304|
+000130  cae4c8eb          DCB      202,228,200,235,208,197,186,197,187,250,181,216,214,183,0
+000134  d0c5bac5
+000138  bbfab5d8
+00013c  d6b700  
+00013f  00                DCB      0
+                  |L4.320|
+000140  b9d8b5c6          DCB      185,216,181,198,0
+000144  00      
+000145  00                DCB      0
+000146  00                DCB      0
+000147  00                DCB      0
+                  |L4.328|
+000148  c8abbaec          DCB      200,171,186,236,0
+00014c  00      
+00014d  00                DCB      0
+00014e  00                DCB      0
+00014f  00                DCB      0
+                  |L4.336|
+000150  bbc6c9c1          DCB      187,198,201,193,0
+000154  00      
+000155  00                DCB      0
+000156  00                DCB      0
+000157  00                DCB      0
+                  |L4.344|
+000158  b6abcef7          DCB      182,171,206,247,214,177,208,208,0
+00015c  d6b1d0d0
+000160  00      
+000161  00                DCB      0
+000162  00                DCB      0
+000163  00                DCB      0
+                  |L4.356|
+000164  c4cfb1b1          DCB      196,207,177,177,214,177,208,208,0
+000168  d6b1d0d0
+00016c  00      
+00016d  00                DCB      0
+00016e  00                DCB      0
+00016f  00                DCB      0
+                  |L4.368|
+000170  b6abcef7          DCB      182,171,206,247,215,243,215,170,0
+000174  d7f3d7aa
 000178  00      
 000179  00                DCB      0
 00017a  00                DCB      0
 00017b  00                DCB      0
                   |L4.380|
-00017c  c8abbaec          DCB      200,171,186,236,0
-000180  00      
-000181  00                DCB      0
-000182  00                DCB      0
-000183  00                DCB      0
-                  |L4.388|
-000184  bbc6c9c1          DCB      187,198,201,193,0
-000188  00      
-000189  00                DCB      0
-00018a  00                DCB      0
-00018b  00                DCB      0
-                  |L4.396|
-00018c  b6abcef7          DCB      182,171,206,247,214,177,208,208,0
-000190  d6b1d0d0
+00017c  c4cfb1b1          DCB      196,207,177,177,215,243,215,170,0
+000180  d7f3d7aa
+000184  00      
+000185  00                DCB      0
+000186  00                DCB      0
+000187  00                DCB      0
+                  |L4.392|
+000188  cad6b6af          DCB      202,214,182,175,191,216,214,198,200,161,207,251,0
+00018c  bfd8d6c6
+000190  c8a1cffb
 000194  00      
 000195  00                DCB      0
 000196  00                DCB      0
 000197  00                DCB      0
                   |L4.408|
-000198  c4cfb1b1          DCB      196,207,177,177,214,177,208,208,0
-00019c  d6b1d0d0
-0001a0  00      
-0001a1  00                DCB      0
-0001a2  00                DCB      0
-0001a3  00                DCB      0
-                  |L4.420|
-0001a4  b6abcef7          DCB      182,171,206,247,215,243,215,170,0
-0001a8  d7f3d7aa
-0001ac  00      
-0001ad  00                DCB      0
-0001ae  00                DCB      0
-0001af  00                DCB      0
-                  |L4.432|
-0001b0  c4cfb1b1          DCB      196,207,177,177,215,243,215,170,0
-0001b4  d7f3d7aa
-0001b8  00      
-0001b9  00                DCB      0
-0001ba  00                DCB      0
-0001bb  00                DCB      0
-                  |L4.444|
-0001bc  cad6b6af          DCB      202,214,182,175,191,216,214,198,200,161,207,251,0
-0001c0  bfd8d6c6
-0001c4  c8a1cffb
-0001c8  00      
-0001c9  00                DCB      0
-0001ca  00                DCB      0
-0001cb  00                DCB      0
-                  |L4.460|
                           DCD      x_pos
 
                           AREA ||i.lcd_show_line3||, CODE, READONLY, ALIGN=2
 
                   lcd_show_line3 PROC
-;;;145    ********************************************************************************/
-;;;146    void lcd_show_line3(u8 index,  char chr){
+;;;146    ********************************************************************************/
+;;;147    void lcd_show_line3(u8 index,  char chr){
 000000  b570              PUSH     {r4-r6,lr}
 000002  4605              MOV      r5,r0
 000004  460c              MOV      r4,r1
-;;;147    	
-;;;148    	static u8 x_pos = 0;//[0-31]
-;;;149    	if(index != INPUT_NUM){
+;;;148    	
+;;;149    	static u8 x_pos = 0;//[0-31]
+;;;150    	if(index != INPUT_NUM){
 000006  2d06              CMP      r5,#6
 000008  d005              BEQ      |L5.22|
-;;;150    //		oled_clear_line(LINE3);  
-;;;151    //		oled_clear_line(LINE4);
-;;;152    //		lcd_clear_line(LINE3);  
-;;;153    //		lcd_clear_line(LCD_LINE4);
-;;;154    		//lcd_clear_line(LINE3);
-;;;155    		//LCD_ShowCHinese((unsigned char*)" ",6*16,5);
-;;;156    		//lcd_clear_line(1);
-;;;157    		lcd_clear_line(2);
+;;;151    //		oled_clear_line(LINE3);  
+;;;152    //		oled_clear_line(LINE4);
+;;;153    //		lcd_clear_line(LINE3);  
+;;;154    //		lcd_clear_line(LCD_LINE4);
+;;;155    		//lcd_clear_line(LINE3);
+;;;156    		//LCD_ShowCHinese((unsigned char*)" ",6*16,5);
+;;;157    		//lcd_clear_line(1);
+;;;158    		lcd_clear_line(2);
 00000a  2002              MOVS     r0,#2
 00000c  f7fffffe          BL       lcd_clear_line
-;;;158    		lcd_clear_line(5);
+;;;159    		lcd_clear_line(5);
 000010  2005              MOVS     r0,#5
 000012  f7fffffe          BL       lcd_clear_line
                   |L5.22|
-;;;159    		//ClearDisplay();
-;;;160    	}
-;;;161    	
-;;;162    	switch(index){
+;;;160    		//ClearDisplay();
+;;;161    	}
+;;;162    	
+;;;163    	switch(index){
 000016  2d08              CMP      r5,#8
-000018  d27e              BCS      |L5.280|
+000018  d26e              BCS      |L5.248|
 00001a  e8dff005          TBB      [pc,r5]
-00001e  8604              DCB      0x86,0x04
+00001e  6d04              DCB      0x6d,0x04
 000020  0a10161c          DCB      0x0a,0x10,0x16,0x1c
-000024  413b              DCB      0x41,0x3b
-;;;163    		case CONNECT_STATUS_FAIL:
-;;;164    //			OLED_ShowCHinese(0,LINE3,0);
-;;;165    //			OLED_ShowCHinese(16,LINE3,1);
-;;;166    //			OLED_ShowCHinese(32,LINE3,16);
-;;;167    //			OLED_ShowCHinese(48,LINE3,2);
-;;;168    //			OLED_ShowCHinese(64,LINE3,3);
-;;;169    		    LCD_ShowCHinese((u8*)"连接不成功",0,LINE3);
+000024  2822              DCB      0x28,0x22
+;;;164    		case CONNECT_STATUS_FAIL:
+;;;165    //			OLED_ShowCHinese(0,LINE3,0);
+;;;166    //			OLED_ShowCHinese(16,LINE3,1);
+;;;167    //			OLED_ShowCHinese(32,LINE3,16);
+;;;168    //			OLED_ShowCHinese(48,LINE3,2);
+;;;169    //			OLED_ShowCHinese(64,LINE3,3);
+;;;170    		    LCD_ShowCHinese((u8*)"连接不成功",0,LINE3);
 000026  2205              MOVS     r2,#5
 000028  2100              MOVS     r1,#0
-00002a  a041              ADR      r0,|L5.304|
+00002a  a035              ADR      r0,|L5.256|
 00002c  f7fffffe          BL       LCD_ShowCHinese
-;;;170    			break;
-000030  e07c              B        |L5.300|
-;;;171    		case CONNECT_STATUS_OK:
-;;;172    //			OLED_ShowCHinese(0,LINE3,0);
-;;;173    //			OLED_ShowCHinese(16,LINE3,1);
-;;;174    //			OLED_ShowCHinese(32,LINE3,2);
-;;;175    //			OLED_ShowCHinese(48,LINE3,3);
-;;;176    		    LCD_ShowCHinese((u8*)"连接成功",0,LINE3);
+;;;171    			break;
+000030  e063              B        |L5.250|
+;;;172    		case CONNECT_STATUS_OK:
+;;;173    //			OLED_ShowCHinese(0,LINE3,0);
+;;;174    //			OLED_ShowCHinese(16,LINE3,1);
+;;;175    //			OLED_ShowCHinese(32,LINE3,2);
+;;;176    //			OLED_ShowCHinese(48,LINE3,3);
+;;;177    		    LCD_ShowCHinese((u8*)"连接成功",0,LINE3);
 000032  2205              MOVS     r2,#5
 000034  2100              MOVS     r1,#0
-000036  a041              ADR      r0,|L5.316|
+000036  a035              ADR      r0,|L5.268|
 000038  f7fffffe          BL       LCD_ShowCHinese
-;;;177    			break;		
-00003c  e076              B        |L5.300|
-;;;178    		case SEND_FAIL:
-;;;179    //			OLED_ShowCHinese(0,LINE3,14);
-;;;180    //			OLED_ShowCHinese(16,LINE3,15);
-;;;181    //			OLED_ShowCHinese(32,LINE3,4);
-;;;182    //			OLED_ShowCHinese(48,LINE3,5);
-;;;183    		  LCD_ShowCHinese((u8*)"发送失败",0,LINE3);
+;;;178    			break;		
+00003c  e05d              B        |L5.250|
+;;;179    		case SEND_FAIL:
+;;;180    //			OLED_ShowCHinese(0,LINE3,14);
+;;;181    //			OLED_ShowCHinese(16,LINE3,15);
+;;;182    //			OLED_ShowCHinese(32,LINE3,4);
+;;;183    //			OLED_ShowCHinese(48,LINE3,5);
+;;;184    		  LCD_ShowCHinese((u8*)"发送失败",0,LINE3);
 00003e  2205              MOVS     r2,#5
 000040  2100              MOVS     r1,#0
-000042  a041              ADR      r0,|L5.328|
+000042  a035              ADR      r0,|L5.280|
 000044  f7fffffe          BL       LCD_ShowCHinese
-;;;184    			break;
-000048  e070              B        |L5.300|
-;;;185    		case SEND_OK:
-;;;186    //			OLED_ShowCHinese(0,LINE3,14);
-;;;187    //			OLED_ShowCHinese(16,LINE3,15);
-;;;188    //			OLED_ShowCHinese(32,LINE3,2);
-;;;189    //			OLED_ShowCHinese(48,LINE3,3);
-;;;190    		  LCD_ShowCHinese((u8*)"发送成功",0,LINE3);
+;;;185    			break;
+000048  e057              B        |L5.250|
+;;;186    		case SEND_OK:
+;;;187    //			OLED_ShowCHinese(0,LINE3,14);
+;;;188    //			OLED_ShowCHinese(16,LINE3,15);
+;;;189    //			OLED_ShowCHinese(32,LINE3,2);
+;;;190    //			OLED_ShowCHinese(48,LINE3,3);
+;;;191    		  LCD_ShowCHinese((u8*)"发送成功",0,LINE3);
 00004a  2205              MOVS     r2,#5
 00004c  2100              MOVS     r1,#0
-00004e  a041              ADR      r0,|L5.340|
+00004e  a035              ADR      r0,|L5.292|
 000050  f7fffffe          BL       LCD_ShowCHinese
-;;;191    			break;
-000054  e06a              B        |L5.300|
-;;;192    		case ADDR_ERROR:
-;;;193    			OLED_ShowCHinese(0,LINE3,11);
-000056  220b              MOVS     r2,#0xb
-000058  2105              MOVS     r1,#5
-00005a  2000              MOVS     r0,#0
-00005c  f7fffffe          BL       OLED_ShowCHinese
-;;;194    			OLED_ShowCHinese(16,LINE3,12);
-000060  220c              MOVS     r2,#0xc
-000062  2105              MOVS     r1,#5
-000064  2010              MOVS     r0,#0x10
-000066  f7fffffe          BL       OLED_ShowCHinese
-;;;195    			OLED_ShowCHinese(32,LINE3,18);
-00006a  2212              MOVS     r2,#0x12
-00006c  2105              MOVS     r1,#5
-00006e  2020              MOVS     r0,#0x20
-000070  f7fffffe          BL       OLED_ShowCHinese
-;;;196    			OLED_ShowCHinese(48,LINE3,19);
-000074  2213              MOVS     r2,#0x13
-000076  2105              MOVS     r1,#5
-000078  2030              MOVS     r0,#0x30
-00007a  f7fffffe          BL       OLED_ShowCHinese
-;;;197    			OLED_ShowCHinese(64,LINE3,20);
-00007e  2214              MOVS     r2,#0x14
-000080  2105              MOVS     r1,#5
-000082  2040              MOVS     r0,#0x40
-000084  f7fffffe          BL       OLED_ShowCHinese
-;;;198    			OLED_ShowCHinese(80,LINE3,21);		
-000088  2215              MOVS     r2,#0x15
-00008a  2105              MOVS     r1,#5
-00008c  2050              MOVS     r0,#0x50
-00008e  f7fffffe          BL       OLED_ShowCHinese
-;;;199    			break;
-000092  e04b              B        |L5.300|
-;;;200    		case SENDING:
-;;;201    //			OLED_ShowCHinese(0,LINE3,38);
-;;;202    //			OLED_ShowCHinese(16,LINE3,39);
-;;;203    //			OLED_ShowCHinese(32,LINE3,14);
-;;;204    //			OLED_ShowCHinese(48,LINE3,15);
-;;;205    				LCD_ShowCHinese((u8*)"正在发送",0,LINE3);		
-000094  2205              MOVS     r2,#5
-000096  2100              MOVS     r1,#0
-000098  a031              ADR      r0,|L5.352|
-00009a  f7fffffe          BL       LCD_ShowCHinese
-;;;206    			break;
-00009e  e045              B        |L5.300|
-;;;207    		case INPUT_NUM:
-;;;208    			if(BUTTON_OK == chr){
-0000a0  2c0a              CMP      r4,#0xa
-0000a2  d103              BNE      |L5.172|
-;;;209    				x_pos = 0;
-0000a4  2000              MOVS     r0,#0
-0000a6  4931              LDR      r1,|L5.364|
-0000a8  7008              STRB     r0,[r1,#0]
-0000aa  e03d              B        |L5.296|
-                  |L5.172|
-;;;210    			}else if(BUTTON_DEL == chr){
-0000ac  2c0b              CMP      r4,#0xb
-0000ae  d11a              BNE      |L5.230|
-;;;211    				//OLED_ShowChar(x_pos*8, LINE3, ' ');
-;;;212    				lcd_ShowChar(x_pos*8, LINE3, ' ');
-0000b0  492e              LDR      r1,|L5.364|
-0000b2  7809              LDRB     r1,[r1,#0]  ; x_pos
-0000b4  06c9              LSLS     r1,r1,#27
-0000b6  0e08              LSRS     r0,r1,#24
-0000b8  2220              MOVS     r2,#0x20
-0000ba  2105              MOVS     r1,#5
-0000bc  f7fffffe          BL       lcd_ShowChar
-;;;213    				x_pos = x_pos>0 ? x_pos-1 : 0;
-0000c0  482a              LDR      r0,|L5.364|
-0000c2  7800              LDRB     r0,[r0,#0]  ; x_pos
-0000c4  2800              CMP      r0,#0
-0000c6  dd03              BLE      |L5.208|
-0000c8  4828              LDR      r0,|L5.364|
-0000ca  7800              LDRB     r0,[r0,#0]  ; x_pos
-0000cc  1e40              SUBS     r0,r0,#1
-0000ce  e000              B        |L5.210|
-                  |L5.208|
-0000d0  2000              MOVS     r0,#0
-                  |L5.210|
-0000d2  4926              LDR      r1,|L5.364|
-0000d4  7008              STRB     r0,[r1,#0]
-;;;214    				//OLED_ShowChar(x_pos*8, LINE3, '_');
-;;;215    				lcd_ShowChar(x_pos*8, LINE3, ' ');
-0000d6  7809              LDRB     r1,[r1,#0]  ; x_pos
-0000d8  06c9              LSLS     r1,r1,#27
-0000da  0e08              LSRS     r0,r1,#24
-0000dc  2220              MOVS     r2,#0x20
-0000de  2105              MOVS     r1,#5
-0000e0  f7fffffe          BL       lcd_ShowChar
-0000e4  e020              B        |L5.296|
-                  |L5.230|
-;;;216    			}else{
-;;;217    				chr = BUTTON_COLON == chr ? ':' : chr+0x30;//转成字符
-0000e6  2c0d              CMP      r4,#0xd
-0000e8  d101              BNE      |L5.238|
-0000ea  203a              MOVS     r0,#0x3a
-0000ec  e001              B        |L5.242|
-                  |L5.238|
-0000ee  f1040030          ADD      r0,r4,#0x30
-                  |L5.242|
-0000f2  b2c4              UXTB     r4,r0
-;;;218    				if(x_pos<19){
-0000f4  481d              LDR      r0,|L5.364|
-0000f6  7800              LDRB     r0,[r0,#0]  ; x_pos
-0000f8  2813              CMP      r0,#0x13
-0000fa  da15              BGE      |L5.296|
-;;;219    					//OLED_ShowChar(x_pos*8, LINE3, chr);
-;;;220    					lcd_ShowChar(x_pos*8, LINE3, ' ');
-0000fc  491b              LDR      r1,|L5.364|
-0000fe  7809              LDRB     r1,[r1,#0]  ; x_pos
-000100  06c9              LSLS     r1,r1,#27
-000102  0e08              LSRS     r0,r1,#24
-000104  2220              MOVS     r2,#0x20
-000106  2105              MOVS     r1,#5
-000108  f7fffffe          BL       lcd_ShowChar
-;;;221    					x_pos ++;
-00010c  4817              LDR      r0,|L5.364|
-00010e  7800              LDRB     r0,[r0,#0]  ; x_pos
-000110  1c40              ADDS     r0,r0,#1
-000112  4916              LDR      r1,|L5.364|
-000114  7008              STRB     r0,[r1,#0]
-;;;222    					//OLED_ShowChar(x_pos*8, LINE3, '_');
-;;;223    					lcd_ShowChar(x_pos*8, LINE3, ' ');
-000116  e000              B        |L5.282|
-                  |L5.280|
-000118  e007              B        |L5.298|
-                  |L5.282|
-00011a  7809              LDRB     r1,[r1,#0]  ; x_pos
-00011c  06c9              LSLS     r1,r1,#27
-00011e  0e08              LSRS     r0,r1,#24
-000120  2220              MOVS     r2,#0x20
-000122  2105              MOVS     r1,#5
-000124  f7fffffe          BL       lcd_ShowChar
-                  |L5.296|
-;;;224    				}
-;;;225    			}
-;;;226    			break;
-000128  e000              B        |L5.300|
-                  |L5.298|
-;;;227    		default:			
-;;;228    			break;
-00012a  bf00              NOP      
-                  |L5.300|
-00012c  bf00              NOP                            ;170
-;;;229    	}
-;;;230    	return;
-;;;231    }
-00012e  bd70              POP      {r4-r6,pc}
-;;;232    
+;;;192    			break;
+000054  e051              B        |L5.250|
+;;;193    		case ADDR_ERROR:
+;;;194    //			OLED_ShowCHinese(0,LINE3,11);
+;;;195    //			OLED_ShowCHinese(16,LINE3,12);
+;;;196    //			OLED_ShowCHinese(32,LINE3,18);
+;;;197    //			OLED_ShowCHinese(48,LINE3,19);
+;;;198    //			OLED_ShowCHinese(64,LINE3,20);
+;;;199    //			OLED_ShowCHinese(80,LINE3,21);	
+;;;200          LCD_ShowCHinese((u8*)"地址格式错误",0,LINE3);		
+000056  2205              MOVS     r2,#5
+000058  2100              MOVS     r1,#0
+00005a  a035              ADR      r0,|L5.304|
+00005c  f7fffffe          BL       LCD_ShowCHinese
+;;;201    			break;
+000060  e04b              B        |L5.250|
+;;;202    		case SENDING:
+;;;203    //			OLED_ShowCHinese(0,LINE3,38);
+;;;204    //			OLED_ShowCHinese(16,LINE3,39);
+;;;205    //			OLED_ShowCHinese(32,LINE3,14);
+;;;206    //			OLED_ShowCHinese(48,LINE3,15);
+;;;207    				LCD_ShowCHinese((u8*)"正在发送",0,LINE3);		
+000062  2205              MOVS     r2,#5
+000064  2100              MOVS     r1,#0
+000066  a036              ADR      r0,|L5.320|
+000068  f7fffffe          BL       LCD_ShowCHinese
+;;;208    			break;
+00006c  e045              B        |L5.250|
+;;;209    		case INPUT_NUM:
+;;;210    			if(BUTTON_OK == chr){
+00006e  2c0a              CMP      r4,#0xa
+000070  d103              BNE      |L5.122|
+;;;211    				x_pos = 0;
+000072  2000              MOVS     r0,#0
+000074  4935              LDR      r1,|L5.332|
+000076  7008              STRB     r0,[r1,#0]
+000078  e03d              B        |L5.246|
+                  |L5.122|
+;;;212    			}else if(BUTTON_DEL == chr){
+00007a  2c0b              CMP      r4,#0xb
+00007c  d11b              BNE      |L5.182|
+;;;213    				//OLED_ShowChar(x_pos*8, LINE3, ' ');
+;;;214    				//lcd_ShowChar(x_pos*8, LINE3, ' ');
+;;;215    				disp_ch(' ',x_pos*8,4);
+00007e  4833              LDR      r0,|L5.332|
+000080  7800              LDRB     r0,[r0,#0]  ; x_pos
+000082  06c0              LSLS     r0,r0,#27
+000084  0e01              LSRS     r1,r0,#24
+000086  2204              MOVS     r2,#4
+000088  2020              MOVS     r0,#0x20
+00008a  f7fffffe          BL       disp_ch
+;;;216    				x_pos = x_pos>0 ? x_pos-1 : 0;
+00008e  482f              LDR      r0,|L5.332|
+000090  7800              LDRB     r0,[r0,#0]  ; x_pos
+000092  2800              CMP      r0,#0
+000094  dd03              BLE      |L5.158|
+000096  482d              LDR      r0,|L5.332|
+000098  7800              LDRB     r0,[r0,#0]  ; x_pos
+00009a  1e40              SUBS     r0,r0,#1
+00009c  e000              B        |L5.160|
+                  |L5.158|
+00009e  2000              MOVS     r0,#0
+                  |L5.160|
+0000a0  492a              LDR      r1,|L5.332|
+0000a2  7008              STRB     r0,[r1,#0]
+;;;217    				//OLED_ShowChar(x_pos*8, LINE3, '_');
+;;;218    				//lcd_ShowChar(x_pos*8, LINE3, ' ');
+;;;219    				disp_ch(' ',x_pos*8,4);
+0000a4  4608              MOV      r0,r1
+0000a6  7800              LDRB     r0,[r0,#0]  ; x_pos
+0000a8  06c0              LSLS     r0,r0,#27
+0000aa  0e01              LSRS     r1,r0,#24
+0000ac  2204              MOVS     r2,#4
+0000ae  2020              MOVS     r0,#0x20
+0000b0  f7fffffe          BL       disp_ch
+0000b4  e01f              B        |L5.246|
+                  |L5.182|
+;;;220    			}else{
+;;;221    				chr = BUTTON_COLON == chr ? ':' : chr+0x30;//转成字符
+0000b6  2c0d              CMP      r4,#0xd
+0000b8  d101              BNE      |L5.190|
+0000ba  203a              MOVS     r0,#0x3a
+0000bc  e001              B        |L5.194|
+                  |L5.190|
+0000be  f1040030          ADD      r0,r4,#0x30
+                  |L5.194|
+0000c2  b2c4              UXTB     r4,r0
+;;;222    				if(x_pos<19){
+0000c4  4821              LDR      r0,|L5.332|
+0000c6  7800              LDRB     r0,[r0,#0]  ; x_pos
+0000c8  2813              CMP      r0,#0x13
+0000ca  da14              BGE      |L5.246|
+;;;223    					//OLED_ShowChar(x_pos*8, LINE3, chr);
+;;;224    					//lcd_ShowChar(x_pos*8, LINE3, ' ');
+;;;225    					disp_ch(chr,x_pos*8,4);
+0000cc  481f              LDR      r0,|L5.332|
+0000ce  7800              LDRB     r0,[r0,#0]  ; x_pos
+0000d0  06c0              LSLS     r0,r0,#27
+0000d2  0e01              LSRS     r1,r0,#24
+0000d4  2204              MOVS     r2,#4
+0000d6  4620              MOV      r0,r4
+0000d8  f7fffffe          BL       disp_ch
+;;;226    					x_pos ++;
+0000dc  481b              LDR      r0,|L5.332|
+0000de  7800              LDRB     r0,[r0,#0]  ; x_pos
+0000e0  1c40              ADDS     r0,r0,#1
+0000e2  491a              LDR      r1,|L5.332|
+0000e4  7008              STRB     r0,[r1,#0]
+;;;227    					//OLED_ShowChar(x_pos*8, LINE3, '_');
+;;;228    					//lcd_ShowChar(x_pos*8, LINE3, ' ');
+;;;229    					disp_ch('_',x_pos*8,4);
+0000e6  4608              MOV      r0,r1
+0000e8  7800              LDRB     r0,[r0,#0]  ; x_pos
+0000ea  06c0              LSLS     r0,r0,#27
+0000ec  0e01              LSRS     r1,r0,#24
+0000ee  2204              MOVS     r2,#4
+0000f0  205f              MOVS     r0,#0x5f
+0000f2  f7fffffe          BL       disp_ch
+                  |L5.246|
+;;;230    				}
+;;;231    			}
+;;;232    			break;
+0000f6  e000              B        |L5.250|
+                  |L5.248|
+;;;233    		default:			
+;;;234    			break;
+0000f8  bf00              NOP      
+                  |L5.250|
+0000fa  bf00              NOP                            ;171
+;;;235    	}
+;;;236    	return;
+;;;237    }
+0000fc  bd70              POP      {r4-r6,pc}
+;;;238    
                           ENDP
 
+0000fe  0000              DCW      0x0000
+                  |L5.256|
+000100  c1acbdd3          DCB      193,172,189,211,178,187,179,201,185,166,0
+000104  b2bbb3c9
+000108  b9a600  
+00010b  00                DCB      0
+                  |L5.268|
+00010c  c1acbdd3          DCB      193,172,189,211,179,201,185,166,0
+000110  b3c9b9a6
+000114  00      
+000115  00                DCB      0
+000116  00                DCB      0
+000117  00                DCB      0
+                  |L5.280|
+000118  b7a2cbcd          DCB      183,162,203,205,202,167,176,220,0
+00011c  caa7b0dc
+000120  00      
+000121  00                DCB      0
+000122  00                DCB      0
+000123  00                DCB      0
+                  |L5.292|
+000124  b7a2cbcd          DCB      183,162,203,205,179,201,185,166,0
+000128  b3c9b9a6
+00012c  00      
+00012d  00                DCB      0
+00012e  00                DCB      0
+00012f  00                DCB      0
                   |L5.304|
-000130  c1acbdd3          DCB      193,172,189,211,178,187,179,201,185,166,0
-000134  b2bbb3c9
-000138  b9a600  
-00013b  00                DCB      0
-                  |L5.316|
-00013c  c1acbdd3          DCB      193,172,189,211,179,201,185,166,0
-000140  b3c9b9a6
-000144  00      
-000145  00                DCB      0
-000146  00                DCB      0
-000147  00                DCB      0
-                  |L5.328|
-000148  b7a2cbcd          DCB      183,162,203,205,202,167,176,220,0
-00014c  caa7b0dc
-000150  00      
-000151  00                DCB      0
-000152  00                DCB      0
-000153  00                DCB      0
-                  |L5.340|
-000154  b7a2cbcd          DCB      183,162,203,205,179,201,185,166,0
-000158  b3c9b9a6
-00015c  00      
-00015d  00                DCB      0
-00015e  00                DCB      0
-00015f  00                DCB      0
-                  |L5.352|
-000160  d5fdd4da          DCB      213,253,212,218,183,162,203,205,0
-000164  b7a2cbcd
-000168  00      
-000169  00                DCB      0
-00016a  00                DCB      0
-00016b  00                DCB      0
-                  |L5.364|
+000130  b5d8d6b7          DCB      181,216,214,183,184,241,202,189,180,237,206,243,0
+000134  b8f1cabd
+000138  b4edcef3
+00013c  00      
+00013d  00                DCB      0
+00013e  00                DCB      0
+00013f  00                DCB      0
+                  |L5.320|
+000140  d5fdd4da          DCB      213,253,212,218,183,162,203,205,0
+000144  b7a2cbcd
+000148  00      
+000149  00                DCB      0
+00014a  00                DCB      0
+00014b  00                DCB      0
+                  |L5.332|
                           DCD      |symbol_number.23|
 
                           AREA ||.data||, DATA, ALIGN=0
