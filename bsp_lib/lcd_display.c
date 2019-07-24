@@ -216,7 +216,7 @@ void lcd_show_line3(u8 index,  char chr){
 				x_pos = x_pos>0 ? x_pos-1 : 0;
 				//OLED_ShowChar(x_pos*8, LINE3, '_');
 				//lcd_ShowChar(x_pos*8, LINE3, ' ');
-				disp_ch(' ',x_pos*8,4);
+				disp_ch('_',x_pos*8,4);
 			}else{
 				chr = BUTTON_COLON == chr ? ':' : chr+0x30;//×ª³É×Ö·û
 				if(x_pos<19){

@@ -29369,7 +29369,7 @@ N				disp_ch(' ',x_pos*8,4);
 N				x_pos = x_pos>0 ? x_pos-1 : 0;
 N				//OLED_ShowChar(x_pos*8, LINE3, '_');
 N				//lcd_ShowChar(x_pos*8, LINE3, ' ');
-N				disp_ch(' ',x_pos*8,4);
+N				disp_ch('_',x_pos*8,4);
 N			}else{
 N				chr = BUTTON_COLON == chr ? ':' : chr+0x30;//×ª³É×Ö·û
 X				chr = 13 == chr ? ':' : chr+0x30;

@@ -143,6 +143,9 @@ int buf2addr(char *buf, int len, u8 *addr){
 			lcd_show_line3(ADDR_ERROR, 0);
 			Delay_Ms(2000);
 			//oled_clear_line(LINE3);
+			lcd_clear_line(2);
+			lcd_clear_line(3);
+			lcd_clear_line(4);
 			lcd_clear_line(LINE3);
 			return ADDR_TYPE_ERROR;
 			break;

@@ -29089,11 +29089,14 @@ N			lcd_show_line3(ADDR_ERROR, 0);
 X			lcd_show_line3(5, 0);
 N			Delay_Ms(2000);
 N			//oled_clear_line(LINE3);
+N			lcd_clear_line(2);
+N			lcd_clear_line(3);
+N			lcd_clear_line(4);
 N			lcd_clear_line(LINE3);
 X			lcd_clear_line(5);
 N			return ADDR_TYPE_ERROR;
 X			return -2;
-W "..\bsp_lib\button.c" 148 4 statement is unreachable
+W "..\bsp_lib\button.c" 151 4 statement is unreachable
 N			break;
 N		}
 N		

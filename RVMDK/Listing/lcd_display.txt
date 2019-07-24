@@ -621,13 +621,13 @@
 0000a2  7008              STRB     r0,[r1,#0]
 ;;;217    				//OLED_ShowChar(x_pos*8, LINE3, '_');
 ;;;218    				//lcd_ShowChar(x_pos*8, LINE3, ' ');
-;;;219    				disp_ch(' ',x_pos*8,4);
+;;;219    				disp_ch('_',x_pos*8,4);
 0000a4  4608              MOV      r0,r1
 0000a6  7800              LDRB     r0,[r0,#0]  ; x_pos
 0000a8  06c0              LSLS     r0,r0,#27
 0000aa  0e01              LSRS     r1,r0,#24
 0000ac  2204              MOVS     r2,#4
-0000ae  2020              MOVS     r0,#0x20
+0000ae  205f              MOVS     r0,#0x5f
 0000b0  f7fffffe          BL       disp_ch
 0000b4  e01f              B        |L5.246|
                   |L5.182|
