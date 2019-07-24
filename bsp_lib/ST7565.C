@@ -285,7 +285,9 @@ void Init_St7565(void)
    
   St7565_WriteCmd(0xAF);//display lcd on             
   St7565_WriteCmd(0x40);//display start addr
-       
+  
+  St7565_WriteCmd(0x22);//	
+	St7565_WriteCmd(0x18);//	
 	ClearDisplay(); 
 
 	//LCD_P8x16Str(0,0,(uchar*)"www.stmcu.org.cn");

@@ -90,6 +90,9 @@ void FSM_link_start(struct FSM *me){
 //		oled_show_line1(INPUT_TYPE, "N");
 //		oled_show_line1_bmp(BMP_NO_SIGNAL);
 //		oled_clear_line(LINE2);
+		lcd_clear_line(1);
+		lcd_clear_line(3);
+		lcd_clear_line(4);
 		lcd_show_line3(CONNECT_STATUS_FAIL, 0);//oled_show_line3(CONNECT_STATUS_OK, 0);
 		LCD_P8x16Str(5,0,(unsigned char*)"N");//oled_show_line1(INPUT_TYPE, "F");
 		LCD_show_line1_bmp(BMP_NO_SIGNAL);
@@ -101,6 +104,8 @@ void FSM_link_start(struct FSM *me){
 	}else{
 		//提示连接成功
 		lcd_clear_line(1);
+		lcd_clear_line(3);
+		lcd_clear_line(4);
 		lcd_show_line3(CONNECT_STATUS_OK, 0);//oled_show_line3(CONNECT_STATUS_OK, 0);
 		lcd_show_line1(INPUT_TYPE,(unsigned char*)"F");//oled_show_line1(INPUT_TYPE, "F");
 		LCD_show_line1_bmp(BMP_SIGNAL);

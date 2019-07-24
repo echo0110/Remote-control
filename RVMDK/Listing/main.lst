@@ -30352,6 +30352,9 @@ N//		oled_show_line3(CONNECT_STATUS_FAIL, 0);
 N//		oled_show_line1(INPUT_TYPE, "N");
 N//		oled_show_line1_bmp(BMP_NO_SIGNAL);
 N//		oled_clear_line(LINE2);
+N		lcd_clear_line(1);
+N		lcd_clear_line(3);
+N		lcd_clear_line(4);
 N		lcd_show_line3(CONNECT_STATUS_FAIL, 0);//oled_show_line3(CONNECT_STATUS_OK, 0);
 X		lcd_show_line3(1, 0);
 N		LCD_P8x16Str(5,0,(unsigned char*)"N");//oled_show_line1(INPUT_TYPE, "F");
@@ -30365,6 +30368,8 @@ N		Delay_Ms(2000);
 N	}else{
 N		//提示连接成功
 N		lcd_clear_line(1);
+N		lcd_clear_line(3);
+N		lcd_clear_line(4);
 N		lcd_show_line3(CONNECT_STATUS_OK, 0);//oled_show_line3(CONNECT_STATUS_OK, 0);
 X		lcd_show_line3(2, 0);
 N		lcd_show_line1(INPUT_TYPE,(unsigned char*)"F");//oled_show_line1(INPUT_TYPE, "F");
@@ -30612,7 +30617,7 @@ N	}
 N	data[1] = 2;//数据长度
 N	data[2] = (key>>8)&0xFF;
 N	data[3] = key&0xFF;
-W "..\User\main.c" 315 20 argument of type "u8 *" is incompatible with parameter of type "char *"
+W "..\User\main.c" 320 20 argument of type "u8 *" is incompatible with parameter of type "char *"
 N	data[4] = fun_xor(data, 4);
 N	for(i=5;i<32;i++){
 N		data[i] = 0;

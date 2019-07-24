@@ -62,14 +62,14 @@
 000002  f7fffffe          BL       St7565_Port
 ;;;267    	lcd_rst_low();
 000006  2102              MOVS     r1,#2
-000008  4819              LDR      r0,|L2.112|
+000008  481c              LDR      r0,|L2.124|
 00000a  f7fffffe          BL       GPIO_ResetBits
 ;;;268    	delayms(200); 
 00000e  20c8              MOVS     r0,#0xc8
 000010  f7fffffe          BL       delayms
 ;;;269      lcd_rst_high();  
 000014  2102              MOVS     r1,#2
-000016  4816              LDR      r0,|L2.112|
+000016  4819              LDR      r0,|L2.124|
 000018  f7fffffe          BL       GPIO_SetBits
 ;;;270    	delayms(200);   
 00001c  20c8              MOVS     r0,#0xc8
@@ -115,36 +115,42 @@
 ;;;287      St7565_WriteCmd(0x40);//display start addr
 000064  2040              MOVS     r0,#0x40
 000066  f7fffffe          BL       St7565_WriteCmd
-;;;288           
-;;;289    	ClearDisplay(); 
-00006a  f7fffffe          BL       ClearDisplay
-;;;290    
-;;;291    	//LCD_P8x16Str(0,0,(uchar*)"www.stmcu.org.cn");
-;;;292    }
-00006e  bd10              POP      {r4,pc}
-;;;293    
+;;;288      
+;;;289      St7565_WriteCmd(0x22);//	
+00006a  2022              MOVS     r0,#0x22
+00006c  f7fffffe          BL       St7565_WriteCmd
+;;;290    	St7565_WriteCmd(0x18);//	
+000070  2018              MOVS     r0,#0x18
+000072  f7fffffe          BL       St7565_WriteCmd
+;;;291    	ClearDisplay(); 
+000076  f7fffffe          BL       ClearDisplay
+;;;292    
+;;;293    	//LCD_P8x16Str(0,0,(uchar*)"www.stmcu.org.cn");
+;;;294    }
+00007a  bd10              POP      {r4,pc}
+;;;295    
                           ENDP
 
-                  |L2.112|
+                  |L2.124|
                           DCD      0x40010800
 
                           AREA ||i.LCD_DrawBMP||, CODE, READONLY, ALIGN=1
 
                   LCD_DrawBMP PROC
-;;;334    /***********功能描述：显示显示BMP图片128×64起始点坐标(x,y),x的范围0～127，y为页的范围0～7*****************/
-;;;335    void LCD_DrawBMP(unsigned char x0, unsigned char y0,unsigned char x1, unsigned char y1,unsigned char BMP[])
+;;;336    /***********功能描述：显示显示BMP图片128×64起始点坐标(x,y),x的范围0～127，y为页的范围0～7*****************/
+;;;337    void LCD_DrawBMP(unsigned char x0, unsigned char y0,unsigned char x1, unsigned char y1,unsigned char BMP[])
 000000  e92d5ff0          PUSH     {r4-r12,lr}
-;;;336    { 	
+;;;338    { 	
 000004  4606              MOV      r6,r0
 000006  460f              MOV      r7,r1
 000008  4690              MOV      r8,r2
 00000a  461c              MOV      r4,r3
 00000c  f8dda028          LDR      r10,[sp,#0x28]
-;;;337     unsigned int j=0;
+;;;339     unsigned int j=0;
 000010  f04f0b00          MOV      r11,#0
-;;;338     unsigned char x,y;
-;;;339      
-;;;340      if(y1%8==0) y=y1/8;      
+;;;340     unsigned char x,y;
+;;;341      
+;;;342      if(y1%8==0) y=y1/8;      
 000014  17e1              ASRS     r1,r4,#31
 000016  eb047151          ADD      r1,r4,r1,LSR #29
 00001a  10c9              ASRS     r1,r1,#3
@@ -156,7 +162,7 @@
 00002a  f3c105c7          UBFX     r5,r1,#3,#8
 00002e  e006              B        |L3.62|
                   |L3.48|
-;;;341      else y=y1/8+1;
+;;;343      else y=y1/8+1;
 000030  4620              MOV      r0,r4
 000032  17e1              ASRS     r1,r4,#31
 000034  eb047151          ADD      r1,r4,r1,LSR #29
@@ -164,39 +170,39 @@
 00003a  1c49              ADDS     r1,r1,#1
 00003c  b2cd              UXTB     r5,r1
                   |L3.62|
-;;;342    	for(y=y0;y<y1;y++)
+;;;344    	for(y=y0;y<y1;y++)
 00003e  463d              MOV      r5,r7
 000040  e014              B        |L3.108|
                   |L3.66|
-;;;343    	{
-;;;344    		//OLED_Set_Pos(x0,y);
-;;;345    		Setadd12864(x0,y);
+;;;345    	{
+;;;346    		//OLED_Set_Pos(x0,y);
+;;;347    		Setadd12864(x0,y);
 000042  4629              MOV      r1,r5
 000044  4630              MOV      r0,r6
 000046  f7fffffe          BL       Setadd12864
-;;;346        for(x=x0;x<x1;x++)
+;;;348        for(x=x0;x<x1;x++)
 00004a  46b1              MOV      r9,r6
 00004c  e00a              B        |L3.100|
                   |L3.78|
-;;;347    	    {      
-;;;348    	    	St7565_WriteDat(BMP[j++]);	    	
+;;;349    	    {      
+;;;350    	    	St7565_WriteDat(BMP[j++]);	    	
 00004e  4659              MOV      r1,r11
 000050  f10b0b01          ADD      r11,r11,#1
 000054  f81a0001          LDRB     r0,[r10,r1]
 000058  f7fffffe          BL       St7565_WriteDat
-00005c  f1090001          ADD      r0,r9,#1              ;346
-000060  f00009ff          AND      r9,r0,#0xff           ;346
+00005c  f1090001          ADD      r0,r9,#1              ;348
+000060  f00009ff          AND      r9,r0,#0xff           ;348
                   |L3.100|
-000064  45c1              CMP      r9,r8                 ;346
+000064  45c1              CMP      r9,r8                 ;348
 000066  dbf2              BLT      |L3.78|
-000068  1c68              ADDS     r0,r5,#1              ;342
-00006a  b2c5              UXTB     r5,r0                 ;342
+000068  1c68              ADDS     r0,r5,#1              ;344
+00006a  b2c5              UXTB     r5,r0                 ;344
                   |L3.108|
-00006c  42a5              CMP      r5,r4                 ;342
+00006c  42a5              CMP      r5,r4                 ;344
 00006e  dbe8              BLT      |L3.66|
-;;;349    	    }
-;;;350    	}
-;;;351    } 
+;;;351    	    }
+;;;352    	}
+;;;353    } 
 000070  e8bd9ff0          POP      {r4-r12,pc}
                           ENDP
 
@@ -301,20 +307,20 @@
                           AREA ||i.LCD_show_line1_bmp||, CODE, READONLY, ALIGN=2
 
                   LCD_show_line1_bmp PROC
-;;;316     
-;;;317    void LCD_show_line1_bmp(u8 index){
+;;;318     
+;;;319    void LCD_show_line1_bmp(u8 index){
 000000  b538              PUSH     {r3-r5,lr}
 000002  4604              MOV      r4,r0
-;;;318    
-;;;319    	switch(index){
+;;;320    
+;;;321    	switch(index){
 000004  b114              CBZ      r4,|L5.12|
 000006  2c01              CMP      r4,#1
 000008  d112              BNE      |L5.48|
 00000a  e008              B        |L5.30|
                   |L5.12|
-;;;320    		case BMP_SIGNAL:
-;;;321    			//OLED_DrawBMP(CONNECT_STATUS, 0, CONNECT_STATUS+16, 2, BmpSignal);
-;;;322    		  LCD_DrawBMP(CONNECT_STATUS, 0, CONNECT_STATUS+16, 2, LCDBmpSignal);
+;;;322    		case BMP_SIGNAL:
+;;;323    			//OLED_DrawBMP(CONNECT_STATUS, 0, CONNECT_STATUS+16, 2, BmpSignal);
+;;;324    		  LCD_DrawBMP(CONNECT_STATUS, 0, CONNECT_STATUS+16, 2, LCDBmpSignal);
 00000c  480a              LDR      r0,|L5.56|
 00000e  2302              MOVS     r3,#2
 000010  2248              MOVS     r2,#0x48
@@ -322,12 +328,12 @@
 000014  9000              STR      r0,[sp,#0]
 000016  2038              MOVS     r0,#0x38
 000018  f7fffffe          BL       LCD_DrawBMP
-;;;323    			break;
+;;;325    			break;
 00001c  e009              B        |L5.50|
                   |L5.30|
-;;;324    		case BMP_NO_SIGNAL:
-;;;325    			//OLED_DrawBMP(CONNECT_STATUS, 0, CONNECT_STATUS+16, 2, BmpNoSignal);
-;;;326    		  LCD_DrawBMP(CONNECT_STATUS, 0, CONNECT_STATUS+16, 2, LCDBmpNoSignal);
+;;;326    		case BMP_NO_SIGNAL:
+;;;327    			//OLED_DrawBMP(CONNECT_STATUS, 0, CONNECT_STATUS+16, 2, BmpNoSignal);
+;;;328    		  LCD_DrawBMP(CONNECT_STATUS, 0, CONNECT_STATUS+16, 2, LCDBmpNoSignal);
 00001e  4807              LDR      r0,|L5.60|
 000020  2302              MOVS     r3,#2
 000022  2248              MOVS     r2,#0x48
@@ -335,19 +341,19 @@
 000026  9000              STR      r0,[sp,#0]
 000028  2038              MOVS     r0,#0x38
 00002a  f7fffffe          BL       LCD_DrawBMP
-;;;327    			break;		
+;;;329    			break;		
 00002e  e000              B        |L5.50|
                   |L5.48|
-;;;328    		default:
-;;;329    			break;
+;;;330    		default:
+;;;331    			break;
 000030  bf00              NOP      
                   |L5.50|
-000032  bf00              NOP                            ;323
-;;;330    	}
-;;;331    	return;
-;;;332    }
+000032  bf00              NOP                            ;325
+;;;332    	}
+;;;333    	return;
+;;;334    }
 000034  bd38              POP      {r3-r5,pc}
-;;;333    
+;;;335    
                           ENDP
 
 000036  0000              DCW      0x0000
@@ -653,48 +659,48 @@
                           AREA ||i.lcd_pos||, CODE, READONLY, ALIGN=1
 
                   lcd_pos PROC
-;;;300    /*********************************************************/
-;;;301    void lcd_pos(uchar X,uchar Y)
+;;;302    /*********************************************************/
+;;;303    void lcd_pos(uchar X,uchar Y)
 000000  b570              PUSH     {r4-r6,lr}
-;;;302    {                          
+;;;304    {                          
 000002  4604              MOV      r4,r0
 000004  460d              MOV      r5,r1
-;;;303       uchar  pos;
-;;;304       if (X==0)
+;;;305       uchar  pos;
+;;;306       if (X==0)
 000006  b90c              CBNZ     r4,|L11.12|
-;;;305         {X=0x80;}
+;;;307         {X=0x80;}
 000008  2480              MOVS     r4,#0x80
 00000a  e00a              B        |L11.34|
                   |L11.12|
-;;;306       else if (X==1)
+;;;308       else if (X==1)
 00000c  2c01              CMP      r4,#1
 00000e  d101              BNE      |L11.20|
-;;;307         {X=0x90;}
+;;;309         {X=0x90;}
 000010  2490              MOVS     r4,#0x90
 000012  e006              B        |L11.34|
                   |L11.20|
-;;;308       else if (X==2)
+;;;310       else if (X==2)
 000014  2c02              CMP      r4,#2
 000016  d101              BNE      |L11.28|
-;;;309         {X=0x88;}
+;;;311         {X=0x88;}
 000018  2488              MOVS     r4,#0x88
 00001a  e002              B        |L11.34|
                   |L11.28|
-;;;310       else if (X==3)
+;;;312       else if (X==3)
 00001c  2c03              CMP      r4,#3
 00001e  d100              BNE      |L11.34|
-;;;311         {X=0x98;}
+;;;313         {X=0x98;}
 000020  2498              MOVS     r4,#0x98
                   |L11.34|
-;;;312       pos = X+Y ;  
+;;;314       pos = X+Y ;  
 000022  1960              ADDS     r0,r4,r5
 000024  b2c6              UXTB     r6,r0
-;;;313       St7565_WriteCmd(pos);     //显示地址
+;;;315       St7565_WriteCmd(pos);     //显示地址
 000026  4630              MOV      r0,r6
 000028  f7fffffe          BL       St7565_WriteCmd
-;;;314    }
+;;;316    }
 00002c  bd70              POP      {r4-r6,pc}
-;;;315    
+;;;317    
                           ENDP
 
 

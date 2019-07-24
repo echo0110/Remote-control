@@ -5,69 +5,69 @@
                           AREA ||i.FSM_link_connected||, CODE, READONLY, ALIGN=2
 
                   FSM_link_connected PROC
-;;;117    
-;;;118    void FSM_link_connected(struct FSM *me){
+;;;122    
+;;;123    void FSM_link_connected(struct FSM *me){
 000000  b510              PUSH     {r4,lr}
 000002  b088              SUB      sp,sp,#0x20
 000004  4604              MOV      r4,r0
-;;;119    
-;;;120    	unsigned char buf[32] = {0};
+;;;124    
+;;;125    	unsigned char buf[32] = {0};
 000006  2120              MOVS     r1,#0x20
 000008  4668              MOV      r0,sp
 00000a  f7fffffe          BL       __aeabi_memclr4
-;;;121    	
-;;;122    	if(me->key!=-1){
+;;;126    	
+;;;127    	if(me->key!=-1){
 00000e  6860              LDR      r0,[r4,#4]
 000010  1c40              ADDS     r0,r0,#1
 000012  b1f8              CBZ      r0,|L1.84|
-;;;123    		//oled_show_line3(SENDING, 0);
-;;;124    		lcd_show_line3(SENDING, 0);
+;;;128    		//oled_show_line3(SENDING, 0);
+;;;129    		lcd_show_line3(SENDING, 0);
 000014  2100              MOVS     r1,#0
 000016  2007              MOVS     r0,#7
 000018  f7fffffe          BL       lcd_show_line3
-;;;125    		Delay_Ms(150);
+;;;130    		Delay_Ms(150);
 00001c  2096              MOVS     r0,#0x96
 00001e  f7fffffe          BL       Delay_Ms
-;;;126    		key_trans(me->key, buf);
+;;;131    		key_trans(me->key, buf);
 000022  88a1              LDRH     r1,[r4,#4]
 000024  b288              UXTH     r0,r1
 000026  4669              MOV      r1,sp
 000028  f7fffffe          BL       key_trans
-;;;127    		disable_key();
+;;;132    		disable_key();
 00002c  f7fffffe          BL       disable_key
-;;;128    		if(NRF24L01_Send(buf)==0){
+;;;133    		if(NRF24L01_Send(buf)==0){
 000030  4668              MOV      r0,sp
 000032  f7fffffe          BL       NRF24L01_Send
 000036  b920              CBNZ     r0,|L1.66|
-;;;129    			//提示发送成功
-;;;130    			//oled_show_line3(SEND_OK, 0);
-;;;131    			lcd_show_line3(SEND_OK, 0);
+;;;134    			//提示发送成功
+;;;135    			//oled_show_line3(SEND_OK, 0);
+;;;136    			lcd_show_line3(SEND_OK, 0);
 000038  2100              MOVS     r1,#0
 00003a  2004              MOVS     r0,#4
 00003c  f7fffffe          BL       lcd_show_line3
 000040  e006              B        |L1.80|
                   |L1.66|
-;;;132    		}else{
-;;;133    			//提示发送不成功
-;;;134    //			oled_show_line3(SEND_FAIL, 0);
-;;;135    			lcd_show_line3(SEND_FAIL, 0);
+;;;137    		}else{
+;;;138    			//提示发送不成功
+;;;139    //			oled_show_line3(SEND_FAIL, 0);
+;;;140    			lcd_show_line3(SEND_FAIL, 0);
 000042  2100              MOVS     r1,#0
 000044  2003              MOVS     r0,#3
 000046  f7fffffe          BL       lcd_show_line3
-;;;136    			NRF24L01_TX_Mode(addr);
+;;;141    			NRF24L01_TX_Mode(addr);
 00004a  4803              LDR      r0,|L1.88|
 00004c  f7fffffe          BL       NRF24L01_TX_Mode
                   |L1.80|
-;;;137    		}
-;;;138    		enable_key();
+;;;142    		}
+;;;143    		enable_key();
 000050  f7fffffe          BL       enable_key
                   |L1.84|
-;;;139    	}
-;;;140    	return;
-;;;141    }
+;;;144    	}
+;;;145    	return;
+;;;146    }
 000054  b008              ADD      sp,sp,#0x20
 000056  bd10              POP      {r4,pc}
-;;;142    
+;;;147    
                           ENDP
 
                   |L1.88|
@@ -76,14 +76,14 @@
                           AREA ||i.FSM_link_disconnected||, CODE, READONLY, ALIGN=1
 
                   FSM_link_disconnected PROC
-;;;142    
-;;;143    void FSM_link_disconnected(struct FSM *me){
+;;;147    
+;;;148    void FSM_link_disconnected(struct FSM *me){
 000000  4770              BX       lr
-;;;144    
-;;;145    	//TODO
-;;;146    	return;
-;;;147    }
-;;;148    
+;;;149    
+;;;150    	//TODO
+;;;151    	return;
+;;;152    }
+;;;153    
                           ENDP
 
 
@@ -105,7 +105,7 @@
 00000a  f7fffffe          BL       __aeabi_memclr4
 ;;;45     	
 ;;;46     	LCD_P8x16Str(5,0,(unsigned char*)"N");//oled_show_line1(INPUT_TYPE, "N");
-00000e  a254              ADR      r2,|L3.352|
+00000e  a25b              ADR      r2,|L3.380|
 000010  2100              MOVS     r1,#0
 000012  2005              MOVS     r0,#5
 000014  f7fffffe          BL       LCD_P8x16Str
@@ -119,10 +119,10 @@
 000024  2005              MOVS     r0,#5
 000026  f7fffffe          BL       oled_clear_line
 ;;;50       save_addr(addr);
-00002a  484e              LDR      r0,|L3.356|
+00002a  4855              LDR      r0,|L3.384|
 00002c  f7fffffe          BL       save_addr
 ;;;51     	if(read_addr(addr) != -1){
-000030  484c              LDR      r0,|L3.356|
+000030  4853              LDR      r0,|L3.384|
 000032  f7fffffe          BL       read_addr
 000036  1c40              ADDS     r0,r0,#1
 000038  2800              CMP      r0,#0
@@ -140,18 +140,18 @@
 00004e  2004              MOVS     r0,#4
 000050  f7fffffe          BL       lcd_clear_line
 ;;;56     		sprintf(buf, "%d:%d:%d:%d:%d\0", addr[0], addr[1], addr[2], addr[3], addr[4]);
-000054  4843              LDR      r0,|L3.356|
+000054  484a              LDR      r0,|L3.384|
 000056  7900              LDRB     r0,[r0,#4]  ; addr
-000058  4942              LDR      r1,|L3.356|
+000058  4949              LDR      r1,|L3.384|
 00005a  78c9              LDRB     r1,[r1,#3]  ; addr
-00005c  4a41              LDR      r2,|L3.356|
+00005c  4a48              LDR      r2,|L3.384|
 00005e  7892              LDRB     r2,[r2,#2]  ; addr
 000060  e9cd2100          STRD     r2,r1,[sp,#0]
 000064  9002              STR      r0,[sp,#8]
-000066  483f              LDR      r0,|L3.356|
+000066  4846              LDR      r0,|L3.384|
 000068  7843              LDRB     r3,[r0,#1]  ; addr
 00006a  7802              LDRB     r2,[r0,#0]  ; addr
-00006c  a13e              ADR      r1,|L3.360|
+00006c  a145              ADR      r1,|L3.388|
 00006e  a803              ADD      r0,sp,#0xc
 000070  f7fffffe          BL       __2sprintf
 ;;;57     		LCD_P8x16Str(LCD_LINE4,1,buf);//OLED_ShowString(0, 2, buf);
@@ -162,12 +162,12 @@
 ;;;58     		LCD_ShowCHinese((u8*)"是",LINE4,5);//5--行  line4---列//OLED_ShowCHinese(0,LINE4,22);
 00007e  2205              MOVS     r2,#5
 000080  2106              MOVS     r1,#6
-000082  a03d              ADR      r0,|L3.376|
+000082  a044              ADR      r0,|L3.404|
 000084  f7fffffe          BL       LCD_ShowCHinese
 ;;;59     		LCD_ShowCHinese((u8*)"否",6*16,5);//OLED_ShowCHinese(7*16,LINE4,23);
 000088  2205              MOVS     r2,#5
 00008a  2160              MOVS     r1,#0x60
-00008c  a03b              ADR      r0,|L3.380|
+00008c  a042              ADR      r0,|L3.408|
 00008e  f7fffffe          BL       LCD_ShowCHinese
 ;;;60     		while(1){
 000092  e01b              B        |L3.204|
@@ -204,7 +204,7 @@
 ;;;73     				while(get_addr(addr)!= 0);
 0000be  bf00              NOP      
                   |L3.192|
-0000c0  4828              LDR      r0,|L3.356|
+0000c0  482f              LDR      r0,|L3.384|
 0000c2  f7fffffe          BL       get_addr
 0000c6  2800              CMP      r0,#0
 0000c8  d1fa              BNE      |L3.192|
@@ -234,7 +234,7 @@
 ;;;82     		while(get_addr(addr)!= 0);
 0000ea  bf00              NOP      
                   |L3.236|
-0000ec  481d              LDR      r0,|L3.356|
+0000ec  4824              LDR      r0,|L3.384|
 0000ee  f7fffffe          BL       get_addr
 0000f2  2800              CMP      r0,#0
 0000f4  d1fa              BNE      |L3.236|
@@ -242,471 +242,485 @@
 ;;;83     	}
 ;;;84     
 ;;;85     	NRF24L01_TX_Mode(addr);
-0000f6  481b              LDR      r0,|L3.356|
+0000f6  4822              LDR      r0,|L3.384|
 0000f8  f7fffffe          BL       NRF24L01_TX_Mode
 ;;;86     
 ;;;87     	if(NRF24L01_Send(buf)){
 0000fc  a803              ADD      r0,sp,#0xc
 0000fe  f7fffffe          BL       NRF24L01_Send
-000102  b1a8              CBZ      r0,|L3.304|
+000102  b1f0              CBZ      r0,|L3.322|
 ;;;88     		//提示连接不成功
 ;;;89     //		oled_show_line3(CONNECT_STATUS_FAIL, 0);
 ;;;90     //		oled_show_line1(INPUT_TYPE, "N");
 ;;;91     //		oled_show_line1_bmp(BMP_NO_SIGNAL);
 ;;;92     //		oled_clear_line(LINE2);
-;;;93     		lcd_show_line3(CONNECT_STATUS_FAIL, 0);//oled_show_line3(CONNECT_STATUS_OK, 0);
-000104  2100              MOVS     r1,#0
-000106  2001              MOVS     r0,#1
-000108  f7fffffe          BL       lcd_show_line3
-;;;94     		LCD_P8x16Str(5,0,(unsigned char*)"N");//oled_show_line1(INPUT_TYPE, "F");
-00010c  a214              ADR      r2,|L3.352|
-00010e  2100              MOVS     r1,#0
-000110  2005              MOVS     r0,#5
-000112  f7fffffe          BL       LCD_P8x16Str
-;;;95     		LCD_show_line1_bmp(BMP_NO_SIGNAL);
-000116  2001              MOVS     r0,#1
-000118  f7fffffe          BL       LCD_show_line1_bmp
-;;;96     		
-;;;97     		
-;;;98     		me->status = LINK_START;
-00011c  2000              MOVS     r0,#0
-00011e  7020              STRB     r0,[r4,#0]
-;;;99     		me->action = FSM_link_start;
-000120  f2af1023          ADR      r0,FSM_link_start + 1
-000124  60a0              STR      r0,[r4,#8]
-;;;100    		Delay_Ms(2000);
-000126  f44f60fa          MOV      r0,#0x7d0
-00012a  f7fffffe          BL       Delay_Ms
-00012e  e014              B        |L3.346|
-                  |L3.304|
-;;;101    	}else{
-;;;102    		//提示连接成功
-;;;103    		lcd_clear_line(1);
-000130  2001              MOVS     r0,#1
-000132  f7fffffe          BL       lcd_clear_line
-;;;104    		lcd_show_line3(CONNECT_STATUS_OK, 0);//oled_show_line3(CONNECT_STATUS_OK, 0);
-000136  2100              MOVS     r1,#0
-000138  2002              MOVS     r0,#2
-00013a  f7fffffe          BL       lcd_show_line3
-;;;105    		lcd_show_line1(INPUT_TYPE,(unsigned char*)"F");//oled_show_line1(INPUT_TYPE, "F");
-00013e  a110              ADR      r1,|L3.384|
-000140  2000              MOVS     r0,#0
-000142  f7fffffe          BL       lcd_show_line1
-;;;106    		LCD_show_line1_bmp(BMP_SIGNAL);
-000146  2000              MOVS     r0,#0
-000148  f7fffffe          BL       LCD_show_line1_bmp
-;;;107    		//lcd_clear_line(LINE3);
-;;;108    		
-;;;109    		me->status = LINK_CONNECTED;
-00014c  2001              MOVS     r0,#1
-00014e  7020              STRB     r0,[r4,#0]
-;;;110    		me->action = FSM_link_connected;
-000150  480c              LDR      r0,|L3.388|
-000152  60a0              STR      r0,[r4,#8]
-;;;111    		
-;;;112    		save_addr(addr);
-000154  4803              LDR      r0,|L3.356|
-000156  f7fffffe          BL       save_addr
-                  |L3.346|
-;;;113    	}
-;;;114    	
-;;;115    	return;
-;;;116    }
-00015a  b00b              ADD      sp,sp,#0x2c
-00015c  bd30              POP      {r4,r5,pc}
-;;;117    
+;;;93     		lcd_clear_line(1);
+000104  2001              MOVS     r0,#1
+000106  f7fffffe          BL       lcd_clear_line
+;;;94     		lcd_clear_line(3);
+00010a  2003              MOVS     r0,#3
+00010c  f7fffffe          BL       lcd_clear_line
+;;;95     		lcd_clear_line(4);
+000110  2004              MOVS     r0,#4
+000112  f7fffffe          BL       lcd_clear_line
+;;;96     		lcd_show_line3(CONNECT_STATUS_FAIL, 0);//oled_show_line3(CONNECT_STATUS_OK, 0);
+000116  2100              MOVS     r1,#0
+000118  2001              MOVS     r0,#1
+00011a  f7fffffe          BL       lcd_show_line3
+;;;97     		LCD_P8x16Str(5,0,(unsigned char*)"N");//oled_show_line1(INPUT_TYPE, "F");
+00011e  a217              ADR      r2,|L3.380|
+000120  2100              MOVS     r1,#0
+000122  2005              MOVS     r0,#5
+000124  f7fffffe          BL       LCD_P8x16Str
+;;;98     		LCD_show_line1_bmp(BMP_NO_SIGNAL);
+000128  2001              MOVS     r0,#1
+00012a  f7fffffe          BL       LCD_show_line1_bmp
+;;;99     		
+;;;100    		
+;;;101    		me->status = LINK_START;
+00012e  2000              MOVS     r0,#0
+000130  7020              STRB     r0,[r4,#0]
+;;;102    		me->action = FSM_link_start;
+000132  f2af1033          ADR      r0,FSM_link_start + 1
+000136  60a0              STR      r0,[r4,#8]
+;;;103    		Delay_Ms(2000);
+000138  f44f60fa          MOV      r0,#0x7d0
+00013c  f7fffffe          BL       Delay_Ms
+000140  e01a              B        |L3.376|
+                  |L3.322|
+;;;104    	}else{
+;;;105    		//提示连接成功
+;;;106    		lcd_clear_line(1);
+000142  2001              MOVS     r0,#1
+000144  f7fffffe          BL       lcd_clear_line
+;;;107    		lcd_clear_line(3);
+000148  2003              MOVS     r0,#3
+00014a  f7fffffe          BL       lcd_clear_line
+;;;108    		lcd_clear_line(4);
+00014e  2004              MOVS     r0,#4
+000150  f7fffffe          BL       lcd_clear_line
+;;;109    		lcd_show_line3(CONNECT_STATUS_OK, 0);//oled_show_line3(CONNECT_STATUS_OK, 0);
+000154  2100              MOVS     r1,#0
+000156  2002              MOVS     r0,#2
+000158  f7fffffe          BL       lcd_show_line3
+;;;110    		lcd_show_line1(INPUT_TYPE,(unsigned char*)"F");//oled_show_line1(INPUT_TYPE, "F");
+00015c  a10f              ADR      r1,|L3.412|
+00015e  2000              MOVS     r0,#0
+000160  f7fffffe          BL       lcd_show_line1
+;;;111    		LCD_show_line1_bmp(BMP_SIGNAL);
+000164  2000              MOVS     r0,#0
+000166  f7fffffe          BL       LCD_show_line1_bmp
+;;;112    		//lcd_clear_line(LINE3);
+;;;113    		
+;;;114    		me->status = LINK_CONNECTED;
+00016a  2001              MOVS     r0,#1
+00016c  7020              STRB     r0,[r4,#0]
+;;;115    		me->action = FSM_link_connected;
+00016e  480c              LDR      r0,|L3.416|
+000170  60a0              STR      r0,[r4,#8]
+;;;116    		
+;;;117    		save_addr(addr);
+000172  4803              LDR      r0,|L3.384|
+000174  f7fffffe          BL       save_addr
+                  |L3.376|
+;;;118    	}
+;;;119    	
+;;;120    	return;
+;;;121    }
+000178  b00b              ADD      sp,sp,#0x2c
+00017a  bd30              POP      {r4,r5,pc}
+;;;122    
                           ENDP
 
-00015e  0000              DCW      0x0000
-                  |L3.352|
-000160  4e00              DCB      "N",0
-000162  00                DCB      0
-000163  00                DCB      0
-                  |L3.356|
-                          DCD      addr
-                  |L3.360|
-000168  25643a25          DCB      "%d:%d:%d:%d:%d",0
-00016c  643a2564
-000170  3a25643a
-000174  256400  
-000177  00                DCB      0
-                  |L3.376|
-000178  cac700            DCB      202,199,0
-00017b  00                DCB      0
                   |L3.380|
-00017c  b7f100            DCB      183,241,0
+00017c  4e00              DCB      "N",0
+00017e  00                DCB      0
 00017f  00                DCB      0
                   |L3.384|
-000180  4600              DCB      "F",0
-000182  00                DCB      0
-000183  00                DCB      0
+                          DCD      addr
                   |L3.388|
+000184  25643a25          DCB      "%d:%d:%d:%d:%d",0
+000188  643a2564
+00018c  3a25643a
+000190  256400  
+000193  00                DCB      0
+                  |L3.404|
+000194  cac700            DCB      202,199,0
+000197  00                DCB      0
+                  |L3.408|
+000198  b7f100            DCB      183,241,0
+00019b  00                DCB      0
+                  |L3.412|
+00019c  4600              DCB      "F",0
+00019e  00                DCB      0
+00019f  00                DCB      0
+                  |L3.416|
                           DCD      FSM_link_connected
 
                           AREA ||i.display_by_key||, CODE, READONLY, ALIGN=2
 
                   display_by_key PROC
-;;;160    //oled dispaly
-;;;161    void display_by_key(int key, struct FSM *me){
+;;;165    //oled dispaly
+;;;166    void display_by_key(int key, struct FSM *me){
 000000  b570              PUSH     {r4-r6,lr}
 000002  4604              MOV      r4,r0
 000004  460d              MOV      r5,r1
-;;;162    	static u32 tmp = 0;
-;;;163    	
-;;;164    	if(key < 0){
+;;;167    	static u32 tmp = 0;
+;;;168    	
+;;;169    	if(key < 0){
 000006  2c00              CMP      r4,#0
 000008  da00              BGE      |L4.12|
                   |L4.10|
-;;;165    		return;
-;;;166    	}
-;;;167    	
-;;;168    	if((LINK_START != me->status) && (key == BUTTON_FUN)){
-;;;169    		oled_clear_line(LINE2);
-;;;170    		oled_clear_line(LINE3);
-;;;171    		if(fun_flag == KEY_FUN){
-;;;172    			//oled_show_line1(INPUT_TYPE, "N");
-;;;173    			lcd_clear_line(1);
-;;;174    			lcd_clear_line(2);
-;;;175    			lcd_clear_line(3);
-;;;176    			lcd_clear_line(4);
-;;;177    //			LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)" ");
-;;;178    //			LCD_P8x16Str(1,INPUT_TYPE,(unsigned char*)" ");
-;;;179    //			LCD_P8x16Str(2,INPUT_TYPE,(unsigned char*)" ");
-;;;180    //			LCD_P8x16Str(3,INPUT_TYPE,(unsigned char*)" ");
-;;;181    //			LCD_P8x16Str(4,INPUT_TYPE,(unsigned char*)" ");
-;;;182    			LCD_P8x16Str(5,INPUT_TYPE,(unsigned char*)" ");
-;;;183    		
-;;;184    			lcd_show_line1(INPUT_TYPE,(unsigned char*)"N");
-;;;185    			fun_flag = KEY_NUM;
-;;;186    			tmp = 0;
-;;;187    			//oled_show_line2(INPUT_NUM, BUTTON_OK);
-;;;188    			  lcd_show_line2(INPUT_NUM,BUTTON_OK);
-;;;189    //			LCD_P8x16Str(0,INPUT_NUM,(unsigned char*)"_");
-;;;190    		}else if(fun_flag == KEY_NUM){
-;;;191    			//oled_show_line1(INPUT_TYPE, "F");
-;;;192    			lcd_clear_line(1);
-;;;193    			lcd_clear_line(2);
-;;;194    			lcd_clear_line(3);
-;;;195    			lcd_clear_line(4);
-;;;196    			LCD_P8x16Str(5,INPUT_TYPE,(unsigned char*)" ");
-;;;197    			//LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)"F");
-;;;198    			lcd_show_line1(INPUT_TYPE,(unsigned char*)"F");
-;;;199    			fun_flag = KEY_FUN;
-;;;200    		}
-;;;201    		me->key = -1;
-;;;202    		return;
-;;;203    	}
-;;;204    	
-;;;205    	if(LINK_CONNECTED == me->status){
-;;;206    		if(KEY_FUN == fun_flag){
-;;;207    			if(key>9){
-;;;208    				me->key = -1;
-;;;209    				return;
-;;;210    			}
-;;;211    			switch(key){
-;;;212    				case 0:
-;;;213    					//oled_show_line2(FUN_LIGHT_OFF, key);
-;;;214    				  lcd_show_line2(FUN_LIGHT_OFF, key);
-;;;215    					break;	
-;;;216    				case 1:
-;;;217    					//oled_show_line2(FUN_LIGHT_RED, key);
-;;;218    				  lcd_show_line2(FUN_LIGHT_RED, key);
-;;;219    					break;				
-;;;220    				case 2:
-;;;221    					//oled_show_line2(FUN_YELLOW_FLASH, key);
-;;;222    				  lcd_show_line2(FUN_YELLOW_FLASH, key);
-;;;223    					break;				
-;;;224    				case 3:
-;;;225    					//oled_show_line2(FUN_EAST_WEST_STRAIGHT, key);
-;;;226    				  lcd_show_line2(FUN_EAST_WEST_STRAIGHT, key);
-;;;227    					break;				
-;;;228    				case 4:
-;;;229    					//oled_show_line2(FUN_SOUTH_NORTH_STRAIGHT, key);
-;;;230    				  lcd_show_line2(FUN_SOUTH_NORTH_STRAIGHT, key);
-;;;231    					break;				
-;;;232    				case 5:
-;;;233    					//oled_show_line2(FUN_EAST_WEST_TURN_LEFT, key);
-;;;234    				  lcd_show_line2(FUN_EAST_WEST_TURN_LEFT, key);
-;;;235    					break;				
-;;;236    				case 6:
-;;;237    					//oled_show_line2(FUN_SOUTH_NORTH_TURN_LEFT, key);
-;;;238    				  lcd_show_line2(FUN_SOUTH_NORTH_TURN_LEFT, key);
-;;;239    					break;
-;;;240    				
-;;;241    				case 7:
-;;;242    					//oled_show_line2(FUN_HANDLE_CONTROL_CANCEL, key);
-;;;243    				  lcd_show_line2(FUN_HANDLE_CONTROL_CANCEL, key);
+;;;170    		return;
+;;;171    	}
+;;;172    	
+;;;173    	if((LINK_START != me->status) && (key == BUTTON_FUN)){
+;;;174    		oled_clear_line(LINE2);
+;;;175    		oled_clear_line(LINE3);
+;;;176    		if(fun_flag == KEY_FUN){
+;;;177    			//oled_show_line1(INPUT_TYPE, "N");
+;;;178    			lcd_clear_line(1);
+;;;179    			lcd_clear_line(2);
+;;;180    			lcd_clear_line(3);
+;;;181    			lcd_clear_line(4);
+;;;182    //			LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)" ");
+;;;183    //			LCD_P8x16Str(1,INPUT_TYPE,(unsigned char*)" ");
+;;;184    //			LCD_P8x16Str(2,INPUT_TYPE,(unsigned char*)" ");
+;;;185    //			LCD_P8x16Str(3,INPUT_TYPE,(unsigned char*)" ");
+;;;186    //			LCD_P8x16Str(4,INPUT_TYPE,(unsigned char*)" ");
+;;;187    			LCD_P8x16Str(5,INPUT_TYPE,(unsigned char*)" ");
+;;;188    		
+;;;189    			lcd_show_line1(INPUT_TYPE,(unsigned char*)"N");
+;;;190    			fun_flag = KEY_NUM;
+;;;191    			tmp = 0;
+;;;192    			//oled_show_line2(INPUT_NUM, BUTTON_OK);
+;;;193    			  lcd_show_line2(INPUT_NUM,BUTTON_OK);
+;;;194    //			LCD_P8x16Str(0,INPUT_NUM,(unsigned char*)"_");
+;;;195    		}else if(fun_flag == KEY_NUM){
+;;;196    			//oled_show_line1(INPUT_TYPE, "F");
+;;;197    			lcd_clear_line(1);
+;;;198    			lcd_clear_line(2);
+;;;199    			lcd_clear_line(3);
+;;;200    			lcd_clear_line(4);
+;;;201    			LCD_P8x16Str(5,INPUT_TYPE,(unsigned char*)" ");
+;;;202    			//LCD_P8x16Str(0,INPUT_TYPE,(unsigned char*)"F");
+;;;203    			lcd_show_line1(INPUT_TYPE,(unsigned char*)"F");
+;;;204    			fun_flag = KEY_FUN;
+;;;205    		}
+;;;206    		me->key = -1;
+;;;207    		return;
+;;;208    	}
+;;;209    	
+;;;210    	if(LINK_CONNECTED == me->status){
+;;;211    		if(KEY_FUN == fun_flag){
+;;;212    			if(key>9){
+;;;213    				me->key = -1;
+;;;214    				return;
+;;;215    			}
+;;;216    			switch(key){
+;;;217    				case 0:
+;;;218    					//oled_show_line2(FUN_LIGHT_OFF, key);
+;;;219    				  lcd_show_line2(FUN_LIGHT_OFF, key);
+;;;220    					break;	
+;;;221    				case 1:
+;;;222    					//oled_show_line2(FUN_LIGHT_RED, key);
+;;;223    				  lcd_show_line2(FUN_LIGHT_RED, key);
+;;;224    					break;				
+;;;225    				case 2:
+;;;226    					//oled_show_line2(FUN_YELLOW_FLASH, key);
+;;;227    				  lcd_show_line2(FUN_YELLOW_FLASH, key);
+;;;228    					break;				
+;;;229    				case 3:
+;;;230    					//oled_show_line2(FUN_EAST_WEST_STRAIGHT, key);
+;;;231    				  lcd_show_line2(FUN_EAST_WEST_STRAIGHT, key);
+;;;232    					break;				
+;;;233    				case 4:
+;;;234    					//oled_show_line2(FUN_SOUTH_NORTH_STRAIGHT, key);
+;;;235    				  lcd_show_line2(FUN_SOUTH_NORTH_STRAIGHT, key);
+;;;236    					break;				
+;;;237    				case 5:
+;;;238    					//oled_show_line2(FUN_EAST_WEST_TURN_LEFT, key);
+;;;239    				  lcd_show_line2(FUN_EAST_WEST_TURN_LEFT, key);
+;;;240    					break;				
+;;;241    				case 6:
+;;;242    					//oled_show_line2(FUN_SOUTH_NORTH_TURN_LEFT, key);
+;;;243    				  lcd_show_line2(FUN_SOUTH_NORTH_TURN_LEFT, key);
 ;;;244    					break;
 ;;;245    				
-;;;246    				case 8:
-;;;247              //lcd_show_line2(FUN_EAST_WEST_TURN_LEFT, key);
-;;;248    				  lcd_clear_line(1);
-;;;249    					break;						
-;;;250    				case 9:
-;;;251    				  lcd_clear_line(1);
-;;;252    					break;	
-;;;253    				case 10:
-;;;254    				case 11:
-;;;255    				case 12:		
-;;;256    				case 13:
-;;;257    					//oled_clear_line(LINE2);			 
-;;;258    					break;					
-;;;259    				default:
-;;;260    					break;
-;;;261    			}
-;;;262    		}else if(KEY_NUM == fun_flag){//用户自定义方案号
-;;;263    			//oled_clear_line(LINE2);			
-;;;264    			//oled_clear_line(LINE3);			
-;;;265    			lcd_clear_line(1);
-;;;266    			lcd_clear_line(2);
-;;;267    			lcd_clear_line(3);
-;;;268    			lcd_clear_line(4);
-;;;269    			tmp = 0;
-;;;270    			//oled_show_line2(INPUT_NUM, BUTTON_OK);
-;;;271    			lcd_show_line2(INPUT_NUM, BUTTON_OK);
-;;;272    			while(key != BUTTON_OK){				
-;;;273    				if(BUTTON_FUN == key){//切换功能
-;;;274    					//oled_clear_line(LINE2);
-;;;275    					//oled_show_line1(INPUT_TYPE, "F");
-;;;276    					lcd_clear_line(1);
-;;;277    					lcd_clear_line(2);
-;;;278    			    lcd_clear_line(3);
-;;;279    			    lcd_clear_line(4);
-;;;280    					lcd_show_line1(INPUT_TYPE,(unsigned char*)"F");
-;;;281    					fun_flag = KEY_FUN;
-;;;282    					me->key = -1;
-;;;283    					tmp = 0;
-;;;284    					return;
-;;;285    				}
-;;;286    				if(key != -1){
-;;;287    					if(key < 10){
-;;;288    						tmp = tmp*10 + key;
-;;;289    					}else if(BUTTON_DEL == key){
-;;;290    						tmp /= 10;
-;;;291    					}
-;;;292    					//oled_show_line2(INPUT_NUM, key);
-;;;293    					lcd_show_line2(INPUT_NUM, key);
-;;;294    				}
-;;;295    				key = get_key();
-;;;296    			}
-;;;297    			me->key = tmp;
-;;;298    		}
-;;;299    	}
-;;;300    	
-;;;301    	return;
-;;;302    }
+;;;246    				case 7:
+;;;247    					//oled_show_line2(FUN_HANDLE_CONTROL_CANCEL, key);
+;;;248    				  lcd_show_line2(FUN_HANDLE_CONTROL_CANCEL, key);
+;;;249    					break;
+;;;250    				
+;;;251    				case 8:
+;;;252              //lcd_show_line2(FUN_EAST_WEST_TURN_LEFT, key);
+;;;253    				  lcd_clear_line(1);
+;;;254    					break;						
+;;;255    				case 9:
+;;;256    				  lcd_clear_line(1);
+;;;257    					break;	
+;;;258    				case 10:
+;;;259    				case 11:
+;;;260    				case 12:		
+;;;261    				case 13:
+;;;262    					//oled_clear_line(LINE2);			 
+;;;263    					break;					
+;;;264    				default:
+;;;265    					break;
+;;;266    			}
+;;;267    		}else if(KEY_NUM == fun_flag){//用户自定义方案号
+;;;268    			//oled_clear_line(LINE2);			
+;;;269    			//oled_clear_line(LINE3);			
+;;;270    			lcd_clear_line(1);
+;;;271    			lcd_clear_line(2);
+;;;272    			lcd_clear_line(3);
+;;;273    			lcd_clear_line(4);
+;;;274    			tmp = 0;
+;;;275    			//oled_show_line2(INPUT_NUM, BUTTON_OK);
+;;;276    			lcd_show_line2(INPUT_NUM, BUTTON_OK);
+;;;277    			while(key != BUTTON_OK){				
+;;;278    				if(BUTTON_FUN == key){//切换功能
+;;;279    					//oled_clear_line(LINE2);
+;;;280    					//oled_show_line1(INPUT_TYPE, "F");
+;;;281    					lcd_clear_line(1);
+;;;282    					lcd_clear_line(2);
+;;;283    			    lcd_clear_line(3);
+;;;284    			    lcd_clear_line(4);
+;;;285    					lcd_show_line1(INPUT_TYPE,(unsigned char*)"F");
+;;;286    					fun_flag = KEY_FUN;
+;;;287    					me->key = -1;
+;;;288    					tmp = 0;
+;;;289    					return;
+;;;290    				}
+;;;291    				if(key != -1){
+;;;292    					if(key < 10){
+;;;293    						tmp = tmp*10 + key;
+;;;294    					}else if(BUTTON_DEL == key){
+;;;295    						tmp /= 10;
+;;;296    					}
+;;;297    					//oled_show_line2(INPUT_NUM, key);
+;;;298    					lcd_show_line2(INPUT_NUM, key);
+;;;299    				}
+;;;300    				key = get_key();
+;;;301    			}
+;;;302    			me->key = tmp;
+;;;303    		}
+;;;304    	}
+;;;305    	
+;;;306    	return;
+;;;307    }
 00000a  bd70              POP      {r4-r6,pc}
                   |L4.12|
-00000c  7828              LDRB     r0,[r5,#0]            ;168
-00000e  2800              CMP      r0,#0                 ;168
+00000c  7828              LDRB     r0,[r5,#0]            ;173
+00000e  2800              CMP      r0,#0                 ;173
 000010  d048              BEQ      |L4.164|
-000012  2c0c              CMP      r4,#0xc               ;168
+000012  2c0c              CMP      r4,#0xc               ;173
 000014  d146              BNE      |L4.164|
-000016  2001              MOVS     r0,#1                 ;169
+000016  2001              MOVS     r0,#1                 ;174
 000018  f7fffffe          BL       oled_clear_line
-00001c  2005              MOVS     r0,#5                 ;170
+00001c  2005              MOVS     r0,#5                 ;175
 00001e  f7fffffe          BL       oled_clear_line
 000022  4872              LDR      r0,|L4.492|
-000024  6800              LDR      r0,[r0,#0]            ;171  ; fun_flag
-000026  2801              CMP      r0,#1                 ;171
+000024  6800              LDR      r0,[r0,#0]            ;176  ; fun_flag
+000026  2801              CMP      r0,#1                 ;176
 000028  d11d              BNE      |L4.102|
 00002a  f7fffffe          BL       lcd_clear_line
-00002e  2002              MOVS     r0,#2                 ;174
+00002e  2002              MOVS     r0,#2                 ;179
 000030  f7fffffe          BL       lcd_clear_line
-000034  2003              MOVS     r0,#3                 ;175
+000034  2003              MOVS     r0,#3                 ;180
 000036  f7fffffe          BL       lcd_clear_line
-00003a  2004              MOVS     r0,#4                 ;176
+00003a  2004              MOVS     r0,#4                 ;181
 00003c  f7fffffe          BL       lcd_clear_line
 000040  a26b              ADR      r2,|L4.496|
-000042  2100              MOVS     r1,#0                 ;182
-000044  2005              MOVS     r0,#5                 ;182
+000042  2100              MOVS     r1,#0                 ;187
+000044  2005              MOVS     r0,#5                 ;187
 000046  f7fffffe          BL       LCD_P8x16Str
 00004a  a16a              ADR      r1,|L4.500|
-00004c  2000              MOVS     r0,#0                 ;184
+00004c  2000              MOVS     r0,#0                 ;189
 00004e  f7fffffe          BL       lcd_show_line1
-000052  2000              MOVS     r0,#0                 ;185
+000052  2000              MOVS     r0,#0                 ;190
 000054  4965              LDR      r1,|L4.492|
-000056  6008              STR      r0,[r1,#0]            ;185  ; fun_flag
+000056  6008              STR      r0,[r1,#0]            ;190  ; fun_flag
 000058  4967              LDR      r1,|L4.504|
-00005a  6008              STR      r0,[r1,#0]            ;186  ; tmp
-00005c  210a              MOVS     r1,#0xa               ;188
-00005e  2006              MOVS     r0,#6                 ;188
+00005a  6008              STR      r0,[r1,#0]            ;191  ; tmp
+00005c  210a              MOVS     r1,#0xa               ;193
+00005e  2006              MOVS     r0,#6                 ;193
 000060  f7fffffe          BL       lcd_show_line2
 000064  e01a              B        |L4.156|
                   |L4.102|
 000066  4861              LDR      r0,|L4.492|
-000068  6800              LDR      r0,[r0,#0]            ;190  ; fun_flag
+000068  6800              LDR      r0,[r0,#0]            ;195  ; fun_flag
 00006a  b9b8              CBNZ     r0,|L4.156|
-00006c  2001              MOVS     r0,#1                 ;192
+00006c  2001              MOVS     r0,#1                 ;197
 00006e  f7fffffe          BL       lcd_clear_line
-000072  2002              MOVS     r0,#2                 ;193
+000072  2002              MOVS     r0,#2                 ;198
 000074  f7fffffe          BL       lcd_clear_line
-000078  2003              MOVS     r0,#3                 ;194
+000078  2003              MOVS     r0,#3                 ;199
 00007a  f7fffffe          BL       lcd_clear_line
-00007e  2004              MOVS     r0,#4                 ;195
+00007e  2004              MOVS     r0,#4                 ;200
 000080  f7fffffe          BL       lcd_clear_line
 000084  a25a              ADR      r2,|L4.496|
-000086  2100              MOVS     r1,#0                 ;196
-000088  2005              MOVS     r0,#5                 ;196
+000086  2100              MOVS     r1,#0                 ;201
+000088  2005              MOVS     r0,#5                 ;201
 00008a  f7fffffe          BL       LCD_P8x16Str
 00008e  a15b              ADR      r1,|L4.508|
-000090  2000              MOVS     r0,#0                 ;198
+000090  2000              MOVS     r0,#0                 ;203
 000092  f7fffffe          BL       lcd_show_line1
-000096  2001              MOVS     r0,#1                 ;199
+000096  2001              MOVS     r0,#1                 ;204
 000098  4954              LDR      r1,|L4.492|
-00009a  6008              STR      r0,[r1,#0]            ;199  ; fun_flag
+00009a  6008              STR      r0,[r1,#0]            ;204  ; fun_flag
                   |L4.156|
-00009c  f04f30ff          MOV      r0,#0xffffffff        ;201
-0000a0  6068              STR      r0,[r5,#4]            ;201
+00009c  f04f30ff          MOV      r0,#0xffffffff        ;206
+0000a0  6068              STR      r0,[r5,#4]            ;206
 0000a2  e7b2              B        |L4.10|
                   |L4.164|
-0000a4  7828              LDRB     r0,[r5,#0]            ;205
-0000a6  2801              CMP      r0,#1                 ;205
+0000a4  7828              LDRB     r0,[r5,#0]            ;210
+0000a6  2801              CMP      r0,#1                 ;210
 0000a8  d148              BNE      |L4.316|
 0000aa  4850              LDR      r0,|L4.492|
-0000ac  6800              LDR      r0,[r0,#0]            ;206  ; fun_flag
-0000ae  2801              CMP      r0,#1                 ;206
+0000ac  6800              LDR      r0,[r0,#0]            ;211  ; fun_flag
+0000ae  2801              CMP      r0,#1                 ;211
 0000b0  d145              BNE      |L4.318|
-0000b2  2c09              CMP      r4,#9                 ;207
+0000b2  2c09              CMP      r4,#9                 ;212
 0000b4  dd02              BLE      |L4.188|
-0000b6  1e80              SUBS     r0,r0,#2              ;208
-0000b8  6068              STR      r0,[r5,#4]            ;208
+0000b6  1e80              SUBS     r0,r0,#2              ;213
+0000b8  6068              STR      r0,[r5,#4]            ;213
 0000ba  e7a6              B        |L4.10|
                   |L4.188|
-0000bc  2c0e              CMP      r4,#0xe               ;211
+0000bc  2c0e              CMP      r4,#0xe               ;216
 0000be  d23c              BCS      |L4.314|
-0000c0  e8dff004          TBB      [pc,r4]               ;211
+0000c0  e8dff004          TBB      [pc,r4]               ;216
 0000c4  070c1116          DCB      0x07,0x0c,0x11,0x16
 0000c8  1b20252a          DCB      0x1b,0x20,0x25,0x2a
 0000cc  2f333738          DCB      0x2f,0x33,0x37,0x38
 0000d0  393a              DCB      0x39,0x3a
-0000d2  b2e1              UXTB     r1,r4                 ;214
-0000d4  2002              MOVS     r0,#2                 ;214
+0000d2  b2e1              UXTB     r1,r4                 ;219
+0000d4  2002              MOVS     r0,#2                 ;219
 0000d6  f7fffffe          BL       lcd_show_line2
 0000da  e02f              B        |L4.316|
-0000dc  b2e1              UXTB     r1,r4                 ;218
-0000de  2003              MOVS     r0,#3                 ;218
+0000dc  b2e1              UXTB     r1,r4                 ;223
+0000de  2003              MOVS     r0,#3                 ;223
 0000e0  f7fffffe          BL       lcd_show_line2
 0000e4  e02a              B        |L4.316|
-0000e6  b2e1              UXTB     r1,r4                 ;222
-0000e8  2004              MOVS     r0,#4                 ;222
+0000e6  b2e1              UXTB     r1,r4                 ;227
+0000e8  2004              MOVS     r0,#4                 ;227
 0000ea  f7fffffe          BL       lcd_show_line2
 0000ee  e025              B        |L4.316|
-0000f0  b2e1              UXTB     r1,r4                 ;226
-0000f2  2005              MOVS     r0,#5                 ;226
+0000f0  b2e1              UXTB     r1,r4                 ;231
+0000f2  2005              MOVS     r0,#5                 ;231
 0000f4  f7fffffe          BL       lcd_show_line2
 0000f8  e020              B        |L4.316|
-0000fa  b2e1              UXTB     r1,r4                 ;230
-0000fc  2007              MOVS     r0,#7                 ;230
+0000fa  b2e1              UXTB     r1,r4                 ;235
+0000fc  2007              MOVS     r0,#7                 ;235
 0000fe  f7fffffe          BL       lcd_show_line2
 000102  e01b              B        |L4.316|
-000104  b2e1              UXTB     r1,r4                 ;234
-000106  2008              MOVS     r0,#8                 ;234
+000104  b2e1              UXTB     r1,r4                 ;239
+000106  2008              MOVS     r0,#8                 ;239
 000108  f7fffffe          BL       lcd_show_line2
 00010c  e016              B        |L4.316|
-00010e  b2e1              UXTB     r1,r4                 ;238
-000110  2009              MOVS     r0,#9                 ;238
+00010e  b2e1              UXTB     r1,r4                 ;243
+000110  2009              MOVS     r0,#9                 ;243
 000112  f7fffffe          BL       lcd_show_line2
 000116  e011              B        |L4.316|
-000118  b2e1              UXTB     r1,r4                 ;243
-00011a  200a              MOVS     r0,#0xa               ;243
+000118  b2e1              UXTB     r1,r4                 ;248
+00011a  200a              MOVS     r0,#0xa               ;248
 00011c  f7fffffe          BL       lcd_show_line2
 000120  e00c              B        |L4.316|
-000122  2001              MOVS     r0,#1                 ;248
+000122  2001              MOVS     r0,#1                 ;253
 000124  f7fffffe          BL       lcd_clear_line
 000128  e008              B        |L4.316|
-00012a  2001              MOVS     r0,#1                 ;251
+00012a  2001              MOVS     r0,#1                 ;256
 00012c  f7fffffe          BL       lcd_clear_line
 000130  e004              B        |L4.316|
-000132  bf00              NOP                            ;254
-000134  bf00              NOP                            ;255
-000136  bf00              NOP                            ;256
+000132  bf00              NOP                            ;259
+000134  bf00              NOP                            ;260
+000136  bf00              NOP                            ;261
 000138  e000              B        |L4.316|
                   |L4.314|
-00013a  bf00              NOP                            ;260
+00013a  bf00              NOP                            ;265
                   |L4.316|
 00013c  e054              B        |L4.488|
                   |L4.318|
 00013e  482b              LDR      r0,|L4.492|
-000140  6800              LDR      r0,[r0,#0]            ;262  ; fun_flag
-000142  2800              CMP      r0,#0                 ;262
+000140  6800              LDR      r0,[r0,#0]            ;267  ; fun_flag
+000142  2800              CMP      r0,#0                 ;267
 000144  d150              BNE      |L4.488|
-000146  2001              MOVS     r0,#1                 ;265
+000146  2001              MOVS     r0,#1                 ;270
 000148  f7fffffe          BL       lcd_clear_line
-00014c  2002              MOVS     r0,#2                 ;266
+00014c  2002              MOVS     r0,#2                 ;271
 00014e  f7fffffe          BL       lcd_clear_line
-000152  2003              MOVS     r0,#3                 ;267
+000152  2003              MOVS     r0,#3                 ;272
 000154  f7fffffe          BL       lcd_clear_line
-000158  2004              MOVS     r0,#4                 ;268
+000158  2004              MOVS     r0,#4                 ;273
 00015a  f7fffffe          BL       lcd_clear_line
-00015e  2000              MOVS     r0,#0                 ;269
+00015e  2000              MOVS     r0,#0                 ;274
 000160  4925              LDR      r1,|L4.504|
-000162  6008              STR      r0,[r1,#0]            ;269  ; tmp
-000164  210a              MOVS     r1,#0xa               ;271
-000166  2006              MOVS     r0,#6                 ;271
+000162  6008              STR      r0,[r1,#0]            ;274  ; tmp
+000164  210a              MOVS     r1,#0xa               ;276
+000166  2006              MOVS     r0,#6                 ;276
 000168  f7fffffe          BL       lcd_show_line2
 00016c  e037              B        |L4.478|
                   |L4.366|
-00016e  2c0c              CMP      r4,#0xc               ;273
+00016e  2c0c              CMP      r4,#0xc               ;278
 000170  d118              BNE      |L4.420|
-000172  2001              MOVS     r0,#1                 ;276
+000172  2001              MOVS     r0,#1                 ;281
 000174  f7fffffe          BL       lcd_clear_line
-000178  2002              MOVS     r0,#2                 ;277
+000178  2002              MOVS     r0,#2                 ;282
 00017a  f7fffffe          BL       lcd_clear_line
-00017e  2003              MOVS     r0,#3                 ;278
+00017e  2003              MOVS     r0,#3                 ;283
 000180  f7fffffe          BL       lcd_clear_line
-000184  2004              MOVS     r0,#4                 ;279
+000184  2004              MOVS     r0,#4                 ;284
 000186  f7fffffe          BL       lcd_clear_line
 00018a  a11c              ADR      r1,|L4.508|
-00018c  2000              MOVS     r0,#0                 ;280
+00018c  2000              MOVS     r0,#0                 ;285
 00018e  f7fffffe          BL       lcd_show_line1
-000192  2001              MOVS     r0,#1                 ;281
+000192  2001              MOVS     r0,#1                 ;286
 000194  4915              LDR      r1,|L4.492|
-000196  6008              STR      r0,[r1,#0]            ;281  ; fun_flag
-000198  1e80              SUBS     r0,r0,#2              ;282
-00019a  6068              STR      r0,[r5,#4]            ;282
-00019c  2000              MOVS     r0,#0                 ;283
+000196  6008              STR      r0,[r1,#0]            ;286  ; fun_flag
+000198  1e80              SUBS     r0,r0,#2              ;287
+00019a  6068              STR      r0,[r5,#4]            ;287
+00019c  2000              MOVS     r0,#0                 ;288
 00019e  4916              LDR      r1,|L4.504|
-0001a0  6008              STR      r0,[r1,#0]            ;283  ; tmp
+0001a0  6008              STR      r0,[r1,#0]            ;288  ; tmp
 0001a2  e732              B        |L4.10|
                   |L4.420|
-0001a4  1c60              ADDS     r0,r4,#1              ;286
+0001a4  1c60              ADDS     r0,r4,#1              ;291
 0001a6  b1b8              CBZ      r0,|L4.472|
-0001a8  2c0a              CMP      r4,#0xa               ;287
+0001a8  2c0a              CMP      r4,#0xa               ;292
 0001aa  da08              BGE      |L4.446|
 0001ac  4812              LDR      r0,|L4.504|
-0001ae  6800              LDR      r0,[r0,#0]            ;288  ; tmp
-0001b0  eb000080          ADD      r0,r0,r0,LSL #2       ;288
-0001b4  eb040040          ADD      r0,r4,r0,LSL #1       ;288
+0001ae  6800              LDR      r0,[r0,#0]            ;293  ; tmp
+0001b0  eb000080          ADD      r0,r0,r0,LSL #2       ;293
+0001b4  eb040040          ADD      r0,r4,r0,LSL #1       ;293
 0001b8  490f              LDR      r1,|L4.504|
-0001ba  6008              STR      r0,[r1,#0]            ;288  ; tmp
+0001ba  6008              STR      r0,[r1,#0]            ;293  ; tmp
 0001bc  e008              B        |L4.464|
                   |L4.446|
-0001be  2c0b              CMP      r4,#0xb               ;289
+0001be  2c0b              CMP      r4,#0xb               ;294
 0001c0  d106              BNE      |L4.464|
 0001c2  480d              LDR      r0,|L4.504|
-0001c4  6800              LDR      r0,[r0,#0]            ;290  ; tmp
-0001c6  210a              MOVS     r1,#0xa               ;290
-0001c8  fbb0f0f1          UDIV     r0,r0,r1              ;290
+0001c4  6800              LDR      r0,[r0,#0]            ;295  ; tmp
+0001c6  210a              MOVS     r1,#0xa               ;295
+0001c8  fbb0f0f1          UDIV     r0,r0,r1              ;295
 0001cc  490a              LDR      r1,|L4.504|
-0001ce  6008              STR      r0,[r1,#0]            ;290  ; tmp
+0001ce  6008              STR      r0,[r1,#0]            ;295  ; tmp
                   |L4.464|
-0001d0  b2e1              UXTB     r1,r4                 ;293
-0001d2  2006              MOVS     r0,#6                 ;293
+0001d0  b2e1              UXTB     r1,r4                 ;298
+0001d2  2006              MOVS     r0,#6                 ;298
 0001d4  f7fffffe          BL       lcd_show_line2
                   |L4.472|
 0001d8  f7fffffe          BL       get_key
-0001dc  4604              MOV      r4,r0                 ;295
+0001dc  4604              MOV      r4,r0                 ;300
                   |L4.478|
-0001de  2c0a              CMP      r4,#0xa               ;272
+0001de  2c0a              CMP      r4,#0xa               ;277
 0001e0  d1c5              BNE      |L4.366|
 0001e2  4805              LDR      r0,|L4.504|
-0001e4  6800              LDR      r0,[r0,#0]            ;297  ; tmp
-0001e6  6068              STR      r0,[r5,#4]            ;297
+0001e4  6800              LDR      r0,[r0,#0]            ;302  ; tmp
+0001e6  6068              STR      r0,[r5,#4]            ;302
                   |L4.488|
-0001e8  bf00              NOP                            ;301
+0001e8  bf00              NOP                            ;306
 0001ea  e70e              B        |L4.10|
-;;;303    
+;;;308    
                           ENDP
 
                   |L4.492|
@@ -729,90 +743,90 @@
                           AREA ||i.fun_xor||, CODE, READONLY, ALIGN=1
 
                   fun_xor PROC
-;;;148    
-;;;149    static u8 fun_xor(char *p, int len){
+;;;153    
+;;;154    static u8 fun_xor(char *p, int len){
 000000  b510              PUSH     {r4,lr}
 000002  4602              MOV      r2,r0
-;;;150    	u8 ret = 0;
+;;;155    	u8 ret = 0;
 000004  2000              MOVS     r0,#0
-;;;151    	
-;;;152    	while(len --){
+;;;156    	
+;;;157    	while(len --){
 000006  e002              B        |L5.14|
                   |L5.8|
-;;;153    		ret = ret ^ *p;
+;;;158    		ret = ret ^ *p;
 000008  7813              LDRB     r3,[r2,#0]
 00000a  4058              EORS     r0,r0,r3
-;;;154    		p += 1;
+;;;159    		p += 1;
 00000c  1c52              ADDS     r2,r2,#1
                   |L5.14|
-00000e  000b              MOVS     r3,r1                 ;152
-000010  f1a10101          SUB      r1,r1,#1              ;152
+00000e  000b              MOVS     r3,r1                 ;157
+000010  f1a10101          SUB      r1,r1,#1              ;157
 000014  d1f8              BNE      |L5.8|
-;;;155    	}
-;;;156    	
-;;;157    	return ret;
-;;;158    }
+;;;160    	}
+;;;161    	
+;;;162    	return ret;
+;;;163    }
 000016  bd10              POP      {r4,pc}
-;;;159    
+;;;164    
                           ENDP
 
 
                           AREA ||i.key_trans||, CODE, READONLY, ALIGN=2
 
                   key_trans PROC
-;;;303    
-;;;304    void key_trans(u16 key, u8 *data){
+;;;308    
+;;;309    void key_trans(u16 key, u8 *data){
 000000  b570              PUSH     {r4-r6,lr}
 000002  4606              MOV      r6,r0
 000004  460c              MOV      r4,r1
-;;;305    	int i;
-;;;306    	
-;;;307    	if(fun_flag == KEY_FUN){
+;;;310    	int i;
+;;;311    	
+;;;312    	if(fun_flag == KEY_FUN){
 000006  480d              LDR      r0,|L6.60|
 000008  6800              LDR      r0,[r0,#0]  ; fun_flag
 00000a  2801              CMP      r0,#1
 00000c  d102              BNE      |L6.20|
-;;;308    		data[0] = 2;
+;;;313    		data[0] = 2;
 00000e  2002              MOVS     r0,#2
 000010  7020              STRB     r0,[r4,#0]
 000012  e001              B        |L6.24|
                   |L6.20|
-;;;309    	}else{
-;;;310    		data[0] = 1;
+;;;314    	}else{
+;;;315    		data[0] = 1;
 000014  2001              MOVS     r0,#1
 000016  7020              STRB     r0,[r4,#0]
                   |L6.24|
-;;;311    	}
-;;;312    	data[1] = 2;//数据长度
+;;;316    	}
+;;;317    	data[1] = 2;//数据长度
 000018  2002              MOVS     r0,#2
 00001a  7060              STRB     r0,[r4,#1]
-;;;313    	data[2] = (key>>8)&0xFF;
+;;;318    	data[2] = (key>>8)&0xFF;
 00001c  0a30              LSRS     r0,r6,#8
 00001e  70a0              STRB     r0,[r4,#2]
-;;;314    	data[3] = key&0xFF;
+;;;319    	data[3] = key&0xFF;
 000020  70e6              STRB     r6,[r4,#3]
-;;;315    	data[4] = fun_xor(data, 4);
+;;;320    	data[4] = fun_xor(data, 4);
 000022  2104              MOVS     r1,#4
 000024  4620              MOV      r0,r4
 000026  f7fffffe          BL       fun_xor
 00002a  7120              STRB     r0,[r4,#4]
-;;;316    	for(i=5;i<32;i++){
+;;;321    	for(i=5;i<32;i++){
 00002c  2505              MOVS     r5,#5
 00002e  e002              B        |L6.54|
                   |L6.48|
-;;;317    		data[i] = 0;
+;;;322    		data[i] = 0;
 000030  2000              MOVS     r0,#0
 000032  5560              STRB     r0,[r4,r5]
-000034  1c6d              ADDS     r5,r5,#1              ;316
+000034  1c6d              ADDS     r5,r5,#1              ;321
                   |L6.54|
-000036  2d20              CMP      r5,#0x20              ;316
+000036  2d20              CMP      r5,#0x20              ;321
 000038  dbfa              BLT      |L6.48|
-;;;318    	}
-;;;319    	
-;;;320    	return;
-;;;321    }
+;;;323    	}
+;;;324    	
+;;;325    	return;
+;;;326    }
 00003a  bd70              POP      {r4-r6,pc}
-;;;322    
+;;;327    
                           ENDP
 
                   |L6.60|
@@ -821,50 +835,50 @@
                           AREA ||i.main||, CODE, READONLY, ALIGN=2
 
                   main PROC
-;;;325    
-;;;326    int main(void)
+;;;330    
+;;;331    int main(void)
 000000  f7fffffe          BL       RCC_Configuration
-;;;327    {
-;;;328    	int key;
-;;;329    	RCC_Configuration();   //初始化系统
-;;;330    	NVIC_Configuration();	
+;;;332    {
+;;;333    	int key;
+;;;334    	RCC_Configuration();   //初始化系统
+;;;335    	NVIC_Configuration();	
 000004  f7fffffe          BL       NVIC_Configuration
-;;;331    	spi_init();
+;;;336    	spi_init();
 000008  f7fffffe          BL       spi_init
-;;;332    	button_init();
+;;;337    	button_init();
 00000c  f7fffffe          BL       button_init
-;;;333    	//OLED_Init();
-;;;334    	LCD_Init();
+;;;338    	//OLED_Init();
+;;;339    	LCD_Init();
 000010  f7fffffe          BL       LCD_Init
-;;;335    	//OLED_Clear();
-;;;336    	ad_init();
+;;;340    	//OLED_Clear();
+;;;341    	ad_init();
 000014  f7fffffe          BL       ad_init
-;;;337      Init_St7565();	 
+;;;342      Init_St7565();	 
 000018  f7fffffe          BL       Init_St7565
-;;;338       while (1){	
+;;;343       while (1){	
 00001c  e00b              B        |L7.54|
                   |L7.30|
-;;;339    		 
-;;;340    		//disp_ch('_',5,4);
-;;;341    		key = get_key();
+;;;344    		 
+;;;345    		//disp_ch('_',5,4);
+;;;346    		key = get_key();
 00001e  f7fffffe          BL       get_key
 000022  4604              MOV      r4,r0
-;;;342    		me.key = key;
+;;;347    		me.key = key;
 000024  4804              LDR      r0,|L7.56|
 000026  6044              STR      r4,[r0,#4]  ; me
-;;;343    		display_by_key(key, &me);
+;;;348    		display_by_key(key, &me);
 000028  4601              MOV      r1,r0
 00002a  4620              MOV      r0,r4
 00002c  f7fffffe          BL       display_by_key
-;;;344    		FSM_dispatch(me);
+;;;349    		FSM_dispatch(me);
 000030  4801              LDR      r0,|L7.56|
 000032  6881              LDR      r1,[r0,#8]  ; me
 000034  4788              BLX      r1
                   |L7.54|
 000036  e7f2              B        |L7.30|
-;;;345      }
-;;;346    }
-;;;347    
+;;;350      }
+;;;351    }
+;;;352    
                           ENDP
 
                   |L7.56|
