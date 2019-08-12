@@ -24,6 +24,7 @@ typedef struct key{
 u8 key6_flag=0;
 static unsigned int cnt = 0;
 static unsigned int delay_cnt = 0;
+static unsigned int blacklight=0;
 											 //                   delay  touch  untouch  key_value
 //static key_t key[14] = {{GPIOC, GPIO_Pin_6,   0,     0,      1,       2},
 //												{GPIOC, GPIO_Pin_7,   0,     0,      1,       5},
@@ -74,20 +75,11 @@ void Delay_Ms(unsigned int delay){
 //·À¶¶´¦Àí
 void key_prograss(void){
 	int i;
+  
+	
+	blacklight++;
+	
 
-#if 0	
-	if(key.busy){
-		if(!GPIO_ReadInputDataBit(key.GPIOx, key.GPIO_Pin)){
-				key.delay++;
-		}else{
-				key.busy = 0;
-		}
-		if(key.delay > 50){
-			put_key(key.key_value);
-			key.busy = 0;
-		}
-	}
-#endif
 	for(i=0; i<14; i++){
   		if(!GPIO_ReadInputDataBit(key[i].GPIOx, key[i].GPIO_Pin)){
 			if(!GPIO_ReadInputDataBit(key[i].GPIOx, key[i].GPIO_Pin))
@@ -98,14 +90,21 @@ void key_prograss(void){
 			key[i].touch_flag = 1;
 			key[i].delay++;
 			if((key[i].delay > 50) && key[i].untouch_flag){
+				GPIO_SetBits(GPIOC, GPIO_Pin_11);
 				put_key(key[i].key_value);
 				key[i].untouch_flag = 0;
+				blacklight=0;
 			}
-		}else{
+		}else{			
 			key[i].delay = 0;
 			key[i].untouch_flag = 1;
-			key[i].touch_flag = 0;
+			key[i].touch_flag = 0;			
 		}
+	}
+	if(blacklight>30000)
+	{
+	 GPIO_ResetBits(GPIOC, GPIO_Pin_11);//close blacklight
+	 blacklight=0;
 	}
 	return;
 }
@@ -230,7 +229,12 @@ void SysTick_Handler(void)
 	cnt++;
 	delay_cnt++;
 	//TimingDelay_Decrement();
+	
 	key_prograss();
+//	if(delay_cnt>5000)
+//	{
+//	 GPIO_ResetBits(GPIOC, GPIO_Pin_11);//close blacklight
+//	}
 	return;
 }
 

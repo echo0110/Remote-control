@@ -28902,6 +28902,7 @@ N
 Nu8 key6_flag=0;
 Nstatic unsigned int cnt = 0;
 Nstatic unsigned int delay_cnt = 0;
+Nstatic unsigned int blacklight=0;
 N											 //                   delay  touch  untouch  key_value
 N//static key_t key[14] = {{GPIOC, GPIO_Pin_6,   0,     0,      1,       2},
 N//												{GPIOC, GPIO_Pin_7,   0,     0,      1,       5},
@@ -28966,20 +28967,11 @@ N
 N//·À¶¶´¦Àí
 Nvoid key_prograss(void){
 N	int i;
+N  
+N	
+N	blacklight++;
+N	
 N
-N#if 0	
-S	if(key.busy){
-S		if(!GPIO_ReadInputDataBit(key.GPIOx, key.GPIO_Pin)){
-S				key.delay++;
-S		}else{
-S				key.busy = 0;
-S		}
-S		if(key.delay > 50){
-S			put_key(key.key_value);
-S			key.busy = 0;
-S		}
-S	}
-N#endif
 N	for(i=0; i<14; i++){
 N  		if(!GPIO_ReadInputDataBit(key[i].GPIOx, key[i].GPIO_Pin)){
 N			if(!GPIO_ReadInputDataBit(key[i].GPIOx, key[i].GPIO_Pin))
@@ -28990,14 +28982,23 @@ N			}
 N			key[i].touch_flag = 1;
 N			key[i].delay++;
 N			if((key[i].delay > 50) && key[i].untouch_flag){
+N				GPIO_SetBits(GPIOC, GPIO_Pin_11);
+X				GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), ((uint16_t)0x0800));
 N				put_key(key[i].key_value);
 N				key[i].untouch_flag = 0;
+N				blacklight=0;
 N			}
-N		}else{
+N		}else{			
 N			key[i].delay = 0;
 N			key[i].untouch_flag = 1;
-N			key[i].touch_flag = 0;
+N			key[i].touch_flag = 0;			
 N		}
+N	}
+N	if(blacklight>30000)
+N	{
+N	 GPIO_ResetBits(GPIOC, GPIO_Pin_11);//close blacklight
+X	 GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x10000) + 0x1000)), ((uint16_t)0x0800));
+N	 blacklight=0;
 N	}
 N	return;
 N}
@@ -29122,7 +29123,12 @@ N{
 N	cnt++;
 N	delay_cnt++;
 N	//TimingDelay_Decrement();
+N	
 N	key_prograss();
+N//	if(delay_cnt>5000)
+N//	{
+N//	 GPIO_ResetBits(GPIOC, GPIO_Pin_11);//close blacklight
+N//	}
 N	return;
 N}
 N

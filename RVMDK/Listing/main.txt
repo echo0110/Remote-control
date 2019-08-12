@@ -851,7 +851,7 @@
 ;;;339    	LCD_Init();
 000010  f7fffffe          BL       LCD_Init
 ;;;340    	//OLED_Clear();
-;;;341    	ad_init();
+;;;341    	ad_init();  
 000014  f7fffffe          BL       ad_init
 ;;;342      Init_St7565();	 
 000018  f7fffffe          BL       Init_St7565

@@ -338,7 +338,7 @@ int main(void)
 	//OLED_Init();
 	LCD_Init();
 	//OLED_Clear();
-	ad_init();
+	ad_init();  
   Init_St7565();	 
    while (1){	
 		 

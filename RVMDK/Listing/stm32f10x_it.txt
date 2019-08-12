@@ -5,54 +5,54 @@
                           AREA ||i.BusFault_Handler||, CODE, READONLY, ALIGN=1
 
                   BusFault_Handler PROC
-;;;164    *******************************************************************************/
-;;;165    void BusFault_Handler(void)
+;;;163    *******************************************************************************/
+;;;164    void BusFault_Handler(void)
 000000  bf00              NOP      
                   |L1.2|
-;;;166    {
-;;;167        //当总线错误发生时进入死循环 
-;;;168        while (1)
+;;;165    {
+;;;166        //当总线错误发生时进入死循环 
+;;;167        while (1)
 000002  e7fe              B        |L1.2|
-;;;169        {
-;;;170        }
-;;;171    }
-;;;172    
+;;;168        {
+;;;169        }
+;;;170    }
+;;;171    
                           ENDP
 
 
                           AREA ||i.DebugMon_Handler||, CODE, READONLY, ALIGN=1
 
                   DebugMon_Handler PROC
-;;;205    *******************************************************************************/
-;;;206    void DebugMon_Handler(void)
+;;;204    *******************************************************************************/
+;;;205    void DebugMon_Handler(void)
 000000  4770              BX       lr
-;;;207    {
-;;;208    }
-;;;209    
+;;;206    {
+;;;207    }
+;;;208    
                           ENDP
 
 
                           AREA ||i.Delay_Ms||, CODE, READONLY, ALIGN=2
 
                   Delay_Ms PROC
-;;;66     
-;;;67     void Delay_Ms(unsigned int delay){
+;;;67     
+;;;68     void Delay_Ms(unsigned int delay){
 000000  2100              MOVS     r1,#0
-;;;68     
-;;;69     	delay_cnt = 0;
+;;;69     
+;;;70     	delay_cnt = 0;
 000002  4a04              LDR      r2,|L3.20|
 000004  6011              STR      r1,[r2,#0]  ; delay_cnt
-;;;70     	while(delay>delay_cnt);
+;;;71     	while(delay>delay_cnt);
 000006  bf00              NOP      
                   |L3.8|
 000008  4902              LDR      r1,|L3.20|
 00000a  6809              LDR      r1,[r1,#0]  ; delay_cnt
 00000c  4288              CMP      r0,r1
 00000e  d8fb              BHI      |L3.8|
-;;;71     	return;
-;;;72     }
+;;;72     	return;
+;;;73     }
 000010  4770              BX       lr
-;;;73     
+;;;74     
                           ENDP
 
 000012  0000              DCW      0x0000
@@ -62,116 +62,116 @@
                           AREA ||i.EXTI0_IRQHandler||, CODE, READONLY, ALIGN=1
 
                   EXTI0_IRQHandler PROC
-;;;245    
-;;;246    void EXTI0_IRQHandler(void)
+;;;249    
+;;;250    void EXTI0_IRQHandler(void)
 000000  b510              PUSH     {r4,lr}
-;;;247    {
-;;;248    	#if 0
-;;;249    	if(!key.busy){
-;;;250    		key.GPIOx = GPIOA;
-;;;251    		key.GPIO_Pin = GPIO_Pin_0;
-;;;252    		key.key_value = 0;
-;;;253    		key.delay = 0;
-;;;254    		key.busy = 1;
-;;;255    	}	
-;;;256    	#endif
-;;;257    	EXTI_ClearITPendingBit(EXTI_Line0);
+;;;251    {
+;;;252    	#if 0
+;;;253    	if(!key.busy){
+;;;254    		key.GPIOx = GPIOA;
+;;;255    		key.GPIO_Pin = GPIO_Pin_0;
+;;;256    		key.key_value = 0;
+;;;257    		key.delay = 0;
+;;;258    		key.busy = 1;
+;;;259    	}	
+;;;260    	#endif
+;;;261    	EXTI_ClearITPendingBit(EXTI_Line0);
 000002  2001              MOVS     r0,#1
 000004  f7fffffe          BL       EXTI_ClearITPendingBit
-;;;258    	return;
-;;;259    }
+;;;262    	return;
+;;;263    }
 000008  bd10              POP      {r4,pc}
-;;;260    
+;;;264    
                           ENDP
 
 
                           AREA ||i.EXTI15_10_IRQHandler||, CODE, READONLY, ALIGN=1
 
                   EXTI15_10_IRQHandler PROC
-;;;267    
-;;;268    void EXTI15_10_IRQHandler(void)
+;;;271    
+;;;272    void EXTI15_10_IRQHandler(void)
 000000  b510              PUSH     {r4,lr}
-;;;269    {
-;;;270    	#if 0
-;;;271    	if(!key.busy){
-;;;272    		if(!GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_10)){
-;;;273    			key.GPIOx = GPIOA;
-;;;274    			key.GPIO_Pin = GPIO_Pin_10;
-;;;275    			key.key_value = 6;
-;;;276    		}else if(!GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_11)){
+;;;273    {
+;;;274    	#if 0
+;;;275    	if(!key.busy){
+;;;276    		if(!GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_10)){
 ;;;277    			key.GPIOx = GPIOA;
-;;;278    			key.GPIO_Pin = GPIO_Pin_11;
-;;;279    			key.key_value = 3;
-;;;280    		}else if(!GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_12)){
+;;;278    			key.GPIO_Pin = GPIO_Pin_10;
+;;;279    			key.key_value = 6;
+;;;280    		}else if(!GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_11)){
 ;;;281    			key.GPIOx = GPIOA;
-;;;282    			key.GPIO_Pin = GPIO_Pin_12;
-;;;283    			key.key_value = 13;
-;;;284    		}else if(!GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11)){
-;;;285    			key.GPIOx = GPIOB;
-;;;286    			key.GPIO_Pin = GPIO_Pin_11;
-;;;287    			key.key_value = 12;
-;;;288    		}else if(!GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12)){
+;;;282    			key.GPIO_Pin = GPIO_Pin_11;
+;;;283    			key.key_value = 3;
+;;;284    		}else if(!GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_12)){
+;;;285    			key.GPIOx = GPIOA;
+;;;286    			key.GPIO_Pin = GPIO_Pin_12;
+;;;287    			key.key_value = 13;
+;;;288    		}else if(!GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11)){
 ;;;289    			key.GPIOx = GPIOB;
-;;;290    			key.GPIO_Pin = GPIO_Pin_12;
-;;;291    			key.key_value = 1;
-;;;292    		}else if(!GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13)){
+;;;290    			key.GPIO_Pin = GPIO_Pin_11;
+;;;291    			key.key_value = 12;
+;;;292    		}else if(!GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12)){
 ;;;293    			key.GPIOx = GPIOB;
-;;;294    			key.GPIO_Pin = GPIO_Pin_13;
-;;;295    			key.key_value = 4;
-;;;296    		}else if(!GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_14)){
+;;;294    			key.GPIO_Pin = GPIO_Pin_12;
+;;;295    			key.key_value = 1;
+;;;296    		}else if(!GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13)){
 ;;;297    			key.GPIOx = GPIOB;
-;;;298    			key.GPIO_Pin = GPIO_Pin_14;
-;;;299    			key.key_value = 7;
-;;;300    		}else if(!GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15)){
+;;;298    			key.GPIO_Pin = GPIO_Pin_13;
+;;;299    			key.key_value = 4;
+;;;300    		}else if(!GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_14)){
 ;;;301    			key.GPIOx = GPIOB;
-;;;302    			key.GPIO_Pin = GPIO_Pin_15;
-;;;303    			key.key_value = 10;
-;;;304    		}
-;;;305    		
-;;;306    		
-;;;307    		key.delay = 0;
-;;;308    		key.busy = 1;
-;;;309    	}
-;;;310    	#endif
-;;;311    	EXTI_ClearITPendingBit(EXTI_Line10 | EXTI_Line11 | EXTI_Line12 | EXTI_Line13 | EXTI_Line14 | EXTI_Line15);
+;;;302    			key.GPIO_Pin = GPIO_Pin_14;
+;;;303    			key.key_value = 7;
+;;;304    		}else if(!GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15)){
+;;;305    			key.GPIOx = GPIOB;
+;;;306    			key.GPIO_Pin = GPIO_Pin_15;
+;;;307    			key.key_value = 10;
+;;;308    		}
+;;;309    		
+;;;310    		
+;;;311    		key.delay = 0;
+;;;312    		key.busy = 1;
+;;;313    	}
+;;;314    	#endif
+;;;315    	EXTI_ClearITPendingBit(EXTI_Line10 | EXTI_Line11 | EXTI_Line12 | EXTI_Line13 | EXTI_Line14 | EXTI_Line15);
 000002  f44f407c          MOV      r0,#0xfc00
 000006  f7fffffe          BL       EXTI_ClearITPendingBit
-;;;312    	return;
-;;;313    }
+;;;316    	return;
+;;;317    }
 00000a  bd10              POP      {r4,pc}
-;;;314    
+;;;318    
                           ENDP
 
 
                           AREA ||i.EXTI9_5_IRQHandler||, CODE, READONLY, ALIGN=1
 
                   EXTI9_5_IRQHandler PROC
-;;;260    
-;;;261    void EXTI9_5_IRQHandler(void)
+;;;264    
+;;;265    void EXTI9_5_IRQHandler(void)
 000000  b510              PUSH     {r4,lr}
-;;;262    {
-;;;263    
-;;;264    	EXTI_ClearITPendingBit(EXTI_Line5 | EXTI_Line6 | EXTI_Line7 | EXTI_Line8 | EXTI_Line9 | EXTI_Line10);
+;;;266    {
+;;;267    
+;;;268    	EXTI_ClearITPendingBit(EXTI_Line5 | EXTI_Line6 | EXTI_Line7 | EXTI_Line8 | EXTI_Line9 | EXTI_Line10);
 000002  f44f60fc          MOV      r0,#0x7e0
 000006  f7fffffe          BL       EXTI_ClearITPendingBit
-;;;265    	return;
-;;;266    }
+;;;269    	return;
+;;;270    }
 00000a  bd10              POP      {r4,pc}
-;;;267    
+;;;271    
                           ENDP
 
 
                           AREA ||i.Get_SysTick||, CODE, READONLY, ALIGN=2
 
                   Get_SysTick PROC
-;;;62     
-;;;63     unsigned int Get_SysTick(void){
+;;;63     
+;;;64     unsigned int Get_SysTick(void){
 000000  4801              LDR      r0,|L7.8|
-;;;64     	return cnt;
+;;;65     	return cnt;
 000002  6800              LDR      r0,[r0,#0]  ; cnt
-;;;65     }
+;;;66     }
 000004  4770              BX       lr
-;;;66     
+;;;67     
                           ENDP
 
 000006  0000              DCW      0x0000
@@ -181,101 +181,106 @@
                           AREA ||i.HardFault_Handler||, CODE, READONLY, ALIGN=1
 
                   HardFault_Handler PROC
-;;;134    *******************************************************************************/
-;;;135    void HardFault_Handler(void)
+;;;133    *******************************************************************************/
+;;;134    void HardFault_Handler(void)
 000000  bf00              NOP      
                   |L8.2|
-;;;136    {
-;;;137        //当硬件错误发生时进入死循环 
-;;;138        while (1)
+;;;135    {
+;;;136        //当硬件错误发生时进入死循环 
+;;;137        while (1)
 000002  e7fe              B        |L8.2|
-;;;139        {
-;;;140        }
-;;;141    }
-;;;142    
+;;;138        {
+;;;139        }
+;;;140    }
+;;;141    
                           ENDP
 
 
                           AREA ||i.MemManage_Handler||, CODE, READONLY, ALIGN=1
 
                   MemManage_Handler PROC
-;;;149    *******************************************************************************/
-;;;150    void MemManage_Handler(void)
+;;;148    *******************************************************************************/
+;;;149    void MemManage_Handler(void)
 000000  bf00              NOP      
                   |L9.2|
-;;;151    {
-;;;152        //当内存管理中断发生时进入死循环 
-;;;153        while (1)
+;;;150    {
+;;;151        //当内存管理中断发生时进入死循环 
+;;;152        while (1)
 000002  e7fe              B        |L9.2|
-;;;154        {
-;;;155        }
-;;;156    }
-;;;157    
+;;;153        {
+;;;154        }
+;;;155    }
+;;;156    
                           ENDP
 
 
                           AREA ||i.NMI_Handler||, CODE, READONLY, ALIGN=1
 
                   NMI_Handler PROC
-;;;123    *******************************************************************************/
-;;;124    void NMI_Handler(void)
+;;;122    *******************************************************************************/
+;;;123    void NMI_Handler(void)
 000000  4770              BX       lr
-;;;125    {
-;;;126    }
-;;;127    
+;;;124    {
+;;;125    }
+;;;126    
                           ENDP
 
 
                           AREA ||i.PendSV_Handler||, CODE, READONLY, ALIGN=1
 
                   PendSV_Handler PROC
-;;;216    *******************************************************************************/
-;;;217    void PendSV_Handler(void)
+;;;215    *******************************************************************************/
+;;;216    void PendSV_Handler(void)
 000000  4770              BX       lr
-;;;218    {
-;;;219    }
-;;;220    
+;;;217    {
+;;;218    }
+;;;219    
                           ENDP
 
 
                           AREA ||i.SVC_Handler||, CODE, READONLY, ALIGN=1
 
                   SVC_Handler PROC
-;;;194    *******************************************************************************/
-;;;195    void SVC_Handler(void)
+;;;193    *******************************************************************************/
+;;;194    void SVC_Handler(void)
 000000  4770              BX       lr
-;;;196    {
-;;;197    }
-;;;198    
+;;;195    {
+;;;196    }
+;;;197    
                           ENDP
 
 
                           AREA ||i.SysTick_Handler||, CODE, READONLY, ALIGN=2
 
                   SysTick_Handler PROC
-;;;227    *******************************************************************************/
-;;;228    void SysTick_Handler(void)
+;;;226    *******************************************************************************/
+;;;227    void SysTick_Handler(void)
 000000  b510              PUSH     {r4,lr}
-;;;229    {
-;;;230    	cnt++;
+;;;228    {
+;;;229    	cnt++;
 000002  4806              LDR      r0,|L13.28|
 000004  6800              LDR      r0,[r0,#0]  ; cnt
 000006  1c40              ADDS     r0,r0,#1
 000008  4904              LDR      r1,|L13.28|
 00000a  6008              STR      r0,[r1,#0]  ; cnt
-;;;231    	delay_cnt++;
+;;;230    	delay_cnt++;
 00000c  4804              LDR      r0,|L13.32|
 00000e  6800              LDR      r0,[r0,#0]  ; delay_cnt
 000010  1c40              ADDS     r0,r0,#1
 000012  4903              LDR      r1,|L13.32|
 000014  6008              STR      r0,[r1,#0]  ; delay_cnt
-;;;232    	//TimingDelay_Decrement();
+;;;231    	//TimingDelay_Decrement();
+;;;232    	
 ;;;233    	key_prograss();
 000016  f7fffffe          BL       key_prograss
-;;;234    	return;
-;;;235    }
+;;;234    //	if(delay_cnt>5000)
+;;;235    //	{
+;;;236    //	 GPIO_ResetBits(GPIOC, GPIO_Pin_11);//close blacklight
+;;;237    //	}
+;;;238    	return;
+;;;239    }
 00001a  bd10              POP      {r4,pc}
-;;;236    
+;;;240    
                           ENDP
 
                   |L13.28|
@@ -286,141 +291,168 @@
                           AREA ||i.UsageFault_Handler||, CODE, READONLY, ALIGN=1
 
                   UsageFault_Handler PROC
-;;;179    *******************************************************************************/
-;;;180    void UsageFault_Handler(void)
+;;;178    *******************************************************************************/
+;;;179    void UsageFault_Handler(void)
 000000  bf00              NOP      
                   |L14.2|
-;;;181    {
-;;;182        //当Usage 错误发生时进入死循环 
-;;;183        while (1)
+;;;180    {
+;;;181        //当Usage 错误发生时进入死循环 
+;;;182        while (1)
 000002  e7fe              B        |L14.2|
-;;;184        {
-;;;185        }
-;;;186    }
-;;;187    
+;;;183        {
+;;;184        }
+;;;185    }
+;;;186    
                           ENDP
 
 
                           AREA ||i.key_prograss||, CODE, READONLY, ALIGN=2
 
                   key_prograss PROC
-;;;74     //防抖处理
-;;;75     void key_prograss(void){
+;;;75     //防抖处理
+;;;76     void key_prograss(void){
 000000  b510              PUSH     {r4,lr}
-;;;76     	int i;
-;;;77     
-;;;78     #if 0	
-;;;79     	if(key.busy){
-;;;80     		if(!GPIO_ReadInputDataBit(key.GPIOx, key.GPIO_Pin)){
-;;;81     				key.delay++;
-;;;82     		}else{
-;;;83     				key.busy = 0;
-;;;84     		}
-;;;85     		if(key.delay > 50){
-;;;86     			put_key(key.key_value);
-;;;87     			key.busy = 0;
-;;;88     		}
-;;;89     	}
-;;;90     #endif
-;;;91     	for(i=0; i<14; i++){
-000002  2400              MOVS     r4,#0
-000004  e05d              B        |L15.194|
-                  |L15.6|
-;;;92       		if(!GPIO_ReadInputDataBit(key[i].GPIOx, key[i].GPIO_Pin)){
-000006  eb040244          ADD      r2,r4,r4,LSL #1
-00000a  4b2f              LDR      r3,|L15.200|
-00000c  eb0302c2          ADD      r2,r3,r2,LSL #3
-000010  8891              LDRH     r1,[r2,#4]
-000012  eb040244          ADD      r2,r4,r4,LSL #1
-000016  f8530032          LDR      r0,[r3,r2,LSL #3]
-00001a  f7fffffe          BL       GPIO_ReadInputDataBit
-00001e  bbd8              CBNZ     r0,|L15.152|
-;;;93     			if(!GPIO_ReadInputDataBit(key[i].GPIOx, key[i].GPIO_Pin))
-000020  eb040244          ADD      r2,r4,r4,LSL #1
-000024  4b28              LDR      r3,|L15.200|
-000026  eb0302c2          ADD      r2,r3,r2,LSL #3
-00002a  8891              LDRH     r1,[r2,#4]
-00002c  eb040244          ADD      r2,r4,r4,LSL #1
-000030  f8530032          LDR      r0,[r3,r2,LSL #3]
-000034  f7fffffe          BL       GPIO_ReadInputDataBit
-;;;94     			{
-;;;95     			
-;;;96     			
+;;;77     	int i;
+;;;78       
+;;;79     	
+;;;80     	blacklight++;
+000002  483f              LDR      r0,|L15.256|
+000004  6800              LDR      r0,[r0,#0]  ; blacklight
+000006  1c40              ADDS     r0,r0,#1
+000008  493d              LDR      r1,|L15.256|
+00000a  6008              STR      r0,[r1,#0]  ; blacklight
+;;;81     	
+;;;82     
+;;;83     	for(i=0; i<14; i++){
+00000c  2400              MOVS     r4,#0
+00000e  e066              B        |L15.222|
+                  |L15.16|
+;;;84       		if(!GPIO_ReadInputDataBit(key[i].GPIOx, key[i].GPIO_Pin)){
+000010  eb040244          ADD      r2,r4,r4,LSL #1
+000014  4b3b              LDR      r3,|L15.260|
+000016  eb0302c2          ADD      r2,r3,r2,LSL #3
+00001a  8891              LDRH     r1,[r2,#4]
+00001c  eb040244          ADD      r2,r4,r4,LSL #1
+000020  f8530032          LDR      r0,[r3,r2,LSL #3]
+000024  f7fffffe          BL       GPIO_ReadInputDataBit
+000028  bbf0              CBNZ     r0,|L15.168|
+;;;85     			if(!GPIO_ReadInputDataBit(key[i].GPIOx, key[i].GPIO_Pin))
+00002a  eb040244          ADD      r2,r4,r4,LSL #1
+00002e  4b35              LDR      r3,|L15.260|
+000030  eb0302c2          ADD      r2,r3,r2,LSL #3
+000034  8891              LDRH     r1,[r2,#4]
+000036  eb040244          ADD      r2,r4,r4,LSL #1
+00003a  f8530032          LDR      r0,[r3,r2,LSL #3]
+00003e  f7fffffe          BL       GPIO_ReadInputDataBit
+;;;86     			{
+;;;87     			
+;;;88     			
+;;;89     			}
+;;;90     			key[i].touch_flag = 1;
+000042  2001              MOVS     r0,#1
+000044  eb040144          ADD      r1,r4,r4,LSL #1
+000048  4a2e              LDR      r2,|L15.260|
+00004a  eb0201c1          ADD      r1,r2,r1,LSL #3
+00004e  60c8              STR      r0,[r1,#0xc]
+;;;91     			key[i].delay++;
+000050  eb040044          ADD      r0,r4,r4,LSL #1
+000054  4611              MOV      r1,r2
+000056  eb0100c0          ADD      r0,r1,r0,LSL #3
+00005a  6880              LDR      r0,[r0,#8]
+00005c  1c40              ADDS     r0,r0,#1
+00005e  eb040144          ADD      r1,r4,r4,LSL #1
+000062  eb0201c1          ADD      r1,r2,r1,LSL #3
+000066  6088              STR      r0,[r1,#8]
+;;;92     			if((key[i].delay > 50) && key[i].untouch_flag){
+000068  eb040044          ADD      r0,r4,r4,LSL #1
+00006c  4611              MOV      r1,r2
+00006e  eb0100c0          ADD      r0,r1,r0,LSL #3
+000072  6880              LDR      r0,[r0,#8]
+000074  2832              CMP      r0,#0x32
+000076  d931              BLS      |L15.220|
+000078  eb040044          ADD      r0,r4,r4,LSL #1
+00007c  eb0100c0          ADD      r0,r1,r0,LSL #3
+000080  6900              LDR      r0,[r0,#0x10]
+000082  b358              CBZ      r0,|L15.220|
+;;;93     				GPIO_SetBits(GPIOC, GPIO_Pin_11);
+000084  f44f6100          MOV      r1,#0x800
+000088  481f              LDR      r0,|L15.264|
+00008a  f7fffffe          BL       GPIO_SetBits
+;;;94     				put_key(key[i].key_value);
+00008e  eb040144          ADD      r1,r4,r4,LSL #1
+000092  4a1c              LDR      r2,|L15.260|
+000094  eb0201c1          ADD      r1,r2,r1,LSL #3
+000098  7d08              LDRB     r0,[r1,#0x14]
+00009a  f7fffffe          BL       put_key
+;;;95     				key[i].untouch_flag = 0;
+00009e  2000              MOVS     r0,#0
+0000a0  eb040144          ADD      r1,r4,r4,LSL #1
+0000a4  4a17              LDR      r2,|L15.260|
+0000a6  e000              B        |L15.170|
+                  |L15.168|
+0000a8  e005              B        |L15.182|
+                  |L15.170|
+0000aa  eb0201c1          ADD      r1,r2,r1,LSL #3
+0000ae  6108              STR      r0,[r1,#0x10]
+;;;96     				blacklight=0;
+0000b0  4913              LDR      r1,|L15.256|
+0000b2  6008              STR      r0,[r1,#0]  ; blacklight
+0000b4  e012              B        |L15.220|
+                  |L15.182|
 ;;;97     			}
-;;;98     			key[i].touch_flag = 1;
-000038  2001              MOVS     r0,#1
-00003a  eb040144          ADD      r1,r4,r4,LSL #1
-00003e  4a22              LDR      r2,|L15.200|
-000040  eb0201c1          ADD      r1,r2,r1,LSL #3
-000044  60c8              STR      r0,[r1,#0xc]
-;;;99     			key[i].delay++;
-000046  eb040044          ADD      r0,r4,r4,LSL #1
-00004a  4611              MOV      r1,r2
-00004c  eb0100c0          ADD      r0,r1,r0,LSL #3
-000050  6880              LDR      r0,[r0,#8]
-000052  1c40              ADDS     r0,r0,#1
-000054  eb040144          ADD      r1,r4,r4,LSL #1
-000058  eb0201c1          ADD      r1,r2,r1,LSL #3
-00005c  6088              STR      r0,[r1,#8]
-;;;100    			if((key[i].delay > 50) && key[i].untouch_flag){
-00005e  eb040044          ADD      r0,r4,r4,LSL #1
-000062  4611              MOV      r1,r2
-000064  eb0100c0          ADD      r0,r1,r0,LSL #3
-000068  6880              LDR      r0,[r0,#8]
-00006a  2832              CMP      r0,#0x32
-00006c  d928              BLS      |L15.192|
-00006e  eb040044          ADD      r0,r4,r4,LSL #1
-000072  eb0100c0          ADD      r0,r1,r0,LSL #3
-000076  6900              LDR      r0,[r0,#0x10]
-000078  b310              CBZ      r0,|L15.192|
-;;;101    				put_key(key[i].key_value);
-00007a  eb040144          ADD      r1,r4,r4,LSL #1
-00007e  eb0201c1          ADD      r1,r2,r1,LSL #3
-000082  7d08              LDRB     r0,[r1,#0x14]
-000084  f7fffffe          BL       put_key
-;;;102    				key[i].untouch_flag = 0;
-000088  2000              MOVS     r0,#0
-00008a  eb040144          ADD      r1,r4,r4,LSL #1
-00008e  4a0e              LDR      r2,|L15.200|
-000090  eb0201c1          ADD      r1,r2,r1,LSL #3
-000094  6108              STR      r0,[r1,#0x10]
-000096  e013              B        |L15.192|
-                  |L15.152|
-000098  e7ff              B        |L15.154|
-                  |L15.154|
-;;;103    			}
-;;;104    		}else{
-;;;105    			key[i].delay = 0;
-00009a  2000              MOVS     r0,#0
-00009c  eb040144          ADD      r1,r4,r4,LSL #1
-0000a0  4a09              LDR      r2,|L15.200|
-0000a2  eb0201c1          ADD      r1,r2,r1,LSL #3
-0000a6  6088              STR      r0,[r1,#8]
-;;;106    			key[i].untouch_flag = 1;
-0000a8  2001              MOVS     r0,#1
-0000aa  eb040144          ADD      r1,r4,r4,LSL #1
-0000ae  eb0201c1          ADD      r1,r2,r1,LSL #3
-0000b2  6108              STR      r0,[r1,#0x10]
-;;;107    			key[i].touch_flag = 0;
-0000b4  2000              MOVS     r0,#0
-0000b6  eb040144          ADD      r1,r4,r4,LSL #1
-0000ba  eb0201c1          ADD      r1,r2,r1,LSL #3
-0000be  60c8              STR      r0,[r1,#0xc]
-                  |L15.192|
-0000c0  1c64              ADDS     r4,r4,#1              ;91
-                  |L15.194|
-0000c2  2c0e              CMP      r4,#0xe               ;91
-0000c4  db9f              BLT      |L15.6|
-;;;108    		}
-;;;109    	}
-;;;110    	return;
-;;;111    }
-0000c6  bd10              POP      {r4,pc}
-;;;112    
+;;;98     		}else{			
+;;;99     			key[i].delay = 0;
+0000b6  2000              MOVS     r0,#0
+0000b8  eb040144          ADD      r1,r4,r4,LSL #1
+0000bc  4a11              LDR      r2,|L15.260|
+0000be  eb0201c1          ADD      r1,r2,r1,LSL #3
+0000c2  6088              STR      r0,[r1,#8]
+;;;100    			key[i].untouch_flag = 1;
+0000c4  2001              MOVS     r0,#1
+0000c6  eb040144          ADD      r1,r4,r4,LSL #1
+0000ca  eb0201c1          ADD      r1,r2,r1,LSL #3
+0000ce  6108              STR      r0,[r1,#0x10]
+;;;101    			key[i].touch_flag = 0;			
+0000d0  2000              MOVS     r0,#0
+0000d2  eb040144          ADD      r1,r4,r4,LSL #1
+0000d6  eb0201c1          ADD      r1,r2,r1,LSL #3
+0000da  60c8              STR      r0,[r1,#0xc]
+                  |L15.220|
+0000dc  1c64              ADDS     r4,r4,#1              ;83
+                  |L15.222|
+0000de  2c0e              CMP      r4,#0xe               ;83
+0000e0  db96              BLT      |L15.16|
+;;;102    		}
+;;;103    	}
+;;;104    	if(blacklight>30000)
+0000e2  4807              LDR      r0,|L15.256|
+0000e4  6800              LDR      r0,[r0,#0]  ; blacklight
+0000e6  f2475130          MOV      r1,#0x7530
+0000ea  4288              CMP      r0,r1
+0000ec  d907              BLS      |L15.254|
+;;;105    	{
+;;;106    	 GPIO_ResetBits(GPIOC, GPIO_Pin_11);//close blacklight
+0000ee  f44f6100          MOV      r1,#0x800
+0000f2  4805              LDR      r0,|L15.264|
+0000f4  f7fffffe          BL       GPIO_ResetBits
+;;;107    	 blacklight=0;
+0000f8  2000              MOVS     r0,#0
+0000fa  4901              LDR      r1,|L15.256|
+0000fc  6008              STR      r0,[r1,#0]  ; blacklight
+                  |L15.254|
+;;;108    	}
+;;;109    	return;
+;;;110    }
+0000fe  bd10              POP      {r4,pc}
+;;;111    
                           ENDP
 
-                  |L15.200|
+                  |L15.256|
+                          DCD      blacklight
+                  |L15.260|
                           DCD      key
+                  |L15.264|
+                          DCD      0x40011000
 
                           AREA ||.data||, DATA, ALIGN=2
 
@@ -430,102 +462,104 @@
                           DCD      0x00000000
                   delay_cnt
                           DCD      0x00000000
+                  blacklight
+                          DCD      0x00000000
                   key
                           DCD      0x40011000
-000010  0040              DCW      0x0040
-000012  0000              DCB      0x00,0x00
+000014  0040              DCW      0x0040
+000016  0000              DCB      0x00,0x00
                           DCD      0x00000000
                           DCD      0x00000000
                           DCD      0x00000001
-000020  02000000          DCB      0x02,0x00,0x00,0x00
+000024  02000000          DCB      0x02,0x00,0x00,0x00
                           DCD      0x40011000
-000028  0080              DCW      0x0080
-00002a  0000              DCB      0x00,0x00
+00002c  0080              DCW      0x0080
+00002e  0000              DCB      0x00,0x00
                           DCD      0x00000000
                           DCD      0x00000000
                           DCD      0x00000001
-000038  05000000          DCB      0x05,0x00,0x00,0x00
+00003c  05000000          DCB      0x05,0x00,0x00,0x00
                           DCD      0x40011000
-000040  0100              DCW      0x0100
-000042  0000              DCB      0x00,0x00
+000044  0100              DCW      0x0100
+000046  0000              DCB      0x00,0x00
                           DCD      0x00000000
                           DCD      0x00000000
                           DCD      0x00000001
-000050  08000000          DCB      0x08,0x00,0x00,0x00
+000054  08000000          DCB      0x08,0x00,0x00,0x00
                           DCD      0x40011000
-000058  0200              DCW      0x0200
-00005a  0000              DCB      0x00,0x00
+00005c  0200              DCW      0x0200
+00005e  0000              DCB      0x00,0x00
                           DCD      0x00000000
                           DCD      0x00000000
                           DCD      0x00000001
-000068  00000000          DCB      0x00,0x00,0x00,0x00
+00006c  00000000          DCB      0x00,0x00,0x00,0x00
                           DCD      0x40010800
-000070  0800              DCW      0x0800
-000072  0000              DCB      0x00,0x00
+000074  0800              DCW      0x0800
+000076  0000              DCB      0x00,0x00
                           DCD      0x00000000
                           DCD      0x00000000
                           DCD      0x00000001
-000080  0b000000          DCB      0x0b,0x00,0x00,0x00
+000084  0b000000          DCB      0x0b,0x00,0x00,0x00
                           DCD      0x40010800
-000088  0400              DCW      0x0400
-00008a  0000              DCB      0x00,0x00
+00008c  0400              DCW      0x0400
+00008e  0000              DCB      0x00,0x00
                           DCD      0x00000000
                           DCD      0x00000000
                           DCD      0x00000001
-000098  09000000          DCB      0x09,0x00,0x00,0x00
+00009c  09000000          DCB      0x09,0x00,0x00,0x00
                           DCD      0x40010800
-0000a0  0200              DCW      0x0200
-0000a2  0000              DCB      0x00,0x00
+0000a4  0200              DCW      0x0200
+0000a6  0000              DCB      0x00,0x00
                           DCD      0x00000000
                           DCD      0x00000000
                           DCD      0x00000001
-0000b0  06000000          DCB      0x06,0x00,0x00,0x00
+0000b4  06000000          DCB      0x06,0x00,0x00,0x00
                           DCD      0x40010800
-0000b8  0100              DCW      0x0100
-0000ba  0000              DCB      0x00,0x00
+0000bc  0100              DCW      0x0100
+0000be  0000              DCB      0x00,0x00
                           DCD      0x00000000
                           DCD      0x00000000
                           DCD      0x00000001
-0000c8  03000000          DCB      0x03,0x00,0x00,0x00
+0000cc  03000000          DCB      0x03,0x00,0x00,0x00
                           DCD      0x40010800
-0000d0  1000              DCW      0x1000
-0000d2  0000              DCB      0x00,0x00
+0000d4  1000              DCW      0x1000
+0000d6  0000              DCB      0x00,0x00
                           DCD      0x00000000
                           DCD      0x00000000
                           DCD      0x00000001
-0000e0  0d000000          DCB      0x0d,0x00,0x00,0x00
+0000e4  0d000000          DCB      0x0d,0x00,0x00,0x00
                           DCD      0x40010c00
-0000e8  0800              DCW      0x0800
-0000ea  0000              DCB      0x00,0x00
+0000ec  0800              DCW      0x0800
+0000ee  0000              DCB      0x00,0x00
                           DCD      0x00000000
                           DCD      0x00000000
                           DCD      0x00000001
-0000f8  0c000000          DCB      0x0c,0x00,0x00,0x00
+0000fc  0c000000          DCB      0x0c,0x00,0x00,0x00
                           DCD      0x40010c00
-000100  1000              DCW      0x1000
-000102  0000              DCB      0x00,0x00
+000104  1000              DCW      0x1000
+000106  0000              DCB      0x00,0x00
                           DCD      0x00000000
                           DCD      0x00000000
                           DCD      0x00000001
-000110  01000000          DCB      0x01,0x00,0x00,0x00
+000114  01000000          DCB      0x01,0x00,0x00,0x00
                           DCD      0x40010c00
-000118  2000              DCW      0x2000
-00011a  0000              DCB      0x00,0x00
+00011c  2000              DCW      0x2000
+00011e  0000              DCB      0x00,0x00
                           DCD      0x00000000
                           DCD      0x00000000
                           DCD      0x00000001
-000128  04000000          DCB      0x04,0x00,0x00,0x00
+00012c  04000000          DCB      0x04,0x00,0x00,0x00
                           DCD      0x40010c00
-000130  4000              DCW      0x4000
-000132  0000              DCB      0x00,0x00
+000134  4000              DCW      0x4000
+000136  0000              DCB      0x00,0x00
                           DCD      0x00000000
                           DCD      0x00000000
                           DCD      0x00000001
-000140  07000000          DCB      0x07,0x00,0x00,0x00
+000144  07000000          DCB      0x07,0x00,0x00,0x00
                           DCD      0x40010c00
-000148  8000              DCW      0x8000
-00014a  0000              DCB      0x00,0x00
+00014c  8000              DCW      0x8000
+00014e  0000              DCB      0x00,0x00
                           DCD      0x00000000
                           DCD      0x00000000
                           DCD      0x00000001
-000158  0a000000          DCB      0x0a,0x00,0x00,0x00
+00015c  0a000000          DCB      0x0a,0x00,0x00,0x00

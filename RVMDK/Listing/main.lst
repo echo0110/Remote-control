@@ -30639,7 +30639,7 @@ N	button_init();
 N	//OLED_Init();
 N	LCD_Init();
 N	//OLED_Clear();
-N	ad_init();
+N	ad_init();  
 N  Init_St7565();	 
 N   while (1){	
 N		 
